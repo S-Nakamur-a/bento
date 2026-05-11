@@ -1,0 +1,21 @@
+{
+  "name": "bento",
+  "owner": {
+    "name": "S-Nakamur-a"
+  },
+  "plugins": [
+    {
+      "name": "bento",
+      "source": "./",
+      "description": "Token-efficient beautiful HTML output. AI generates minimal HTML using a pre-bundled CSS/JS framework.",
+      "version": "0.1.0",
+      "category": "documentation",
+      "tags": [
+        "html",
+        "documentation",
+        "token-efficient",
+        "presentation"
+      ]
+    }
+  ]
+}

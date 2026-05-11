@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AIっぽくない文章を書くために — bento writing style</title>
+<link rel="stylesheet" href="../assets/bento.css">
+<link rel="stylesheet" href="../assets/themes/editorial.css">
+<script src="../assets/bento.js" defer></script>
+<style>
+  .bento {
+    --bento-max-width: 76ch;
+  }
+  .ws-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0.6rem 0;
+  }
+  .ws-pair > div {
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--bento-radius, 0.4rem);
+    background: var(--bento-surface);
+    border: 1px solid var(--bento-border);
+  }
+  .ws-pair .ws-bad   { border-left: 3px solid #d23669; }
+  .ws-pair .ws-good  { border-left: 3px solid #2f9e6e; }
+  .ws-pair small { display:block; color: var(--bento-muted); margin-bottom: 0.2rem; }
+  @media (max-width: 640px) {
+    .ws-pair { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="bento" data-theme="editorial">
+<main class="bento-doc">
+
+  <header class="bento-hero">
+    <p>
+      <span class="bento-badge bento-badge--primary">WRITING GUIDE</span>
+      <span class="bento-badge bento-badge--muted">bento / 補助ドキュメント</span>
+    </p>
+    <h1>AIっぽくない文章を書くために</h1>
+    <p class="bento-lead">
+      美しい HTML を組んでも、中の散文が AI 臭ければ読者は3行で気づきます。
+      このページは、bento スキルの一部として配布される
+      <code>writing-style.md</code> の要点を視覚化したものです。
+      四つの根（語彙・文の形・構造・組版）と、書き終わる前のセルフチェックまで。
+    </p>
+    <div class="bento-hero-meta">
+      <span>Source: Wikipedia "Signs of AI writing", OpenAI dev forum, GPTZero 等の公開知見</span>
+      <span>2026-05-11</span>
+      <span>Reading time: 6 min</span>
+    </div>
+  </header>
+
+  <nav class="bento-toc"></nav>
+
+  <h2>核心は一行で済む</h2>
+
+  <div class="bento-callout bento-callout--tip">
+    <strong>原則</strong>
+    <p>立場を取る。具体的に書く。リズムを揺らす。<br>
+    AI 文章のテルはほぼ全部、この三つのどれかをサボった結果です。</p>
+  </div>
+
+  <p>
+    語彙リストやハウツーから入ると、読み手は「禁止語を避ける」ゲームになります。
+    でも本当の問題はそこではありません。AI が書いた文章が AI 臭く感じるのは、
+    <strong>言い切らない</strong>、<strong>抽象に逃げる</strong>、
+    <strong>同じ拍子で続ける</strong>、この三つです。語彙はあくまでその症状。
+    根っこを掴むと、未知のテルにも勘が効きます。
+  </p>
+
+  <h2>このページで扱う範囲</h2>
+
+  <div class="bento-grid" data-cols="4">
+    <div class="bento-stat">
+      <span class="bento-stat-label">分類</span>
+      <span class="bento-stat-value">4</span>
+      <span class="bento-stat-trend" data-trend="flat">語彙 / 文 / 構造 / 組版</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">flagged words</span>
+      <span class="bento-stat-value">30+</span>
+      <span class="bento-stat-trend" data-trend="flat">英語 + 日本語</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">em-dash 予算</span>
+      <span class="bento-stat-value">0–1</span>
+      <span class="bento-stat-trend" data-trend="down">最大の指紋</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">セルフチェック</span>
+      <span class="bento-stat-value">11</span>
+      <span class="bento-stat-trend" data-trend="flat">書き終わる前に</span>
+    </div>
+  </div>
+
+  <h2>四つの根</h2>
+
+  <div class="bento-grid" data-cols="2">
+    <div class="bento-card">
+      <h3>1. 語彙</h3>
+      <p>
+        <code>delve</code>, <code>leverage</code>, <code>pivotal</code>,
+        「ソリューション」「最適化」「本質」のような、
+        どんな話題にも当てはまる万能語。
+        意味は通るが、書き手の輪郭が消える。
+      </p>
+    </div>
+    <div class="bento-card">
+      <h3>2. 文の形</h3>
+      <p>
+        三つ並べ（rule of three）、「単なる○○ではなく△△」、
+        文末の <code>-ing</code> 修飾節、同じ語尾の連続。
+        構造が固まると一文ごとに AI のメトロノームが鳴る。
+      </p>
+    </div>
+    <div class="bento-card">
+      <h3>3. 構造</h3>
+      <p>
+        導入・3 ポイント・まとめの 5 段落エッセイ。
+        最後の「課題はあるが今後に期待される」型のクローズ。
+        段落の重みが均一に揃いすぎる。
+      </p>
+    </div>
+    <div class="bento-card">
+      <h3>4. 組版</h3>
+      <p>
+        em-dash の乱用、カーリークォート、太字の過剰、
+        絵文字の箇条書きマーカー。
+        2025–2026 年で <strong>em-dash は最も信頼性の高い AI 指紋</strong>
+        と言われています。
+      </p>
+    </div>
+  </div>
+
+  <aside class="bento-related"
+         data-title="このページの章"
+         data-refs="#vocab, #sentence, #structure, #typography, #checklist"></aside>
+
+  <h2 id="vocab">語彙: 置き換え辞書</h2>
+
+  <p>
+    左の語が悪いわけではありません。
+    AI 出力でこれらが <em>あまりに頻繁に</em> 出るので、
+    一つ二つ混ざるだけで読み手のセンサーが鳴ります。
+    迷ったら右の素直な語に倒す方が安全です。
+  </p>
+
+  <h3>English</h3>
+
+  <table class="bento-compare">
+    <thead>
+      <tr><th>カテゴリ</th><th>避ける</th><th>代替</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>動詞</td><td>delve, leverage, utilize, harness, streamline, foster, navigate</td><td>dig into, use, build, show, point to, work through</td></tr>
+      <tr><td>形容詞</td><td>pivotal, robust, seamless, cutting-edge, transformative</td><td>important, working, smooth, new, that-changes-X</td></tr>
+      <tr><td>名詞（比喩）</td><td>landscape, realm, tapestry, synergy, testament, ecosystem</td><td>field, area, mix, fit, proof, group</td></tr>
+      <tr><td>接続フィラー</td><td>Additionally, Furthermore, Moreover, In conclusion</td><td>(ほぼ全部削れる) but, so, and, then</td></tr>
+    </tbody>
+  </table>
+
+  <h3>日本語</h3>
+
+  <table class="bento-compare">
+    <thead>
+      <tr><th>カテゴリ</th><th>避ける</th><th>代替</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>カタカナ語</td><td>ソリューション、アライメント、シナジー、コミットメント、ロードマップ</td><td>解決策、すり合わせ、相乗効果、約束、計画</td></tr>
+      <tr><td>抽象名詞</td><td>本質、価値最大化、最適化、可能性、ポテンシャル</td><td>中身、もうけを増やす、いちばん良い形、できること、伸びしろ</td></tr>
+      <tr><td>定型接続</td><td>まず、次に、そのため、したがって、また、さらに</td><td>多くは削れる。順接は接続詞なしで繋ぐ</td></tr>
+      <tr><td>事なかれ</td><td>一概には言えませんが、メリットもあればデメリットも</td><td>言い切る。例「やめるべき」「○○の時だけ使う」</td></tr>
+      <tr><td>比喩テンプレ</td><td>地図、羅針盤、土台、エンジン、レシピ、ピース</td><td>具体物に。または比喩自体を捨てる</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="sentence">文の形: 直しの実例</h2>
+
+  <h3>三つ並べを一発で切る</h3>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      The framework is intuitive, powerful, and extensible.
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      The framework is extensible. Almost everything is a plug-in.
+    </div>
+  </div>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      シンプルで、軽量で、わかりやすい設計です。
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      設計は軽い。プラグイン一つで全部組み替えられます。
+    </div>
+  </div>
+
+  <h3>「単なる X ではなく Y」を捨てる</h3>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      It's not just a database, it's a knowledge layer.
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      It's a knowledge layer.
+    </div>
+  </div>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      これは単なるツールではなく、思考の枠組みです。
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      これは思考の枠組みです。
+    </div>
+  </div>
+
+  <h3>文末の hedging 分詞を切り落とす</h3>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      The system processes data in real time, <em>highlighting its importance to modern infrastructure</em>.
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      The system processes data in real time.
+    </div>
+  </div>
+
+  <h2 id="structure">構造: 段落と全体</h2>
+
+  <div class="bento-callout bento-callout--note">
+    <strong>5段落エッセイを拒む</strong>
+    <p>
+      AI のデフォルトは「導入 → 3 ポイント → まとめ」。
+      実際の文章は重みに合わせて節の長さが不揃いです。
+      対称性ではなく主張の重さで段落の長さを決めます。
+    </p>
+  </div>
+
+  <div class="bento-callout bento-callout--note">
+    <strong>場面設定の枕を削る</strong>
+    <p>
+      段落の冒頭が「In today's world…」「現代のビジネス環境において…」
+      で始まっていたら、その一文ごと消して、二文目から始めます。
+    </p>
+  </div>
+
+  <div class="bento-callout bento-callout--note">
+    <strong>「課題はあるが今後に期待」で締めない</strong>
+    <p>
+      AI の常套のクローズ。情報量ゼロ。
+      最後の実質的な論点で止めるか、鋭い問いを一つ置きます。
+    </p>
+  </div>
+
+  <h2 id="typography">組版: punctuation の指紋</h2>
+
+  <div class="bento-callout bento-callout--danger">
+    <strong>em-dash は最強のテル</strong>
+    <p>
+      <q>The em-dash has become the most recognizable fingerprint of AI writing,
+      more reliable than any single word.</q>（Wikipedia / GPTZero 等の指摘）。
+      ピリオド、コロン、丸括弧、コンマで置き換えます。
+      和文のダッシュ「— / ――」も同様。
+    </p>
+  </div>
+
+  <h3>クォート・ボールド・絵文字</h3>
+
+  <table class="bento-compare">
+    <thead>
+      <tr><th>項目</th><th>AI のクセ</th><th>人間らしい設定</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>引用符</td><td>カーリー（&ldquo; &rdquo; &lsquo; &rsquo;）が混入</td><td>ストレート（"  '）に統一</td></tr>
+      <tr><td>太字</td><td>同じ語を出るたびに <strong>太字</strong></td><td>概念ごとに 1 回だけ</td></tr>
+      <tr><td>絵文字</td><td>箇条書きの先頭に 🚀 ✅ ❌</td><td>bento の callout / steps / badge を使う</td></tr>
+      <tr><td>三点リーダ</td><td>...（半角ピリオド3つ）</td><td>「…」（全角1文字）</td></tr>
+    </tbody>
+  </table>
+
+  <aside class="bento-related"
+         data-title="続けて読む"
+         data-refs="#vocab, #sentence"></aside>
+
+  <h2 id="checklist">書き終わる前のセルフチェック</h2>
+
+  <p>
+    最後にこの 11 項目で散文をスキャンします。
+    3 つ以上失敗していたら、パッチではなく書き直しの合図です。
+  </p>
+
+  <ol class="bento-steps">
+    <li><div><h4>em-dash</h4><p>0 個、または明確な意図のある 1 個まで。</p></div></li>
+    <li><div><h4>禁止語彙</h4><p>delve / leverage / pivotal / robust / seamless / tapestry が無いか。</p></div></li>
+    <li><div><h4>定型接続</h4><p>「まず／次に／そのため／さらに」がデフォルト位置に無いか。</p></div></li>
+    <li><div><h4>枕の場面設定</h4><p>段落冒頭の「In today's…」「現代の○○では…」を消したか。</p></div></li>
+    <li><div><h4>否定対比</h4><p><code>not just X, but Y</code> / 「単なる○○ではなく」を使っていないか。</p></div></li>
+    <li><div><h4>具体性</h4><p>固有名詞・数字・日付が 1 ページに最低 3 個あるか。</p></div></li>
+    <li><div><h4>リズム</h4><p>文の長さが視覚的に不揃いか（全部 12–18 語になっていないか）。</p></div></li>
+    <li><div><h4>箇条書き</h4><p>本当にリスト構造か。散文に直せないか。</p></div></li>
+    <li><div><h4>末尾の要約</h4><p>本文を繰り返すだけの締めの段落を消したか。</p></div></li>
+    <li><div><h4>太字</h4><p>同じ語を何度も太字にしていないか。</p></div></li>
+    <li><div><h4>立場</h4><p>誰かが反対できる主張が一つはあるか。</p></div></li>
+  </ol>
+
+  <h2>bento の中で守るべきこと、一行で</h2>
+
+  <div class="bento-callout bento-callout--success">
+    <strong>原則の再掲</strong>
+    <p>立場を取る。具体的に書く。リズムを揺らす。<br>
+       残りはこの三つの系。</p>
+  </div>
+
+  <p>
+    語彙リストや禁止表は便利ですが、本物のテストは別にあります。
+    あなたの段落のうち、誰かに反論されうるものはどれですか。
+    一つも無ければ、足りないのは禁止語ではなく主張です
+    （実務的な確認項目は
+    <a class="bento-xref" href="#checklist"></a>
+    にまとまっています）。
+  </p>
+
+  <footer class="bento-footer">
+    <span>bento / writing-style.md の HTML 版</span>
+    <span>2026-05-11</span>
+  </footer>
+
+</main>
+</body>
+</html>

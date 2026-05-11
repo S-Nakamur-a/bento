@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bento feature showcase</title>
+<link rel="stylesheet" href="../assets/bento.css">
+<link rel="stylesheet" href="../assets/themes/editorial.css">
+<link rel="stylesheet" href="../assets/themes/mono.css">
+<link rel="stylesheet" href="../assets/themes/playful.css">
+<script src="../assets/bento.js" defer></script>
+</head>
+<body class="bento">
+<main class="bento-doc">
+
+  <header class="bento-hero">
+    <p><span class="bento-badge bento-badge--primary">REPORT</span> <span class="bento-badge bento-badge--muted">Q2 2026</span></p>
+    <h1>Bento — feature showcase</h1>
+    <p class="bento-lead">AI からのトークン消費を抑えたまま、美しい HTML 出力を実現するためのスキル「bento」のデモドキュメント。本ページに登場するすべての要素は、CDN から配信される単一の <code>bento.css</code> と <code>bento.js</code> によってスタイル付け・描画されている。</p>
+    <div class="bento-hero-meta">
+      <span>Author: AI</span>
+      <span>2026-05-11</span>
+      <span>Reading time: 4 min</span>
+    </div>
+  </header>
+
+  <nav class="bento-toc"></nav>
+
+  <h2>Cards &amp; KPIs</h2>
+  <p>ダッシュボード的な数値ハイライトは <code>.bento-stat</code> と <code>.bento-grid</code> の組み合わせで作れる。</p>
+
+  <div class="bento-grid" data-cols="4">
+    <div class="bento-stat">
+      <span class="bento-stat-label">MRR</span>
+      <span class="bento-stat-value">¥4.2M</span>
+      <span class="bento-stat-trend" data-trend="up">+12.4% MoM</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">Active users</span>
+      <span class="bento-stat-value">12,840</span>
+      <span class="bento-stat-trend" data-trend="up">+3.1%</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">Churn</span>
+      <span class="bento-stat-value">2.1%</span>
+      <span class="bento-stat-trend" data-trend="down">-0.4pt</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">NPS</span>
+      <span class="bento-stat-value">48</span>
+      <span class="bento-stat-trend" data-trend="flat">±0</span>
+    </div>
+  </div>
+
+  <div class="bento-grid" data-cols="3">
+    <div class="bento-card">
+      <h3>調査</h3>
+      <p>ユーザーインタビュー <strong>14 件</strong> を実施。共通課題は「初回設定の手戻り」。</p>
+      <footer>2026-04</footer>
+    </div>
+    <div class="bento-card">
+      <h3>設計</h3>
+      <p>オンボーディングフローを <strong>3 ステップ</strong> に簡素化。検証用プロトを 2 案用意。</p>
+      <footer>2026-04</footer>
+    </div>
+    <div class="bento-card">
+      <h3>実装</h3>
+      <p>A/B テスト基盤に乗せ、全体の 10% に段階展開。完了は来週。</p>
+      <footer>2026-05</footer>
+    </div>
+  </div>
+
+  <h2>Callouts</h2>
+  <p>注意・補足・警告・成功事例などはセマンティックな callout で。</p>
+
+  <div class="bento-callout bento-callout--info">
+    <strong>Info</strong>
+    <p>これは情報を伝えるための callout です。背景色とアイコンが自動でつきます。</p>
+  </div>
+
+  <div class="bento-callout bento-callout--tip">
+    <strong>Tip</strong>
+    <p>本文に対する補足や Tips を強調表示できます。</p>
+  </div>
+
+  <div class="bento-callout bento-callout--success">
+    <strong>Success</strong>
+    <p>成功事例やポジティブな確認事項を緑系で示します。</p>
+  </div>
+
+  <div class="bento-callout bento-callout--warn">
+    <strong>Warning</strong>
+    <p>運用上の注意点を黄系で目立たせます。</p>
+  </div>
+
+  <div class="bento-callout bento-callout--danger">
+    <strong>Danger</strong>
+    <p>致命的な誤りや破壊的操作の警告に。</p>
+  </div>
+
+  <h2>Charts</h2>
+  <p><code>.bento-chart</code> 要素に <code>data-type</code> / <code>data-labels</code> / <code>data-values</code> もしくは <code>data-series</code> を指定するだけで Chart.js が描画する。色はテーマに自動追随。</p>
+
+  <div class="bento-split">
+    <div class="bento-chart"
+         data-type="bar"
+         data-title="月次売上 (M¥)"
+         data-labels='["Jan","Feb","Mar","Apr","May"]'
+         data-values='[3.1, 3.4, 3.6, 3.9, 4.2]'></div>
+
+    <div class="bento-chart"
+         data-type="doughnut"
+         data-title="流入経路"
+         data-labels='["Organic","Paid","Referral","Direct"]'
+         data-values='[42, 21, 18, 19]'></div>
+  </div>
+
+  <div class="bento-chart"
+       data-type="line"
+       data-title="ユーザー数の推移 (k)"
+       data-labels='["W1","W2","W3","W4","W5","W6","W7","W8"]'
+       data-series='[
+         {"label":"Free","values":[8.1,8.4,8.6,9.0,9.2,9.4,9.8,10.1]},
+         {"label":"Pro","values":[2.0,2.1,2.2,2.3,2.4,2.5,2.6,2.74]}
+       ]'></div>
+
+  <h2>Diagrams (mermaid)</h2>
+  <p>Mermaid 構文を <code>.bento-mermaid</code> に入れるだけで描画される。</p>
+
+  <div class="bento-mermaid">
+flowchart LR
+  A[ユーザー要望] --> B{Markdownで足りる？}
+  B -- Yes --> C[Markdown出力]
+  B -- No --> D[bentoスキル発動]
+  D --> E[HTML+CSS+JSで美しく]
+  </div>
+
+  <h2>Steps</h2>
+  <ol class="bento-steps">
+    <li>
+      <div>
+        <h4>要望を聞き取る</h4>
+        <p>どんな成果物が欲しいかを 30 秒で確認する。</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>テンプレートを選ぶ</h4>
+        <p>レポート系か、ランディング系か、表紙＋章立て系か。</p>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h4>セマンティックに書く</h4>
+        <p>クラスは最小限。bento が組版する前提でマークアップする。</p>
+      </div>
+    </li>
+  </ol>
+
+  <h2>Timeline</h2>
+  <ol class="bento-timeline">
+    <li>
+      <time>2026-03</time>
+      <h4>初版リリース</h4>
+      <p>カード／コールアウト／ステップ／タイムラインを実装。</p>
+    </li>
+    <li>
+      <time>2026-04</time>
+      <h4>チャート対応</h4>
+      <p>Chart.js を data-attribute 駆動で統合。</p>
+    </li>
+    <li>
+      <time>2026-05</time>
+      <h4>テーマ追加</h4>
+      <p>editorial / mono / playful の 3 プリセットを同梱。</p>
+    </li>
+  </ol>
+
+  <h2>Compare table</h2>
+  <table class="bento-compare">
+    <thead>
+      <tr>
+        <th>機能</th>
+        <th>Markdown</th>
+        <th>bento</th>
+        <th>HTML 手書き</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>トークン効率</td><td>✓</td><td>✓</td><td>✗</td></tr>
+      <tr><td>表現力（チャート等）</td><td>✗</td><td>✓</td><td>✓</td></tr>
+      <tr><td>テーマ切替</td><td>✗</td><td>✓</td><td>△</td></tr>
+      <tr><td>単一ファイル出力</td><td>✓</td><td>✓</td><td>△</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Code</h2>
+  <p>標準の <code>&lt;pre&gt;&lt;code class="language-…"&gt;</code> で highlight.js が走る。<code>data-filename</code> でファイル名タブが付く。</p>
+
+  <pre data-filename="hello.py"><code class="language-python">def greet(name: str) -> str:
+    """Friendly hello."""
+    return f"hello, {name}!"
+
+print(greet("bento"))</code></pre>
+
+  <h2>Math</h2>
+  <p>インライン数式: \( e^{i\pi} + 1 = 0 \)。ディスプレイ数式:</p>
+  \[ \int_{-\infty}^{\infty} e^{-x^2}\,dx = \sqrt{\pi} \]
+
+  <h2>Collapsibles</h2>
+  <details>
+    <summary>仕組みの詳細を見る</summary>
+    <p>bento.js は DOMContentLoaded 後にページをスキャンし、必要な外部ライブラリだけを CDN から遅延ロードする。たとえば mermaid ブロックがなければ mermaid は取得されない。</p>
+  </details>
+
+  <h2>Theme switcher (demo only)</h2>
+  <p>このページに限り、下のボタンで <code>data-theme</code> をその場で切り替えて確認できる。実際の出力では <code>&lt;body data-theme="..."&gt;</code> を 1 箇所書くだけ。</p>
+  <p>
+    <button class="bento-badge" onclick="document.body.removeAttribute('data-theme')">default</button>
+    <button class="bento-badge bento-badge--primary" onclick="document.body.setAttribute('data-theme','dark')">dark</button>
+    <button class="bento-badge bento-badge--warn" onclick="document.body.setAttribute('data-theme','editorial')">editorial</button>
+    <button class="bento-badge bento-badge--muted" onclick="document.body.setAttribute('data-theme','mono')">mono</button>
+    <button class="bento-badge bento-badge--success" onclick="document.body.setAttribute('data-theme','playful')">playful</button>
+  </p>
+
+  <footer class="bento-footer">
+    <span>Generated with <strong>bento</strong></span>
+    <span>2026-05-11</span>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bento playground — callout designer</title>
+<link rel="stylesheet" href="../assets/bento.css">
+<script src="../assets/bento.js" defer></script>
+<style>
+  #preview-frame {
+    border: 1px dashed var(--bento-border);
+    border-radius: var(--bento-radius);
+    padding: 1.2rem;
+    background: var(--bento-bg);
+    min-height: 9rem;
+    display: flex;
+    align-items: center;
+  }
+  #preview-frame > .bento-callout { width: 100%; margin: 0; }
+  /* When opt-icon is off, hide the ::before icon and stretch contents */
+  #preview-frame .bento-callout[data-no-icon="1"]::before { display: none; }
+  #preview-frame .bento-callout[data-no-icon="1"] > strong,
+  #preview-frame .bento-callout[data-no-icon="1"] > p { grid-column: 1 / -1; }
+  #payload {
+    font-family: var(--bento-font-mono);
+    font-size: 0.85em;
+    background: var(--bento-surface-2);
+    border: 1px solid var(--bento-border);
+    border-radius: var(--bento-radius-sm);
+    padding: 0.8rem 1rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+  }
+</style>
+</head>
+<body class="bento">
+<main class="bento-doc">
+
+  <header class="bento-hero">
+    <p>
+      <span class="bento-badge bento-badge--primary">PLAYGROUND</span>
+      <span class="bento-badge bento-badge--muted">Custom Editing Interface</span>
+    </p>
+    <h1>Callout デザイナー</h1>
+    <p class="bento-lead">
+      左のフォームで bento の <code>.bento-callout</code> をいじり、
+      右で見た目を確認しつつ、最後に「Copy HTML」で出力をクリップボードへ。
+      double-click でこのファイルを開き、好みの形を見つけたら HTML を
+      別のドキュメントに貼り付けてください。
+    </p>
+  </header>
+
+  <div class="bento-sidebar" data-ratio="1:2">
+
+    <!-- ===== Left: form controls ===== -->
+    <form id="form" onsubmit="return false">
+
+      <div class="bento-field">
+        <label for="variant">バリアント</label>
+        <select id="variant">
+          <option value="info">info</option>
+          <option value="note">note</option>
+          <option value="tip" selected>tip</option>
+          <option value="success">success</option>
+          <option value="warn">warn</option>
+          <option value="danger">danger</option>
+        </select>
+      </div>
+
+      <div class="bento-field">
+        <label for="title">タイトル</label>
+        <input id="title" type="text" value="原則">
+        <span class="bento-field-help">空欄にすると <code>&lt;strong&gt;</code> ごと省かれます。</span>
+      </div>
+
+      <div class="bento-field">
+        <label for="body">本文</label>
+        <textarea id="body" rows="3">立場を取る。具体的に書く。リズムを揺らす。</textarea>
+      </div>
+
+      <div class="bento-field">
+        <label for="accent">アクセント色</label>
+        <input id="accent" type="color" value="#2f5fbf">
+        <span class="bento-field-help">プレビュー内の <code>--bento-accent</code> を上書きします。</span>
+      </div>
+
+      <div class="bento-field">
+        <label for="radius">角丸 (<span id="radius-val">10</span>px)</label>
+        <input id="radius" type="range" min="0" max="24" value="10">
+      </div>
+
+      <fieldset>
+        <legend>オプション</legend>
+        <div class="bento-field bento-field--inline">
+          <input id="opt-icon" type="checkbox" checked>
+          <label for="opt-icon">アイコンを表示する</label>
+        </div>
+      </fieldset>
+
+    </form>
+
+    <!-- ===== Right: preview + export ===== -->
+    <div>
+
+      <h3>プレビュー</h3>
+      <div id="preview-frame">
+        <!-- live-built callout goes here -->
+      </div>
+
+      <figure class="bento-illust" aria-hidden="true">
+        <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="22" width="316" height="36" rx="8"
+                fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 6"/>
+          <circle cx="40"  cy="40" r="8" fill="currentColor"/>
+          <circle cx="160" cy="40" r="8" fill="currentColor" opacity="0.55"/>
+          <circle cx="280" cy="40" r="8" fill="currentColor" opacity="0.25"/>
+        </svg>
+        <figcaption>SVG は <code>currentColor</code> で <code>--bento-accent</code> を継承します。</figcaption>
+      </figure>
+
+      <h3>HTML 出力</h3>
+      <pre id="payload"></pre>
+
+      <p>
+        <button type="button"
+                class="bento-btn bento-btn--primary bento-copy"
+                data-copy-from="#payload">
+          Copy HTML
+        </button>
+        <button type="button" class="bento-btn bento-btn--ghost" id="reset">
+          Reset
+        </button>
+      </p>
+
+    </div>
+
+  </div>
+
+  <footer class="bento-footer">
+    <span>bento / Custom Editing Interface 雛形</span>
+    <span>2026-05-11</span>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  const variant   = document.getElementById("variant");
+  const title     = document.getElementById("title");
+  const body      = document.getElementById("body");
+  const accent    = document.getElementById("accent");
+  const radius    = document.getElementById("radius");
+  const radiusVal = document.getElementById("radius-val");
+  const optIcon   = document.getElementById("opt-icon");
+  const frame     = document.getElementById("preview-frame");
+  const payload   = document.getElementById("payload");
+  const reset     = document.getElementById("reset");
+
+  const defaults = {
+    variant: "tip",
+    title:   "原則",
+    body:    "立場を取る。具体的に書く。リズムを揺らす。",
+    accent:  "#2f5fbf",
+    radius:  10,
+    icon:    true,
+  };
+
+  // Build the callout DOM from current state (no innerHTML).
+  function buildCallout(state) {
+    const div = document.createElement("div");
+    div.className = "bento-callout bento-callout--" + state.variant;
+    div.style.setProperty("--bento-accent", state.accent);
+    div.style.borderRadius = "0 " + state.radius + "px " + state.radius + "px 0";
+    if (!state.icon) div.setAttribute("data-no-icon", "1");
+
+    if (state.title) {
+      const strong = document.createElement("strong");
+      strong.textContent = state.title;
+      div.appendChild(strong);
+    }
+    const p = document.createElement("p");
+    const lines = state.body.split("\n");
+    lines.forEach((line, i) => {
+      p.appendChild(document.createTextNode(line));
+      if (i < lines.length - 1) p.appendChild(document.createElement("br"));
+    });
+    div.appendChild(p);
+    return div;
+  }
+
+  // Render the same content as an HTML string for the payload display.
+  // Pre/textContent below means no script can execute even if title/body
+  // contained markup.
+  function serializeCallout(state) {
+    const indent = "  ";
+    const attrs = [
+      'class="bento-callout bento-callout--' + state.variant + '"',
+      'style="--bento-accent: ' + state.accent +
+        '; border-radius: 0 ' + state.radius + 'px ' + state.radius + 'px 0;"',
+    ];
+    if (!state.icon) attrs.push('data-no-icon="1"');
+
+    const parts = ["<div " + attrs.join(" ") + ">"];
+    if (state.title) parts.push(indent + "<strong>" + esc(state.title) + "</strong>");
+    parts.push(indent + "<p>" + esc(state.body).replace(/\n/g, "<br>") + "</p>");
+    parts.push("</div>");
+    return parts.join("\n");
+  }
+
+  function esc(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+    });
+  }
+
+  function readState() {
+    return {
+      variant: variant.value,
+      title:   title.value.trim(),
+      body:    body.value,
+      accent:  accent.value,
+      radius:  radius.value,
+      icon:    optIcon.checked,
+    };
+  }
+
+  function render() {
+    const state = readState();
+    radiusVal.textContent = state.radius;
+
+    while (frame.firstChild) frame.removeChild(frame.firstChild);
+    frame.appendChild(buildCallout(state));
+
+    payload.textContent = serializeCallout(state);
+  }
+
+  ["change", "input"].forEach((evt) => {
+    document.getElementById("form").addEventListener(evt, render);
+  });
+
+  reset.addEventListener("click", () => {
+    variant.value   = defaults.variant;
+    title.value     = defaults.title;
+    body.value      = defaults.body;
+    accent.value    = defaults.accent;
+    radius.value    = defaults.radius;
+    optIcon.checked = defaults.icon;
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
