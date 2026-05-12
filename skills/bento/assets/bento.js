@@ -17,6 +17,7 @@
     katex:   "https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js",
     katexCss:"https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css",
     katexAuto:"https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js",
+    marked:  "https://cdn.jsdelivr.net/npm/marked@13/marked.min.js",
   };
 
   /* ---------- helpers ---------- */
@@ -174,6 +175,27 @@
     }
   }
 
+  // Accepts either JSON (`["A","B"]` / `[10,20]`) or comma-separated
+  // values (`A,B` / `10,20`). Numeric strings are coerced to numbers.
+  function parseListAttr(el, attr, fallback) {
+    const raw = el.getAttribute(attr);
+    if (!raw) return fallback;
+    const trimmed = raw.trim();
+    if (trimmed.startsWith("[") || trimmed.startsWith("{")) {
+      try { return JSON.parse(trimmed); }
+      catch (e) {
+        console.warn(`bento: invalid JSON in ${attr}`, raw);
+        return fallback;
+      }
+    }
+    return trimmed.split(",").map((s) => {
+      const t = s.trim();
+      if (t === "") return t;
+      const n = Number(t);
+      return Number.isNaN(n) ? t : n;
+    });
+  }
+
   async function initCharts(nodes) {
     if (!nodes.length) return;
     await loadScript(CDN.chart);
@@ -187,8 +209,8 @@
 
     for (const el of nodes) {
       const type = el.dataset.type || "bar";
-      const labels = parseJSONAttr(el, "data-labels", []);
-      const values = parseJSONAttr(el, "data-values", null);
+      const labels = parseListAttr(el, "data-labels", []);
+      const values = parseListAttr(el, "data-values", null);
       const series = parseJSONAttr(el, "data-series", null);
       const title = el.dataset.title || "";
 
@@ -433,10 +455,71 @@
     });
   }
 
+  /* ---------- Markdown islands ---------- */
+
+  // Trim outer blank lines, then strip the common leading indent shared by
+  // every non-empty line. Lets the markdown source live indented inside
+  // <section data-md> ... </section> without breaking code blocks (relative
+  // indentation is preserved).
+  function unindent(s) {
+    const trimmed = s.replace(/^\n+/, "").replace(/\s+$/, "");
+    const lines = trimmed.split("\n");
+    let min = Infinity;
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      const m = line.match(/^(\s*)/);
+      if (m) min = Math.min(min, m[1].length);
+    }
+    if (!isFinite(min) || min === 0) return lines.join("\n");
+    return lines.map((l) => l.slice(min)).join("\n");
+  }
+
+  // Parses an HTML string via DOMParser and replaces the target element's
+  // children with the parsed result. Strips <script> elements and inline
+  // on* event-handler attributes as defense-in-depth (the markdown source
+  // is AI-authored, but a prompt-injected document shouldn't run scripts).
+  function replaceWithHTML(el, htmlString) {
+    const doc = new DOMParser().parseFromString(htmlString, "text/html");
+    doc.body.querySelectorAll("script").forEach((s) => s.remove());
+    doc.body.querySelectorAll("*").forEach((node) => {
+      for (const attr of Array.from(node.attributes)) {
+        if (attr.name.toLowerCase().startsWith("on")) node.removeAttribute(attr.name);
+      }
+    });
+    while (el.firstChild) el.removeChild(el.firstChild);
+    while (doc.body.firstChild) el.appendChild(doc.body.firstChild);
+  }
+
+  // Renders any [data-md] element's textContent as markdown, replacing
+  // its contents with the resulting HTML. Awaited at the top of boot so
+  // headings / charts / mermaid inside the rendered output get picked up
+  // by the rest of the pipeline.
+  async function initMarkdown(nodes) {
+    if (!nodes.length) return;
+    await loadScript(CDN.marked);
+    const marked = window.marked;
+    if (!marked) return;
+    if (marked.use) marked.use({ gfm: true, breaks: false });
+    for (const el of nodes) {
+      el.setAttribute("data-md-built", "1");
+      const src = unindent(el.textContent);
+      try {
+        replaceWithHTML(el, marked.parse(src));
+      } catch (e) {
+        showError(el, "markdown: " + (e.message || String(e)));
+      }
+    }
+  }
+
   /* ---------- boot ---------- */
 
-  function boot() {
+  async function boot() {
     const root = document.querySelector(".bento") || document.body;
+
+    // Markdown islands first: their rendered output may add headings,
+    // charts, mermaid, code blocks that downstream steps need to see.
+    await initMarkdown(Array.from(root.querySelectorAll("[data-md]:not([data-md-built])")));
+
     ensureHeadingIds(root);
 
     root.querySelectorAll("nav.bento-toc:empty, nav.bento-toc:not([data-built])").forEach((el) => {

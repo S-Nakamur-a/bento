@@ -1,26 +1,34 @@
 ---
 name: bento
-description: Token-efficient beautiful HTML document generation. Use this skill when the user asks for output as a "pretty document", "rich HTML", "美しいドキュメント", "HTMLレポート", "見栄えの良い資料", a shareable report/landing, or when Markdown's expressive limits become a blocker (complex diagrams, charts, comparison cards, callouts). Produces a single self-contained .html file that loads a pre-built CSS/JS framework from CDN — AI only emits minimal semantic HTML, all visual polish comes from the framework.
+description: HTML output for documents a human will read carefully — not skim once and discard. Trigger on "pretty document", "rich HTML", "美しいドキュメント", "HTMLレポート", "見栄えの良い資料", "shareable report", "briefing", "design spec", or any output the reader will sit with, return to, share, or print. Produces a single self-contained .html file; visual polish (typography, callouts, charts, mermaid, math, code highlight) comes from a CDN-hosted CSS/JS framework so the AI can focus on prose quality and structure. Accepts a deliberate token premium over plain Markdown in exchange for reading-quality Markdown can't reach.
 ---
 
-# bento — beautifully compartmentalized HTML output
+# bento — HTML for documents humans actually read
 
-This skill lets you produce **rich, beautifully styled HTML documents** while emitting only a thin layer of semantic markup. All visual heavy-lifting (typography, layout, callouts, charts, mermaid, math, code highlight) lives in a CDN-hosted CSS/JS framework. You reference it with two `<link>` / `<script>` tags and write near-vanilla HTML.
+Some outputs are conversational and ephemeral — a quick Markdown reply is the right tool. Others deserve more: a human is going to sit with the document, return to it, share it, perhaps print it. **bento is for those.**
+
+The visual layer (typography, layout, callouts, charts, mermaid, math, code highlight) lives in a CDN-hosted CSS/JS framework. You write near-vanilla semantic HTML; the framework dresses the page so your sentences can carry the substance.
+
+This costs some tokens over plain Markdown. Pay them deliberately — when the reader's time and attention are worth more than the output's tokens. When they aren't, skip the skill (see "Do NOT use" below).
 
 ## When to use
 
-Use bento when ANY of the following apply:
+Use bento when the reader is a **human** and will read the document **carefully** — not skim once and forget. Concrete triggers:
 
-- The user wants a polished report, summary, or landing-page-style output
-- The content has charts, comparison tables, callouts, multi-column layout, or progress indicators
-- Markdown/mermaid alone would be visually flat or awkward
-- The user asks for an "HTML version", "shareable doc", or "資料"
+- The output will be shared with others (team, stakeholders, customer)
+- The reader will return to it (briefings, design specs, reference docs, runbooks)
+- The doc will be printed or persisted, not just scrolled past
+- The content needs structure beyond Markdown's reach (charts, comparison tables, callouts, KPI tiles, multi-column layout, mermaid diagrams)
+- The user explicitly asks for "polished", "shareable", "HTMLレポート", "美しいドキュメント", "資料", or similar
 
 Do NOT use bento when:
 
-- The user explicitly wants Markdown / plain text / a code file
-- The output will be consumed by another LLM (HTML wastes tokens vs Markdown there)
-- It's a short reply that doesn't need styling
+- The output will be consumed by another LLM — HTML markup is pure overhead for an LLM reader; the skill load is also wasted
+- The reply is conversational or ephemeral — the reader will read once, ack, and move on
+- The user explicitly wants Markdown, plain text, or a code file
+- It's a short factual answer that doesn't reward visual structure
+
+The trade-off is deliberate: bento costs more tokens than Markdown. Make sure the document earns those tokens by being something a human will actually invest reading time in.
 
 ## How to produce output
 
@@ -29,7 +37,7 @@ Do NOT use bento when:
 3. **Use the skeleton below verbatim** as the first lines, then write your content inside `<main class="bento-doc">`.
 4. **Compose using bento classes** (see catalogue). Don't invent new class names; if you need something not covered, use plain semantic HTML — the framework styles `h1-h6`, `p`, `ul`, `ol`, `blockquote`, `table`, `code`, `pre`, `figure` etc. out of the box.
 5. **Don't inline raw CSS unless customizing the theme.** A single `<style>` block at top is fine for overrides; never restyle from scratch.
-6. **Token discipline**: prefer semantic HTML over class soup. The framework targets element selectors first, classes second.
+6. **Mindful with markup, but never at the reader's expense.** Use the shortest equivalent form when it costs nothing in clarity: semantic-attribute callouts `<aside data-tone>`, modifier-only badge classes, bare `<article>` inside `.bento-grid` as a card, compact `data-labels="A,B,C"` for charts, `<section data-md>` for prose-heavy regions. See `token.md` for the catalogue — but if the longer form reads better in source, write it. Token savings are a side benefit, not the goal.
 7. **Write like a human, not like ChatGPT.** Before drafting any prose, read `writing-style.md` in this directory — beautiful HTML around AI-sounding prose still reads as an AI artifact. The framework dresses the page; your sentences carry the credibility.
 8. **Design for skimmers, not readers.** Roughly 70% of readers skim; the first 5–7 seconds decide whether they invest more. Open with the bottom line, use `<h2>` headings as a text-shaped TOC, and put one visual element (callout / card grid / stat row / chart / compare table) near the top of every section. Read `readability.md` for the document-level discipline (paragraph length, component choice by shape, the self-check before you stop).
 
@@ -40,20 +48,18 @@ Replace `@main` with a pinned version tag (e.g. `@v0.1.0`) once the user release
 ```html
 <!doctype html>
 <html lang="ja">
-<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>YOUR TITLE</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/bento.css">
 <script src="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/bento.js" defer></script>
-</head>
-<body class="bento" data-theme="default">
-<main class="bento-doc">
+<body class="bento">
+<main>
 <!-- content -->
 </main>
-</body>
-</html>
 ```
+
+HTML5 lets you omit `<head>`, the `</body>`/`</html>` closers, and quote-less attributes; the framework also accepts a bare `<main>` (no `class="bento-doc"`) directly inside `<body class="bento">`. Both shortcuts are pure savings — don't write the longer form unless you need a specific behavior.
 
 ### Component catalogue
 
@@ -72,15 +78,16 @@ See `assets/bento.css` for full reference; below are the most useful classes.
 - Related block: `<aside class="bento-related"><strong>Related</strong><ul><li><a href="#a">…</a></li>…</ul></aside>` — compact sidebar listing related sections.
   Shortcut form: `<aside class="bento-related" data-refs="#a, #b"></aside>` (also accepts `data-title="関連する章"` to set the heading). The link list is built at runtime from the target headings' text. Use this at the end of a section to point readers to related ones.
 
-**Cards & callouts**
-- `.bento-card` — soft-shadowed card. Children: `<h3>`, `<p>`, optional `<footer>`.
-- `.bento-callout` with modifier: `bento-callout--info|--warn|--danger|--success|--tip|--note`. Children: optional `<strong>` title + `<p>`.
-- `.bento-stat` — KPI tile: `<div class="bento-stat"><span class="bento-stat-value">42</span><span class="bento-stat-label">…</span></div>`. Combine with `.bento-grid` for dashboards.
-- `.bento-badge` — inline label. Modifiers `--primary|--success|--warn|--danger|--muted`.
+**Cards & callouts** — three equivalent forms per component, listed shortest first. Prefer the shortest one that's clear.
+- **Card**: bare `<article>…</article>` inside `.bento-grid` *(shortest)* · `<div class="bento-card">…</div>` *(explicit)*. Children: `<h3>`, `<p>`, optional `<footer>`.
+- **Callout**: `<aside data-tone="info">…</aside>` *(shortest)* · `<div class="bento-callout--info">…</div>` *(modifier alone)* · `<div class="bento-callout bento-callout--info">…</div>` *(BEM)*. Tones: `info|note|tip|success|warn|danger`. Children: optional `<strong>` title + `<p>`.
+- **Stat**: `<div class="bento-stat"><span class="bento-stat-value">42</span><span class="bento-stat-label">…</span></div>`. Combine with `.bento-grid` for dashboards.
+- **Badge**: `<span data-tone="primary">…</span>` *(shortest)* · `<span class="bento-badge--primary">…</span>` *(modifier alone)*. Tones: `primary|success|warn|danger|muted`.
 
 **Rich content (data-attribute driven)**
+- **Markdown island** *(highest-leverage shortcut)*: `<section data-md>…markdown…</section>` — anything inside renders as Markdown at load time. Use for prose-heavy regions (paragraphs, lists, headings, inline code) where Markdown is far denser than HTML. Visual elements (`.bento-chart`, callouts, mermaid) still need raw HTML; just embed them inside the island. Leading whitespace common to every line is auto-stripped, so the source can stay readably indented.
 - **Mermaid**: `<div class="bento-mermaid">graph TD; A-->B</div>` — JS auto-renders. No need to load mermaid yourself.
-- **Charts**: `<div class="bento-chart" data-type="bar" data-labels='["A","B","C"]' data-values='[10,20,30]'></div>`. Types: `bar`, `line`, `doughnut`, `radar`. For multi-series use `data-series='[{"label":"2024","values":[…]},…]'`. JSON in `data-*` must be valid JSON (double quotes).
+- **Charts**: `<div class="bento-chart" data-type="bar" data-labels="A,B,C" data-values="10,20,30"></div>`. Types: `bar`, `line`, `doughnut`, `radar`. `data-labels` / `data-values` accept comma-separated values (shortest) or JSON arrays. For multi-series use `data-series='[{"label":"2024","values":[…]},…]'` (JSON only). `data-type="bar"` is the default — drop it for bars.
 - **Math (KaTeX)**: inline `\(…\)`, block `\[…\]`. Auto-rendered.
 - **Code**: standard `<pre><code class="language-python">…</code></pre>` — highlight.js auto-loads. Add `data-filename="app.py"` on `<pre>` to show a filename strip.
 - **Collapsible**: native `<details><summary>…</summary>…</details>` is styled.
@@ -89,7 +96,7 @@ See `assets/bento.css` for full reference; below are the most useful classes.
 - **Compare table**: `<table class="bento-compare"><thead>…</thead>…</table>` — adds checkmark/cross styling for `✓` and `✗` cell contents.
 
 **Interactive controls** — for two-way docs (forms, palettes, throwaway editors).
-- **Buttons**: opt-in via `.bento-btn` on `<button>` or `<a>`. Modifiers `--primary|--danger|--ghost`, sizes `--sm|--lg`. Raw `<button>` is left alone (so the older `<button class="bento-badge">` pattern still works).
+- **Buttons**: three equivalent opt-in forms — `<button data-variant="primary">…</button>` *(shortest)* · `<button class="bento-btn--primary">…</button>` *(modifier alone)* · `<button class="bento-btn bento-btn--primary">…</button>` *(BEM)*. Variants: `primary|danger|ghost`. Sizes via `data-size="sm"` / `"lg"` (or `bento-btn--sm` / `--lg`). Raw `<button>` without `data-variant` or `.bento-btn` is intentionally left unstyled.
 - **Form controls**: `<input>` (text/email/password/search/url/tel/number/date/time/range/color/checkbox/radio), `<select>`, `<textarea>`, `<label>`, `<fieldset>`/`<legend>` are styled out of the box — no class needed. Focus ring, invalid state, and `accent-color` follow the theme.
 - **Field group**: wrap label + control with `<div class="bento-field"><label>…</label><input>…</div>`. Add `<span class="bento-field-help">…</span>` for hint text. Modifier `bento-field--inline` puts them on one row.
 - **SVG illustration**: wrap an inline `<svg>` in `<figure class="bento-illust">…</figure>` (or apply `class="bento-illust"` directly on `<svg>`). The element's `color` is set to `--bento-accent`, so any path drawn with `stroke="currentColor"` / `fill="currentColor"` follows the theme.
@@ -203,16 +210,19 @@ The full variable list lives in `assets/bento.css` at the top under `:where(.ben
 
 - `templates/starter.html` — minimal blank document
 - `examples/report.html` — full feature showcase (cards, charts, mermaid, etc.). Read this first if you want to see real usage of every component.
+- `examples/compact-forms.html` — every token-efficient shortcut applied: `<aside data-tone>` callouts, `<span data-tone>` badges, `<button data-variant>` buttons, bare `<article>` cards, comma-separated chart data, `<section data-md>` markdown island. Read this when optimizing for token cost.
 - `examples/playground.html` — Custom Editing Interface demo: sidebar layout, form controls, SVG preview, and a copy-as-JSON export button.
 - `examples/writing-style.html` — long-form report that exercises cross-references (`.bento-xref`, `.bento-related`) end to end.
 - `writing-style.md` — sentence-level discipline. Read before drafting prose. Lists AI-tells (em-dashes, "delve", rule-of-three, hedging participles, "not just X but Y", and the Japanese equivalents) plus a final self-check.
 - `readability.md` — document-level discipline. Pyramid Principle / BLUF, paragraph design, heading hierarchy, component choice by shape (paragraph vs `<ul>` vs `.bento-card` grid vs `.bento-compare` vs callout), density targets, and a 5-minute structural self-check.
+- `token.md` — cost-level discipline. Where bento spends extra tokens, the shortcut catalogue (compact forms, `<section data-md>` markdown islands, when to skip bento entirely), and a 1-minute self-check before emitting HTML.
 
 ## Operating principles
 
-- **One file, fully self-contained** — output is a single `.html` the user can double-click. No build step.
-- **Semantic-first** — pick the right HTML element before reaching for a class.
+- **Reader-first, not token-first.** bento exists for documents a human will read carefully. Token efficiency matters only when it doesn't damage that. If the two conflict, pick reading quality.
+- **Commit, be specific, vary.** The visual framework can carry weak prose only so far. See `writing-style.md` for sentence-level discipline.
+- **Skimmer-first structure.** Bottom line up top, signpost headings, one visual element per section. See `readability.md` for document-level rules.
+- **One file, fully self-contained** — output is a single `.html` the user can double-click, share, or print. No build step.
+- **Semantic-first** — pick the right HTML element before reaching for a class. The framework auto-styles `<p>`, `<h1>`–`<h6>`, `<ul>`, `<ol>`, `<table>`, `<blockquote>`, `<details>`, native form controls; many components also have semantic-attribute shortcuts (`<aside data-tone>`, `<span data-tone>`, `<button data-variant>`, bare `<article>` in `.bento-grid`).
 - **Don't restyle**, customize via CSS variables only.
-- **Keep markup terse** — that's the whole point. If a generated section feels verbose, look for a class that already does it.
-- **Commit, be specific, vary.** The visual framework can carry weak prose only so far. See `writing-style.md` for the discipline.
-- **Skimmer-first structure.** Bottom line up top, signpost headings, one visual element per section. See `readability.md` for the document-level rules.
+- **Mindful with markup.** Use the shortest equivalent form when it costs nothing in clarity. See `token.md` for the trade-offs and when not to use bento at all — but the shortcuts serve the reader, not vice versa.

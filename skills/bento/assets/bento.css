@@ -111,14 +111,18 @@
 
 /* ---------- Document column ---------- */
 
-.bento-doc {
+/* Either `<main class="bento-doc">` (explicit) or `<main>` directly inside
+   `<body class="bento">` (token-efficient shortcut) gets the reading column. */
+.bento-doc,
+.bento > main {
   max-width: var(--bento-max-width);
   margin: 0 auto;
   padding: 4rem 1.5rem 6rem;
 }
 
 @media (max-width: 640px) {
-  .bento-doc { padding: 2rem 1rem 4rem; }
+  .bento-doc,
+  .bento > main { padding: 2rem 1rem 4rem; }
 }
 
 /* ---------- Typography ---------- */
@@ -240,7 +244,11 @@
 
 /* ---------- Cards ---------- */
 
-.bento-card {
+/* `.bento-card` is the explicit form. As a token-efficient shortcut, a bare
+   `<article>` inside `.bento-grid` is also styled as a card.
+   `<section>` is intentionally excluded so `<section data-md>` markdown islands
+   can live inside grids without inheriting card styling. */
+:is(.bento-card, .bento-grid > article) {
   background: var(--bento-surface);
   border: 1px solid var(--bento-border);
   border-radius: var(--bento-radius);
@@ -250,10 +258,10 @@
   flex-direction: column;
   gap: 0.5rem;
 }
-.bento-card > :first-child { margin-top: 0; }
-.bento-card > :last-child { margin-bottom: 0; }
-.bento-card h3, .bento-card h4 { margin: 0; }
-.bento-card > footer {
+:is(.bento-card, .bento-grid > article) > :first-child { margin-top: 0; }
+:is(.bento-card, .bento-grid > article) > :last-child { margin-bottom: 0; }
+:is(.bento-card, .bento-grid > article) :is(h3, h4) { margin: 0; }
+:is(.bento-card, .bento-grid > article) > footer {
   margin-top: auto;
   padding-top: 0.6rem;
   border-top: 1px solid var(--bento-border);
@@ -263,7 +271,17 @@
 
 /* ---------- Callouts ---------- */
 
-.bento-callout {
+/* Any of the following is rendered as a callout:
+   - <div class="bento-callout"> + modifier (explicit, original BEM form)
+   - <div class="bento-callout--info"> (modifier alone — base styles included)
+   - <aside data-tone="info"> inside .bento (semantic, shortest form)
+*/
+:is(
+  .bento-callout,
+  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
+  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
+  .bento aside[data-tone]
+) {
   --c: var(--bento-info);
   border-left: 4px solid var(--c);
   background: color-mix(in srgb, var(--c) 8%, var(--bento-surface));
@@ -275,7 +293,12 @@
   gap: 0.2rem 0.8rem;
   align-items: start;
 }
-.bento-callout::before {
+:is(
+  .bento-callout,
+  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
+  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
+  .bento aside[data-tone]
+)::before {
   content: "i";
   display: inline-grid;
   place-items: center;
@@ -289,22 +312,32 @@
   font-family: var(--bento-font-serif);
   grid-row: span 2;
 }
-.bento-callout > strong { color: var(--c); display: block; }
-.bento-callout > p { margin: 0; grid-column: 2; }
-.bento-callout > strong + p { grid-column: 2; }
+:is(
+  .bento-callout,
+  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
+  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
+  .bento aside[data-tone]
+) > strong { color: var(--c); display: block; }
+:is(
+  .bento-callout,
+  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
+  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
+  .bento aside[data-tone]
+) > p { margin: 0; grid-column: 2; }
 
-.bento-callout--info    { --c: var(--bento-info); }
-.bento-callout--info::before { content: "i"; }
-.bento-callout--note    { --c: var(--bento-muted); }
-.bento-callout--note::before { content: "·"; }
-.bento-callout--tip     { --c: var(--bento-tip); }
-.bento-callout--tip::before { content: "✦"; font-family: var(--bento-font-sans); }
-.bento-callout--success { --c: var(--bento-success); }
-.bento-callout--success::before { content: "✓"; font-family: var(--bento-font-sans); }
-.bento-callout--warn    { --c: var(--bento-warn); }
-.bento-callout--warn::before { content: "!"; }
-.bento-callout--danger  { --c: var(--bento-danger); }
-.bento-callout--danger::before { content: "✕"; font-family: var(--bento-font-sans); }
+/* Tone variants — class form OR data-tone attribute. */
+.bento-callout--info,    .bento aside[data-tone="info"]    { --c: var(--bento-info); }
+.bento-callout--info::before,    .bento aside[data-tone="info"]::before    { content: "i"; }
+.bento-callout--note,    .bento aside[data-tone="note"]    { --c: var(--bento-muted); }
+.bento-callout--note::before,    .bento aside[data-tone="note"]::before    { content: "·"; }
+.bento-callout--tip,     .bento aside[data-tone="tip"]     { --c: var(--bento-tip); }
+.bento-callout--tip::before,     .bento aside[data-tone="tip"]::before     { content: "✦"; font-family: var(--bento-font-sans); }
+.bento-callout--success, .bento aside[data-tone="success"] { --c: var(--bento-success); }
+.bento-callout--success::before, .bento aside[data-tone="success"]::before { content: "✓"; font-family: var(--bento-font-sans); }
+.bento-callout--warn,    .bento aside[data-tone="warn"]    { --c: var(--bento-warn); }
+.bento-callout--warn::before,    .bento aside[data-tone="warn"]::before    { content: "!"; }
+.bento-callout--danger,  .bento aside[data-tone="danger"]  { --c: var(--bento-danger); }
+.bento-callout--danger::before,  .bento aside[data-tone="danger"]::before  { content: "✕"; font-family: var(--bento-font-sans); }
 
 /* ---------- Stats / KPI ---------- */
 
@@ -344,7 +377,16 @@
 
 /* ---------- Badges ---------- */
 
-.bento-badge {
+/* Three equivalent forms:
+   - <span class="bento-badge bento-badge--primary"> (explicit BEM)
+   - <span class="bento-badge--primary"> (modifier alone)
+   - <span data-tone="primary"> inside .bento (semantic, shortest)
+*/
+:is(
+  .bento-badge,
+  .bento-badge--primary, .bento-badge--success, .bento-badge--warn, .bento-badge--danger, .bento-badge--muted,
+  .bento span[data-tone]
+) {
   display: inline-block;
   padding: 0.15em 0.6em;
   font-size: 0.78em;
@@ -356,17 +398,25 @@
   line-height: 1.5;
   vertical-align: 0.1em;
 }
-.bento-badge--primary { background: var(--bento-accent-soft); color: var(--bento-accent); border-color: transparent; }
-.bento-badge--success { background: color-mix(in srgb, var(--bento-success) 12%, transparent); color: var(--bento-success); border-color: transparent; }
-.bento-badge--warn    { background: color-mix(in srgb, var(--bento-warn) 12%, transparent); color: var(--bento-warn); border-color: transparent; }
-.bento-badge--danger  { background: color-mix(in srgb, var(--bento-danger) 12%, transparent); color: var(--bento-danger); border-color: transparent; }
-.bento-badge--muted   { background: var(--bento-surface-2); color: var(--bento-muted); }
+.bento-badge--primary, .bento span[data-tone="primary"] { background: var(--bento-accent-soft); color: var(--bento-accent); border-color: transparent; }
+.bento-badge--success, .bento span[data-tone="success"] { background: color-mix(in srgb, var(--bento-success) 12%, transparent); color: var(--bento-success); border-color: transparent; }
+.bento-badge--warn,    .bento span[data-tone="warn"]    { background: color-mix(in srgb, var(--bento-warn) 12%, transparent); color: var(--bento-warn); border-color: transparent; }
+.bento-badge--danger,  .bento span[data-tone="danger"]  { background: color-mix(in srgb, var(--bento-danger) 12%, transparent); color: var(--bento-danger); border-color: transparent; }
+.bento-badge--muted,   .bento span[data-tone="muted"]   { background: var(--bento-surface-2); color: var(--bento-muted); }
 
 /* ---------- Buttons ---------- */
 
-/* Opt-in: add .bento-btn to a <button> or <a>. Raw <button> is left
-   alone so existing <button class="bento-badge"> usage keeps working. */
-.bento .bento-btn {
+/* Three equivalent opt-in forms (raw `<button>` is intentionally left alone):
+   - <button class="bento-btn bento-btn--primary"> (explicit BEM)
+   - <button class="bento-btn--primary"> (modifier alone)
+   - <button data-variant="primary"> inside .bento (semantic, shortest)
+   Same applies to <a>. */
+.bento :is(
+  .bento-btn,
+  .bento-btn--primary, .bento-btn--danger, .bento-btn--ghost,
+  .bento-btn--sm, .bento-btn--lg,
+  button[data-variant], a[data-variant]
+) {
   -webkit-appearance: none;
   appearance: none;
   display: inline-flex;
@@ -386,51 +436,53 @@
   text-decoration: none;
   transition: background .12s, border-color .12s, color .12s, transform .05s;
 }
-.bento a.bento-btn { border-bottom: 1px solid var(--bento-border); }
-.bento .bento-btn:hover {
+.bento :is(a.bento-btn, a[data-variant]) { border-bottom: 1px solid var(--bento-border); }
+.bento :is(.bento-btn, .bento-btn--primary, .bento-btn--danger, .bento-btn--ghost, button[data-variant], a[data-variant]):hover {
   background: var(--bento-surface-2);
   border-color: var(--bento-border-strong);
 }
-.bento .bento-btn:active { transform: translateY(1px); }
-.bento .bento-btn:disabled,
-.bento .bento-btn[aria-disabled="true"] {
+.bento :is(.bento-btn, button[data-variant], a[data-variant]):active { transform: translateY(1px); }
+.bento :is(.bento-btn, button[data-variant], a[data-variant]):disabled,
+.bento :is(.bento-btn, button[data-variant], a[data-variant])[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.bento .bento-btn--primary {
+.bento :is(.bento-btn--primary, button[data-variant="primary"], a[data-variant="primary"]) {
   background: var(--bento-accent);
   border-color: var(--bento-accent);
   color: #fff;
 }
-.bento .bento-btn--primary:hover {
+.bento :is(.bento-btn--primary, button[data-variant="primary"], a[data-variant="primary"]):hover {
   background: color-mix(in srgb, var(--bento-accent) 88%, #000);
   border-color: color-mix(in srgb, var(--bento-accent) 88%, #000);
 }
-.bento .bento-btn--danger {
+.bento :is(.bento-btn--danger, button[data-variant="danger"], a[data-variant="danger"]) {
   background: var(--bento-danger);
   border-color: var(--bento-danger);
   color: #fff;
 }
-.bento .bento-btn--ghost {
+.bento :is(.bento-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]) {
   background: transparent;
   border-color: transparent;
 }
-.bento .bento-btn--ghost:hover {
+.bento :is(.bento-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]):hover {
   background: var(--bento-surface-2);
   border-color: var(--bento-border);
 }
-.bento .bento-btn--sm { padding: 0.32em 0.75em; font-size: var(--bento-fs-xs); }
-.bento .bento-btn--lg { padding: 0.75em 1.5em; font-size: 1rem; }
+.bento .bento-btn--sm,
+.bento :is(button, a)[data-variant][data-size="sm"] { padding: 0.32em 0.75em; font-size: var(--bento-fs-xs); }
+.bento .bento-btn--lg,
+.bento :is(button, a)[data-variant][data-size="lg"] { padding: 0.75em 1.5em; font-size: 1rem; }
 
 /* Copy feedback on .bento-copy buttons after a successful clipboard write. */
-.bento .bento-btn[data-copied="1"]::after {
+.bento :is(.bento-btn, button[data-variant])[data-copied="1"]::after {
   content: "✓";
   color: var(--bento-success);
   margin-left: 0.3em;
 }
-.bento .bento-btn[data-copied="fail"]::after {
+.bento :is(.bento-btn, button[data-variant])[data-copied="fail"]::after {
   content: "✕";
   color: var(--bento-danger);
   margin-left: 0.3em;

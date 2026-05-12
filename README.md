@@ -1,11 +1,14 @@
 # bento
 
-> **Beautifully compartmentalized HTML output for Claude Code.**
-> AI writes minimal semantic HTML; a pre-built CSS/JS framework — loaded from CDN — does all the visual polish.
+> **HTML output for documents humans will read carefully.**
+> Some outputs are conversational and ephemeral — Markdown is the right tool for those.
+> Others deserve typographic care, structure, charts, callouts — content the reader is going to sit with, return to, share, or print. **bento is for those.**
 
-The motivation: Markdown is the de-facto for AI ↔ human document conversation because it's readable and cheap in tokens, but it tops out fast on charts, comparison cards, hero layouts, etc. HTML+CSS+JS handles all of that, yet writing it inline burns a lot of tokens. **bento** flips this: the AI emits ~Markdown-sized HTML using a small class vocabulary, and the heavy assets live in this repo and are served via jsDelivr.
+bento accepts a deliberate token premium over plain Markdown in exchange for what Markdown can't give: consistent typography, structured visual components (charts, callouts, comparison tables, KPI tiles, mermaid diagrams), responsive multi-column layouts, and a reading rhythm that holds up in a browser, in print, and across rereads. The AI writes near-vanilla semantic HTML using a small class vocabulary; all visual heavy-lifting lives in a CDN-hosted CSS/JS framework loaded with two tags.
 
 Like a real bento, each compartment is neatly framed and the whole tray composes into something that looks intentional, not improvised.
+
+**When to use, when not to use** — see `skills/bento/SKILL.md`. The short version: use bento when a human will read the document carefully; use Markdown when the reader will skim once, or when the consumer is another LLM.
 
 ## Repository layout
 
@@ -16,14 +19,16 @@ bento/
 │   ├── SKILL.md           # the instruction Claude reads
 │   ├── writing-style.md   # prose discipline: AI-tells to avoid (EN + JA)
 │   ├── readability.md     # document discipline: structure, hierarchy, component choice
+│   ├── token.md           # cost discipline: shortcut catalogue, when to skip bento
 │   ├── assets/
 │   │   ├── bento.css      # core framework (typography, cards, callouts, stats, ...)
-│   │   ├── bento.js       # lazy-loads mermaid / chart.js / highlight.js / katex
+│   │   ├── bento.js       # lazy-loads marked / mermaid / chart.js / highlight.js / katex
 │   │   └── themes/        # editorial / mono / playful (dark lives inside bento.css)
 │   ├── templates/
 │   │   └── starter.html
 │   └── examples/
 │       ├── report.html         # full feature showcase — open this first
+│       ├── compact-forms.html  # every token-efficient shortcut in one document
 │       ├── writing-style.html  # cross-references (xref / related) in action
 │       └── playground.html     # Custom Editing Interface: form + sidebar + copy
 └── README.md
@@ -131,15 +136,27 @@ Full token list at the top of `skills/bento/assets/bento.css`.
 
 See `skills/bento/SKILL.md` for the full reference Claude uses, and `skills/bento/examples/report.html` for live examples of everything.
 
-## Token math
+## The token trade-off
 
-A typical Markdown report ≈ N tokens. The same report rendered through bento:
+bento is not free. Compared to plain Markdown:
 
-- HTML skeleton (head + body wrappers + `<link>` + `<script>`): ~70 tokens, one-time per document
-- Per-component overhead: 0–8 tokens (mostly `<div class="bento-…">` vs `<p>`)
-- All visual definitions: **0 tokens** (in CDN-cached external files)
+- The skill itself costs tokens to load (one-time per session; cached on subsequent turns)
+- Each document carries a skeleton (doctype, framework `<link>`/`<script>`, body wrappers)
+- Each visual component carries some shell markup
+- All visual definitions live in CDN-cached files (**0 output tokens**)
 
-In practice the AI emits roughly the same number of tokens as a Markdown version while producing a fully styled, charted, navigable HTML document.
+That premium buys typography, structured visuals, responsive layout, and reading rhythm Markdown can't give. The trade is worth it **when a human will read carefully** — and only then. For ephemeral or LLM-bound output, plain Markdown is the right call; see `skills/bento/SKILL.md` for the when-to-use list.
+
+For the documents that do earn the tokens, the framework keeps the markup tax small with a few shortcuts:
+
+- **Markdown islands**: `<section data-md>…markdown…</section>` lets you write prose-heavy regions as plain Markdown
+- **Semantic-attribute components**: `<aside data-tone="info">`, `<span data-tone="primary">`, `<button data-variant="primary">` replace the longer BEM classes
+- **Bare `<article>`** inside `.bento-grid` is styled as a card
+- **Compact chart data**: `data-labels="A,B,C"` works alongside JSON arrays
+- **Modifier-only classes**: `bento-callout--info` works without also writing `bento-callout`
+- **Bare `<main>`** directly inside `<body class="bento">` (no need for `class="bento-doc"`)
+
+See `skills/bento/token.md` for the full catalogue, the dial-down hierarchy, and (most importantly) when to skip bento entirely. Token savings serve the reader; they are not the goal.
 
 ## License
 

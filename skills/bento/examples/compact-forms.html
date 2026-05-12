@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bento — compact forms showcase</title>
+<link rel="stylesheet" href="../assets/bento.css">
+<script src="../assets/bento.js" defer></script>
+<body class="bento">
+<main>
+
+<header class="bento-hero">
+  <p><span data-tone="primary">SHOWCASE</span> <span data-tone="muted">v0.2</span></p>
+  <h1>Compact forms</h1>
+  <p class="bento-lead">Every component below is written in its shortest equivalent form. Compare with <code>examples/report.html</code> to see the BEM-style longer markup.</p>
+</header>
+
+<nav class="bento-toc"></nav>
+
+<h2>Skeleton</h2>
+
+<p>The document above uses the minimal skeleton: no <code>&lt;head&gt;</code> wrapper, no <code>data-theme</code> default, and a bare <code>&lt;main&gt;</code> directly inside <code>&lt;body class="bento"&gt;</code>. The framework's reading-column rules apply to either <code>.bento-doc</code> or <code>.bento &gt; main</code>.</p>
+
+<h2>Callouts via &lt;aside data-tone&gt;</h2>
+
+<p>The semantic form replaces a 4-class div with one attribute. Six tones recognized.</p>
+
+<aside data-tone="info">
+  <strong>Info</strong>
+  <p>The shortest callout is <code>&lt;aside data-tone="info"&gt;…&lt;/aside&gt;</code>. The icon and accent color come from the tone.</p>
+</aside>
+<aside data-tone="note">
+  <strong>Note</strong>
+  <p>Tones available: <code>info</code>, <code>note</code>, <code>tip</code>, <code>success</code>, <code>warn</code>, <code>danger</code>.</p>
+</aside>
+<aside data-tone="tip">
+  <strong>Tip</strong>
+  <p>The BEM form (<code>class="bento-callout bento-callout--tip"</code>) still works for back-compat.</p>
+</aside>
+<aside data-tone="success">
+  <strong>Success</strong>
+  <p>All six tones render identically to the class-based form.</p>
+</aside>
+<aside data-tone="warn">
+  <strong>Warn</strong>
+  <p>If you combine <code>data-tone</code> with <code>class="bento-related"</code>, behavior is undefined — pick one.</p>
+</aside>
+<aside data-tone="danger">
+  <strong>Danger</strong>
+  <p>Don't use <code>data-tone</code> on a generic <code>&lt;aside&gt;</code> that isn't meant to be a callout — the styling applies to any <code>aside[data-tone]</code> inside <code>.bento</code>.</p>
+</aside>
+
+<h2>Cards via bare &lt;article&gt;</h2>
+
+<p>Inside <code>.bento-grid</code>, any <code>&lt;article&gt;</code> picks up card styling. <code>&lt;section&gt;</code> is intentionally excluded so markdown islands can sit inside grids.</p>
+
+<div class="bento-grid">
+  <article>
+    <h3>Investigation</h3>
+    <p>14 user interviews. Common pattern: friction at step 2 of onboarding.</p>
+    <footer>2026-04</footer>
+  </article>
+  <article>
+    <h3>Design</h3>
+    <p>Compressed three screens into one. Two variants under A/B test.</p>
+    <footer>2026-04</footer>
+  </article>
+  <article>
+    <h3>Implementation</h3>
+    <p>Rolled to 10% of traffic. Completion rate up 14 percentage points.</p>
+    <footer>2026-05</footer>
+  </article>
+</div>
+
+<h2>Badges via &lt;span data-tone&gt;</h2>
+
+<p>
+  <span data-tone="primary">primary</span>
+  <span data-tone="success">success</span>
+  <span data-tone="warn">warn</span>
+  <span data-tone="danger">danger</span>
+  <span data-tone="muted">muted</span>
+</p>
+
+<h2>Buttons via &lt;button data-variant&gt;</h2>
+
+<p>
+  <button data-variant="primary">Primary</button>
+  <button data-variant="danger">Danger</button>
+  <button data-variant="ghost">Ghost</button>
+  <button data-variant="primary" data-size="sm">Small</button>
+  <button data-variant="primary" data-size="lg">Large</button>
+</p>
+
+<h2>Charts with comma-separated data</h2>
+
+<p><code>data-labels</code> and <code>data-values</code> now accept the compact form alongside JSON arrays.</p>
+
+<div class="bento-grid" data-cols="2">
+  <div class="bento-chart" data-labels="Q1,Q2,Q3,Q4" data-values="42,58,71,89" data-title="Quarterly"></div>
+  <div class="bento-chart" data-type="doughnut" data-labels="A,B,C,D" data-values="35,25,22,18" data-title="Allocation"></div>
+</div>
+
+<h2>Markdown islands</h2>
+
+<p>This region is written as Markdown inside <code>&lt;section data-md&gt;</code>. Paragraphs, headings, lists, inline code, and emphasis all stay in Markdown — far denser than the equivalent HTML.</p>
+
+<section data-md>
+### Findings
+
+The redesign cut **first-screen abandonment** by *14 percentage points*. Three reasons stood out:
+
+- One-screen flow removed the back-button anti-pattern that confused 8 of 14 interviewees.
+- The new default for the `notification_channel` field matched what most users expected.
+- Step labels were shortened — `Enable team sharing` → `Share`.
+
+Open questions:
+
+1. Does the win hold for cohorts with `team_size > 50`?
+2. Are completion times also improving, or are we trading one metric for another?
+3. Can the same screen-compression idea apply to the import flow?
+</section>
+
+<h2>What this saves vs the long form</h2>
+
+<p>Each component in this document is one to a few tokens shorter than its BEM-style equivalent. The markdown island is the dominant saving — it replaces several paragraphs, a list, and headings worth of HTML markup with their Markdown shapes (roughly half the tokens for that region).</p>
+
+<aside data-tone="note">
+  <strong>When to use the longer forms</strong>
+  <p>Pick the BEM-style class when you need to apply <em>multiple</em> bento patterns to one element, when integrating with a non-bento parent that uses <code>&lt;aside&gt;</code> for layout, or when style-overriding via specific selectors.</p>
+</aside>
+
+</main>
