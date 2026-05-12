@@ -15,11 +15,17 @@ Like a real bento, each compartment is neatly framed and the whole tray composes
 ```
 bento/
 ├── .claude-plugin/        # plugin / marketplace manifests
+├── commands/
+│   └── report.md          # /bento:report — orchestrator slash command
+├── agents/
+│   ├── bento-researcher.md   # produces the content brief
+│   └── bento-author.md       # writes the final HTML
 ├── skills/bento/
-│   ├── SKILL.md           # the instruction Claude reads
+│   ├── SKILL.md           # component catalogue + skeleton + writing rules
 │   ├── writing-style.md   # prose discipline: AI-tells to avoid (EN + JA)
 │   ├── readability.md     # document discipline: structure, hierarchy, component choice
 │   ├── token.md           # cost discipline: shortcut catalogue, when to skip bento
+│   ├── perspectives/      # reader-profile presets (engineer / product / executive / newcomer / customer)
 │   ├── assets/
 │   │   ├── bento.css      # core framework (typography, cards, callouts, stats, ...)
 │   │   ├── bento.js       # lazy-loads marked / mermaid / chart.js / highlight.js / katex
@@ -43,7 +49,38 @@ bento/
 /plugin install bento
 ```
 
-Once installed, the `bento` skill auto-activates when you ask Claude for "a pretty HTML report", "美しい資料", a shareable doc, a dashboard summary, etc.
+Once installed, you can produce a report two ways:
+
+```
+/bento:report <topic> [for <audience>]
+```
+
+The slash command is the canonical entry. It parses the topic and reader, then dispatches two subagents:
+
+- `bento-researcher` reads the writing-style and readability guides plus the chosen perspective profile, gathers material from any sources you pass, and returns a Markdown content brief.
+- `bento-author` turns the brief into a single self-contained `.html` file that follows the skeleton, the component vocabulary, and the writing rules.
+
+Example calls:
+
+- `/bento:report リポジトリ概要 for engineers`
+- `/bento:report Q3 status for executives`
+- `/bento:report 新人向けのオンボーディングメモ`
+
+If you instead ask for a pretty HTML report in normal conversation (`美しい資料を作って`, `give me a shareable HTML report on X`), the `bento` skill auto-activates and runs the same flow inline.
+
+### Reader perspectives
+
+bento ships five built-in reader profiles under `skills/bento/perspectives/`:
+
+| Slug | For |
+| --- | --- |
+| `engineer` | developers, SRE, platform engineers |
+| `product` | PMs, designers, business stakeholders |
+| `executive` | leadership, sponsors |
+| `newcomer` | new joiners, onboarding readers |
+| `customer` | external users, paying customers |
+
+Each profile sets `preferred_components`, `tone_notes`, and an example opening so the researcher and author know what shape of output lands for that reader. When the command runs with a new audience that does not match a profile, the researcher drafts a new one and the command offers to save it as `perspectives/<slug>.md` for future runs.
 
 ### Manual / one-shot use
 

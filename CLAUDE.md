@@ -16,9 +16,20 @@ There is no build, lint, or test runner. The only tooling worth knowing:
 
 ## Architecture
 
-### Three layers, three files
+### Entry points and runtime layout
 
-The skill works as three complementary instruction files that all load into the consuming Claude's context when the skill activates:
+The plugin exposes four runtime components Claude Code loads:
+
+| Path | Component type | Role |
+| --- | --- | --- |
+| `commands/report.md` | slash command | Canonical entry. Parses topic + perspective, orchestrates the subagents. |
+| `skills/bento/SKILL.md` | skill | Ambient fallback (auto-activates on "make a report" style prompts). Also the authoritative reference for components, skeleton, themes; `bento-author` reads it. |
+| `agents/bento-researcher.md` | subagent | Produces a Markdown content brief from topic + perspective + sources. |
+| `agents/bento-author.md` | subagent | Writes the final `.html` from the brief and the perspective. |
+
+### Three discipline files
+
+Three writing-discipline files apply across the subagents and the ambient skill path:
 
 | File | Layer | What it disciplines |
 | --- | --- | --- |
@@ -27,6 +38,15 @@ The skill works as three complementary instruction files that all load into the 
 | `skills/bento/readability.md` | Document | BLUF / Pyramid Principle, paragraph design, heading hierarchy, component-choice-by-shape |
 
 Edits to any of these propagate to every user of the skill the moment the commit lands on `main` (see distribution model below). Keep changes deliberate.
+
+### Reader perspectives
+
+`skills/bento/perspectives/` holds reader-profile presets:
+
+- `_index.md` — the slug list (`engineer`, `product`, `executive`, `newcomer`, `customer`). The command reads it to know which slugs exist; the researcher reads it to know which audiences are already covered.
+- `<slug>.md` — frontmatter (`audience`, `bluf_style`, `preferred_components`, `tone_notes`) plus body sections (when to use, key concerns, structural tips, example opening).
+
+The researcher consults a profile to shape the brief; the author consults the same profile to pick components and tone. For audiences not in `_index.md`, the researcher drafts a profile and the command offers to persist it as `perspectives/<slug>.md`.
 
 ### Distribution model
 
@@ -68,10 +88,21 @@ When adding a new component, pick one of these three modes deliberately and expl
 
 ### Adding to the catalogue
 
-When adding any new component or helper, update three places in lockstep:
+When adding a new **component or helper**, update three places in lockstep:
 
-1. The CSS/JS asset(s)
-2. The component catalogue table in `SKILL.md`
-3. The "Components at a glance" table and (if structural) the directory tree in `README.md`
+1. The CSS/JS asset(s).
+2. The component catalogue table in `SKILL.md`.
+3. The "Components at a glance" table and (if structural) the directory tree in `README.md`.
 
-The instruction layer is the public API of this skill; CSS without a SKILL.md entry is invisible to the AI that's supposed to use it.
+When adding a new **perspective**, update two places:
+
+1. `skills/bento/perspectives/<slug>.md` with the new profile.
+2. The slug table in `skills/bento/perspectives/_index.md`.
+
+When changing the **command or a subagent**, update:
+
+1. The relevant `commands/report.md` or `agents/<name>.md`.
+2. The "Entry points and runtime layout" table above, if the responsibility split shifted.
+3. The README section describing the entry point, if the user-facing contract changed.
+
+The instruction layer is the public API of this skill; CSS without a SKILL.md entry is invisible to the AI that's supposed to use it, and a perspective file without an `_index.md` row is invisible to the command.
