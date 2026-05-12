@@ -7,14 +7,15 @@
     {
       "name": "bento",
       "source": "./",
-      "description": "Token-efficient beautiful HTML output. AI generates minimal HTML using a pre-bundled CSS/JS framework.",
-      "version": "0.1.0",
+      "description": "Token-efficient beautiful HTML output. AI generates minimal HTML using a pre-bundled CSS/JS framework. /bento:report tailors output by reader perspective (engineer, product, executive, newcomer, customer).",
+      "version": "0.2.0",
       "category": "documentation",
       "tags": [
         "html",
         "documentation",
         "token-efficient",
-        "presentation"
+        "presentation",
+        "report"
       ]
     }
   ]

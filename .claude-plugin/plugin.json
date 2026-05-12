@@ -1,7 +1,7 @@
 {
   "name": "bento",
-  "version": "0.1.0",
-  "description": "Token-efficient beautiful HTML output skill. AI emits a thin layer of semantic HTML; the bento CSS/JS framework provides typography, cards, callouts, charts, mermaid and KaTeX for free.",
+  "version": "0.2.0",
+  "description": "Token-efficient beautiful HTML output. AI emits a thin layer of semantic HTML; the bento CSS/JS framework provides typography, cards, callouts, charts, mermaid and KaTeX for free. Ships the /bento:report command with reader-perspective presets (engineer, product, executive, newcomer, customer) plus two subagents that keep the main context light.",
   "author": {
     "name": "S-Nakamur-a"
   },
