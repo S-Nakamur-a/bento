@@ -3,289 +3,289 @@
  *  Designed so that AI emits minimal semantic HTML; this stylesheet does the polish.
  */
 
-/* ---------- Design tokens (override via :where(.bento) cascade or inline) ---------- */
+/* ---------- Design tokens (override via :where(.bx) cascade or inline) ---------- */
 
-:where(.bento) {
+:where(.bx) {
   /* Type scale (modular, 1.2 ratio off 17px) */
-  --bento-fs-base: 17px;
-  --bento-fs-sm: 0.875rem;
-  --bento-fs-xs: 0.78rem;
-  --bento-fs-lead: 1.25rem;
-  --bento-fs-h1: clamp(2rem, 4.5vw, 3rem);
-  --bento-fs-h2: clamp(1.5rem, 3vw, 2rem);
-  --bento-fs-h3: 1.35rem;
-  --bento-fs-h4: 1.1rem;
+  --bx-fs-base: 17px;
+  --bx-fs-sm: 0.875rem;
+  --bx-fs-xs: 0.78rem;
+  --bx-fs-lead: 1.25rem;
+  --bx-fs-h1: clamp(2rem, 4.5vw, 3rem);
+  --bx-fs-h2: clamp(1.5rem, 3vw, 2rem);
+  --bx-fs-h3: 1.35rem;
+  --bx-fs-h4: 1.1rem;
 
   /* Fonts */
-  --bento-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --bento-font-serif: "Iowan Old Style", "Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Source Serif Pro", "Noto Serif JP", Georgia, serif;
-  --bento-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --bx-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bx-font-serif: "Iowan Old Style", "Apple Garamond", "Baskerville", "Times New Roman", "Droid Serif", "Source Serif Pro", "Noto Serif JP", Georgia, serif;
+  --bx-font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
 
   /* Color tokens (light) */
-  --bento-fg: #1a2238;
-  --bento-fg-soft: #3b465d;
-  --bento-muted: #6b7591;
-  --bento-bg: #fbfbfa;
-  --bento-surface: #ffffff;
-  --bento-surface-2: #f4f4f1;
-  --bento-border: #e6e4df;
-  --bento-border-strong: #cfccc4;
-  --bento-accent: #2f5fbf;
-  --bento-accent-soft: #e5edfb;
-  --bento-success: #1b8a5a;
-  --bento-warn: #b66a00;
-  --bento-danger: #c0392b;
-  --bento-info: #2563eb;
-  --bento-tip: #6d28d9;
+  --bx-fg: #1a2238;
+  --bx-fg-soft: #3b465d;
+  --bx-muted: #6b7591;
+  --bx-bg: #fbfbfa;
+  --bx-surface: #ffffff;
+  --bx-surface-2: #f4f4f1;
+  --bx-border: #e6e4df;
+  --bx-border-strong: #cfccc4;
+  --bx-accent: #2f5fbf;
+  --bx-accent-soft: #e5edfb;
+  --bx-success: #1b8a5a;
+  --bx-warn: #b66a00;
+  --bx-danger: #c0392b;
+  --bx-info: #2563eb;
+  --bx-tip: #6d28d9;
 
   /* Geometry */
-  --bento-radius: 10px;
-  --bento-radius-sm: 6px;
-  --bento-radius-lg: 18px;
-  --bento-max-width: 76ch;
-  --bento-gap: 1rem;
-  --bento-shadow: 0 1px 2px rgba(20, 28, 50, 0.04), 0 8px 24px -12px rgba(20, 28, 50, 0.08);
-  --bento-shadow-strong: 0 1px 2px rgba(20, 28, 50, 0.06), 0 24px 48px -24px rgba(20, 28, 50, 0.18);
+  --bx-radius: 10px;
+  --bx-radius-sm: 6px;
+  --bx-radius-lg: 18px;
+  --bx-max-width: 76ch;
+  --bx-gap: 1rem;
+  --bx-shadow: 0 1px 2px rgba(20, 28, 50, 0.04), 0 8px 24px -12px rgba(20, 28, 50, 0.08);
+  --bx-shadow-strong: 0 1px 2px rgba(20, 28, 50, 0.06), 0 24px 48px -24px rgba(20, 28, 50, 0.18);
 }
 
 /* Dark via attribute */
-.bento[data-theme="dark"],
-:where(.bento) [data-theme="dark"] {
-  --bento-fg: #e8ecf2;
-  --bento-fg-soft: #bcc4d2;
-  --bento-muted: #8c95a8;
-  --bento-bg: #0f1320;
-  --bento-surface: #161b2c;
-  --bento-surface-2: #1f2538;
-  --bento-border: #2a3148;
-  --bento-border-strong: #3a4263;
-  --bento-accent: #7aa7ff;
-  --bento-accent-soft: #1b2747;
-  --bento-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -12px rgba(0, 0, 0, 0.55);
+.bx[data-theme="dark"],
+:where(.bx) [data-theme="dark"] {
+  --bx-fg: #e8ecf2;
+  --bx-fg-soft: #bcc4d2;
+  --bx-muted: #8c95a8;
+  --bx-bg: #0f1320;
+  --bx-surface: #161b2c;
+  --bx-surface-2: #1f2538;
+  --bx-border: #2a3148;
+  --bx-border-strong: #3a4263;
+  --bx-accent: #7aa7ff;
+  --bx-accent-soft: #1b2747;
+  --bx-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -12px rgba(0, 0, 0, 0.55);
 }
 
 /* Respect user OS preference unless an explicit theme is set */
 @media (prefers-color-scheme: dark) {
-  .bento:not([data-theme]) {
-    --bento-fg: #e8ecf2;
-    --bento-fg-soft: #bcc4d2;
-    --bento-muted: #8c95a8;
-    --bento-bg: #0f1320;
-    --bento-surface: #161b2c;
-    --bento-surface-2: #1f2538;
-    --bento-border: #2a3148;
-    --bento-border-strong: #3a4263;
-    --bento-accent: #7aa7ff;
-    --bento-accent-soft: #1b2747;
-    --bento-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -12px rgba(0, 0, 0, 0.55);
+  .bx:not([data-theme]) {
+    --bx-fg: #e8ecf2;
+    --bx-fg-soft: #bcc4d2;
+    --bx-muted: #8c95a8;
+    --bx-bg: #0f1320;
+    --bx-surface: #161b2c;
+    --bx-surface-2: #1f2538;
+    --bx-border: #2a3148;
+    --bx-border-strong: #3a4263;
+    --bx-accent: #7aa7ff;
+    --bx-accent-soft: #1b2747;
+    --bx-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 28px -12px rgba(0, 0, 0, 0.55);
   }
 }
 
-/* ---------- Base reset (scoped to .bento) ---------- */
+/* ---------- Base reset (scoped to .bx) ---------- */
 
-.bento, .bento * { box-sizing: border-box; }
-.bento {
+.bx, .bx * { box-sizing: border-box; }
+.bx {
   margin: 0;
-  font-family: var(--bento-font-sans);
-  font-size: var(--bento-fs-base);
+  font-family: var(--bx-font-sans);
+  font-size: var(--bx-fs-base);
   line-height: 1.65;
-  color: var(--bento-fg);
-  background: var(--bento-bg);
+  color: var(--bx-fg);
+  background: var(--bx-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-.bento img, .bento svg, .bento video { max-width: 100%; height: auto; display: block; }
-.bento a {
-  color: var(--bento-accent);
+.bx img, .bx svg, .bx video { max-width: 100%; height: auto; display: block; }
+.bx a {
+  color: var(--bx-accent);
   text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--bento-accent) 35%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--bx-accent) 35%, transparent);
   transition: color .15s, border-color .15s;
 }
-.bento a:hover { border-bottom-color: var(--bento-accent); }
-.bento :focus-visible {
-  outline: 2px solid var(--bento-accent);
+.bx a:hover { border-bottom-color: var(--bx-accent); }
+.bx :focus-visible {
+  outline: 2px solid var(--bx-accent);
   outline-offset: 2px;
-  border-radius: var(--bento-radius-sm);
+  border-radius: var(--bx-radius-sm);
 }
 
 /* ---------- Document column ---------- */
 
-/* Either `<main class="bento-doc">` (explicit) or `<main>` directly inside
+/* Either `<main class="bx-doc">` (explicit) or `<main>` directly inside
    `<body class="bento">` (token-efficient shortcut) gets the reading column. */
-.bento-doc,
-.bento > main {
-  max-width: var(--bento-max-width);
+.bx-doc,
+.bx > main {
+  max-width: var(--bx-max-width);
   margin: 0 auto;
   padding: 4rem 1.5rem 6rem;
 }
 
 @media (max-width: 640px) {
-  .bento-doc,
-  .bento > main { padding: 2rem 1rem 4rem; }
+  .bx-doc,
+  .bx > main { padding: 2rem 1rem 4rem; }
 }
 
 /* ---------- Typography ---------- */
 
-.bento h1, .bento h2, .bento h3, .bento h4 {
+.bx h1, .bx h2, .bx h3, .bx h4 {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: var(--bento-fg);
+  color: var(--bx-fg);
   margin: 2.2em 0 0.6em;
 }
-.bento h1 { font-size: var(--bento-fs-h1); margin-top: 0; letter-spacing: -0.02em; }
-.bento h2 {
-  font-size: var(--bento-fs-h2);
+.bx h1 { font-size: var(--bx-fs-h1); margin-top: 0; letter-spacing: -0.02em; }
+.bx h2 {
+  font-size: var(--bx-fs-h2);
   padding-bottom: 0.35em;
-  border-bottom: 1px solid var(--bento-border);
+  border-bottom: 1px solid var(--bx-border);
 }
-.bento h3 { font-size: var(--bento-fs-h3); }
-.bento h4 { font-size: var(--bento-fs-h4); color: var(--bento-fg-soft); }
+.bx h3 { font-size: var(--bx-fs-h3); }
+.bx h4 { font-size: var(--bx-fs-h4); color: var(--bx-fg-soft); }
 
-.bento p, .bento ul, .bento ol, .bento blockquote, .bento figure, .bento pre, .bento table { margin: 0 0 1.1em; }
-.bento ul, .bento ol { padding-left: 1.4em; }
-.bento li { margin: 0.25em 0; }
-.bento li::marker { color: var(--bento-muted); }
+.bx p, .bx ul, .bx ol, .bx blockquote, .bx figure, .bx pre, .bx table { margin: 0 0 1.1em; }
+.bx ul, .bx ol { padding-left: 1.4em; }
+.bx li { margin: 0.25em 0; }
+.bx li::marker { color: var(--bx-muted); }
 
-.bento-lead { font-size: var(--bento-fs-lead); color: var(--bento-fg-soft); line-height: 1.5; }
+.bx-lead { font-size: var(--bx-fs-lead); color: var(--bx-fg-soft); line-height: 1.5; }
 
-.bento strong { color: var(--bento-fg); font-weight: 700; }
-.bento em { font-style: italic; }
+.bx strong { color: var(--bx-fg); font-weight: 700; }
+.bx em { font-style: italic; }
 
-.bento blockquote {
-  border-left: 3px solid var(--bento-accent);
-  background: color-mix(in srgb, var(--bento-accent-soft) 60%, transparent);
+.bx blockquote {
+  border-left: 3px solid var(--bx-accent);
+  background: color-mix(in srgb, var(--bx-accent-soft) 60%, transparent);
   padding: 0.8em 1.1em;
-  border-radius: 0 var(--bento-radius) var(--bento-radius) 0;
-  color: var(--bento-fg-soft);
+  border-radius: 0 var(--bx-radius) var(--bx-radius) 0;
+  color: var(--bx-fg-soft);
   font-style: italic;
 }
-.bento blockquote > :last-child { margin-bottom: 0; }
+.bx blockquote > :last-child { margin-bottom: 0; }
 
-.bento hr, .bento-hr {
+.bx hr, .bx-hr {
   border: none;
   height: 1px;
-  background: var(--bento-border);
+  background: var(--bx-border);
   margin: 2.4em 0;
 }
 
-.bento-muted { color: var(--bento-muted); }
-.bento-small { font-size: var(--bento-fs-sm); }
-.bento-mono { font-family: var(--bento-font-mono); }
-.bento-center { text-align: center; }
-.bento-right { text-align: right; }
+.bx-muted { color: var(--bx-muted); }
+.bx-small { font-size: var(--bx-fs-sm); }
+.bx-mono { font-family: var(--bx-font-mono); }
+.bx-center { text-align: center; }
+.bx-right { text-align: right; }
 
 /* ---------- Hero ---------- */
 
-.bento-hero {
+.bx-hero {
   padding: 3rem 0 2rem;
-  border-bottom: 1px solid var(--bento-border);
+  border-bottom: 1px solid var(--bx-border);
   margin-bottom: 2.5rem;
 }
-.bento-hero h1 { margin: 0 0 0.4em; }
-.bento-hero .bento-lead { margin: 0; }
-.bento-hero-meta {
+.bx-hero h1 { margin: 0 0 0.4em; }
+.bx-hero .bx-lead { margin: 0; }
+.bx-hero-meta {
   margin-top: 1.2em;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.2rem;
-  color: var(--bento-muted);
-  font-size: var(--bento-fs-sm);
+  color: var(--bx-muted);
+  font-size: var(--bx-fs-sm);
 }
 
 /* ---------- Grid / split layouts ---------- */
 
-.bento-grid {
+.bx-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--bento-gap);
+  gap: var(--bx-gap);
   margin: 1.5em 0;
 }
-.bento-grid[data-cols="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.bento-grid[data-cols="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.bento-grid[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.bento-grid[data-cols="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.bento-grid[data-cols="6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.bx-grid[data-cols="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bx-grid[data-cols="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.bx-grid[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bx-grid[data-cols="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.bx-grid[data-cols="6"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 @media (max-width: 720px) {
-  .bento-grid[data-cols] { grid-template-columns: 1fr; }
+  .bx-grid[data-cols] { grid-template-columns: 1fr; }
 }
 
-.bento-split {
+.bx-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin: 1.5em 0;
 }
 @media (max-width: 720px) {
-  .bento-split { grid-template-columns: 1fr; }
+  .bx-split { grid-template-columns: 1fr; }
 }
 
 /* Asymmetric narrow + wide. Defaults: narrow column on the left at ~25%,
    set data-side="right" to flip. Optional data-ratio="1:2"|"1:3"|"1:4". */
-.bento-sidebar {
+.bx-sidebar {
   display: grid;
   grid-template-columns: minmax(200px, 1fr) 3fr;
   gap: 1.5rem;
   margin: 1.5em 0;
 }
-.bento-sidebar[data-side="right"] {
+.bx-sidebar[data-side="right"] {
   grid-template-columns: 3fr minmax(200px, 1fr);
 }
-.bento-sidebar[data-ratio="1:2"] { grid-template-columns: 1fr 2fr; }
-.bento-sidebar[data-ratio="1:3"] { grid-template-columns: 1fr 3fr; }
-.bento-sidebar[data-ratio="1:4"] { grid-template-columns: 1fr 4fr; }
-.bento-sidebar[data-side="right"][data-ratio="1:2"] { grid-template-columns: 2fr 1fr; }
-.bento-sidebar[data-side="right"][data-ratio="1:3"] { grid-template-columns: 3fr 1fr; }
-.bento-sidebar[data-side="right"][data-ratio="1:4"] { grid-template-columns: 4fr 1fr; }
+.bx-sidebar[data-ratio="1:2"] { grid-template-columns: 1fr 2fr; }
+.bx-sidebar[data-ratio="1:3"] { grid-template-columns: 1fr 3fr; }
+.bx-sidebar[data-ratio="1:4"] { grid-template-columns: 1fr 4fr; }
+.bx-sidebar[data-side="right"][data-ratio="1:2"] { grid-template-columns: 2fr 1fr; }
+.bx-sidebar[data-side="right"][data-ratio="1:3"] { grid-template-columns: 3fr 1fr; }
+.bx-sidebar[data-side="right"][data-ratio="1:4"] { grid-template-columns: 4fr 1fr; }
 @media (max-width: 720px) {
-  .bento-sidebar { grid-template-columns: 1fr; }
+  .bx-sidebar { grid-template-columns: 1fr; }
 }
 
 /* ---------- Cards ---------- */
 
-/* `.bento-card` is the explicit form. As a token-efficient shortcut, a bare
-   `<article>` inside `.bento-grid` is also styled as a card.
+/* `.bx-card` is the explicit form. As a token-efficient shortcut, a bare
+   `<article>` inside `.bx-grid` is also styled as a card.
    `<section>` is intentionally excluded so `<section data-md>` markdown islands
    can live inside grids without inheriting card styling. */
-:is(.bento-card, .bento-grid > article) {
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+:is(.bx-card, .bx-grid > article) {
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1.25rem 1.4rem;
-  box-shadow: var(--bento-shadow);
+  box-shadow: var(--bx-shadow);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-:is(.bento-card, .bento-grid > article) > :first-child { margin-top: 0; }
-:is(.bento-card, .bento-grid > article) > :last-child { margin-bottom: 0; }
-:is(.bento-card, .bento-grid > article) :is(h3, h4) { margin: 0; }
-:is(.bento-card, .bento-grid > article) > footer {
+:is(.bx-card, .bx-grid > article) > :first-child { margin-top: 0; }
+:is(.bx-card, .bx-grid > article) > :last-child { margin-bottom: 0; }
+:is(.bx-card, .bx-grid > article) :is(h3, h4) { margin: 0; }
+:is(.bx-card, .bx-grid > article) > footer {
   margin-top: auto;
   padding-top: 0.6rem;
-  border-top: 1px solid var(--bento-border);
-  color: var(--bento-muted);
-  font-size: var(--bento-fs-sm);
+  border-top: 1px solid var(--bx-border);
+  color: var(--bx-muted);
+  font-size: var(--bx-fs-sm);
 }
 
 /* ---------- Callouts ---------- */
 
 /* Any of the following is rendered as a callout:
-   - <div class="bento-callout"> + modifier (explicit, original BEM form)
-   - <div class="bento-callout--info"> (modifier alone — base styles included)
-   - <aside data-tone="info"> inside .bento (semantic, shortest form)
+   - <div class="bx-callout"> + modifier (explicit, original BEM form)
+   - <div class="bx-callout--info"> (modifier alone — base styles included)
+   - <aside data-tone="info"> inside .bx (semantic, shortest form)
 */
 :is(
-  .bento-callout,
-  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
-  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
-  .bento aside[data-tone]
+  .bx-callout,
+  .bx-callout--info, .bx-callout--note, .bx-callout--tip,
+  .bx-callout--success, .bx-callout--warn, .bx-callout--danger,
+  .bx aside[data-tone]
 ) {
-  --c: var(--bento-info);
+  --c: var(--bx-info);
   border-left: 4px solid var(--c);
-  background: color-mix(in srgb, var(--c) 8%, var(--bento-surface));
-  border-radius: 0 var(--bento-radius) var(--bento-radius) 0;
+  background: color-mix(in srgb, var(--c) 8%, var(--bx-surface));
+  border-radius: 0 var(--bx-radius) var(--bx-radius) 0;
   padding: 0.9rem 1.1rem;
   margin: 1.4em 0;
   display: grid;
@@ -294,10 +294,10 @@
   align-items: start;
 }
 :is(
-  .bento-callout,
-  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
-  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
-  .bento aside[data-tone]
+  .bx-callout,
+  .bx-callout--info, .bx-callout--note, .bx-callout--tip,
+  .bx-callout--success, .bx-callout--warn, .bx-callout--danger,
+  .bx aside[data-tone]
 )::before {
   content: "i";
   display: inline-grid;
@@ -309,112 +309,112 @@
   color: #fff;
   font-weight: 700;
   font-size: 0.85em;
-  font-family: var(--bento-font-serif);
+  font-family: var(--bx-font-serif);
   grid-row: span 2;
 }
 :is(
-  .bento-callout,
-  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
-  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
-  .bento aside[data-tone]
+  .bx-callout,
+  .bx-callout--info, .bx-callout--note, .bx-callout--tip,
+  .bx-callout--success, .bx-callout--warn, .bx-callout--danger,
+  .bx aside[data-tone]
 ) > strong { color: var(--c); display: block; }
 :is(
-  .bento-callout,
-  .bento-callout--info, .bento-callout--note, .bento-callout--tip,
-  .bento-callout--success, .bento-callout--warn, .bento-callout--danger,
-  .bento aside[data-tone]
+  .bx-callout,
+  .bx-callout--info, .bx-callout--note, .bx-callout--tip,
+  .bx-callout--success, .bx-callout--warn, .bx-callout--danger,
+  .bx aside[data-tone]
 ) > p { margin: 0; grid-column: 2; }
 
 /* Tone variants — class form OR data-tone attribute. */
-.bento-callout--info,    .bento aside[data-tone="info"]    { --c: var(--bento-info); }
-.bento-callout--info::before,    .bento aside[data-tone="info"]::before    { content: "i"; }
-.bento-callout--note,    .bento aside[data-tone="note"]    { --c: var(--bento-muted); }
-.bento-callout--note::before,    .bento aside[data-tone="note"]::before    { content: "·"; }
-.bento-callout--tip,     .bento aside[data-tone="tip"]     { --c: var(--bento-tip); }
-.bento-callout--tip::before,     .bento aside[data-tone="tip"]::before     { content: "✦"; font-family: var(--bento-font-sans); }
-.bento-callout--success, .bento aside[data-tone="success"] { --c: var(--bento-success); }
-.bento-callout--success::before, .bento aside[data-tone="success"]::before { content: "✓"; font-family: var(--bento-font-sans); }
-.bento-callout--warn,    .bento aside[data-tone="warn"]    { --c: var(--bento-warn); }
-.bento-callout--warn::before,    .bento aside[data-tone="warn"]::before    { content: "!"; }
-.bento-callout--danger,  .bento aside[data-tone="danger"]  { --c: var(--bento-danger); }
-.bento-callout--danger::before,  .bento aside[data-tone="danger"]::before  { content: "✕"; font-family: var(--bento-font-sans); }
+.bx-callout--info,    .bx aside[data-tone="info"]    { --c: var(--bx-info); }
+.bx-callout--info::before,    .bx aside[data-tone="info"]::before    { content: "i"; }
+.bx-callout--note,    .bx aside[data-tone="note"]    { --c: var(--bx-muted); }
+.bx-callout--note::before,    .bx aside[data-tone="note"]::before    { content: "·"; }
+.bx-callout--tip,     .bx aside[data-tone="tip"]     { --c: var(--bx-tip); }
+.bx-callout--tip::before,     .bx aside[data-tone="tip"]::before     { content: "✦"; font-family: var(--bx-font-sans); }
+.bx-callout--success, .bx aside[data-tone="success"] { --c: var(--bx-success); }
+.bx-callout--success::before, .bx aside[data-tone="success"]::before { content: "✓"; font-family: var(--bx-font-sans); }
+.bx-callout--warn,    .bx aside[data-tone="warn"]    { --c: var(--bx-warn); }
+.bx-callout--warn::before,    .bx aside[data-tone="warn"]::before    { content: "!"; }
+.bx-callout--danger,  .bx aside[data-tone="danger"]  { --c: var(--bx-danger); }
+.bx-callout--danger::before,  .bx aside[data-tone="danger"]::before  { content: "✕"; font-family: var(--bx-font-sans); }
 
 /* ---------- Stats / KPI ---------- */
 
-.bento-stat {
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+.bx-stat {
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1rem 1.2rem;
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
 }
-.bento-stat-value {
+.bx-stat-value {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.02em;
-  color: var(--bento-fg);
+  color: var(--bx-fg);
   font-variant-numeric: tabular-nums;
 }
-.bento-stat-label {
-  color: var(--bento-muted);
-  font-size: var(--bento-fs-sm);
+.bx-stat-label {
+  color: var(--bx-muted);
+  font-size: var(--bx-fs-sm);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-.bento-stat-trend {
-  font-size: var(--bento-fs-sm);
+.bx-stat-trend {
+  font-size: var(--bx-fs-sm);
   font-weight: 600;
 }
-.bento-stat-trend[data-trend="up"]   { color: var(--bento-success); }
-.bento-stat-trend[data-trend="up"]::before   { content: "▲ "; }
-.bento-stat-trend[data-trend="down"] { color: var(--bento-danger); }
-.bento-stat-trend[data-trend="down"]::before { content: "▼ "; }
-.bento-stat-trend[data-trend="flat"] { color: var(--bento-muted); }
-.bento-stat-trend[data-trend="flat"]::before { content: "▬ "; }
+.bx-stat-trend[data-trend="up"]   { color: var(--bx-success); }
+.bx-stat-trend[data-trend="up"]::before   { content: "▲ "; }
+.bx-stat-trend[data-trend="down"] { color: var(--bx-danger); }
+.bx-stat-trend[data-trend="down"]::before { content: "▼ "; }
+.bx-stat-trend[data-trend="flat"] { color: var(--bx-muted); }
+.bx-stat-trend[data-trend="flat"]::before { content: "▬ "; }
 
 /* ---------- Badges ---------- */
 
 /* Three equivalent forms:
-   - <span class="bento-badge bento-badge--primary"> (explicit BEM)
-   - <span class="bento-badge--primary"> (modifier alone)
-   - <span data-tone="primary"> inside .bento (semantic, shortest)
+   - <span class="bx-badge bx-badge--primary"> (explicit BEM)
+   - <span class="bx-badge--primary"> (modifier alone)
+   - <span data-tone="primary"> inside .bx (semantic, shortest)
 */
 :is(
-  .bento-badge,
-  .bento-badge--primary, .bento-badge--success, .bento-badge--warn, .bento-badge--danger, .bento-badge--muted,
-  .bento span[data-tone]
+  .bx-badge,
+  .bx-badge--primary, .bx-badge--success, .bx-badge--warn, .bx-badge--danger, .bx-badge--muted,
+  .bx span[data-tone]
 ) {
   display: inline-block;
   padding: 0.15em 0.6em;
   font-size: 0.78em;
   font-weight: 600;
   border-radius: 999px;
-  background: var(--bento-surface-2);
-  color: var(--bento-fg-soft);
-  border: 1px solid var(--bento-border);
+  background: var(--bx-surface-2);
+  color: var(--bx-fg-soft);
+  border: 1px solid var(--bx-border);
   line-height: 1.5;
   vertical-align: 0.1em;
 }
-.bento-badge--primary, .bento span[data-tone="primary"] { background: var(--bento-accent-soft); color: var(--bento-accent); border-color: transparent; }
-.bento-badge--success, .bento span[data-tone="success"] { background: color-mix(in srgb, var(--bento-success) 12%, transparent); color: var(--bento-success); border-color: transparent; }
-.bento-badge--warn,    .bento span[data-tone="warn"]    { background: color-mix(in srgb, var(--bento-warn) 12%, transparent); color: var(--bento-warn); border-color: transparent; }
-.bento-badge--danger,  .bento span[data-tone="danger"]  { background: color-mix(in srgb, var(--bento-danger) 12%, transparent); color: var(--bento-danger); border-color: transparent; }
-.bento-badge--muted,   .bento span[data-tone="muted"]   { background: var(--bento-surface-2); color: var(--bento-muted); }
+.bx-badge--primary, .bx span[data-tone="primary"] { background: var(--bx-accent-soft); color: var(--bx-accent); border-color: transparent; }
+.bx-badge--success, .bx span[data-tone="success"] { background: color-mix(in srgb, var(--bx-success) 12%, transparent); color: var(--bx-success); border-color: transparent; }
+.bx-badge--warn,    .bx span[data-tone="warn"]    { background: color-mix(in srgb, var(--bx-warn) 12%, transparent); color: var(--bx-warn); border-color: transparent; }
+.bx-badge--danger,  .bx span[data-tone="danger"]  { background: color-mix(in srgb, var(--bx-danger) 12%, transparent); color: var(--bx-danger); border-color: transparent; }
+.bx-badge--muted,   .bx span[data-tone="muted"]   { background: var(--bx-surface-2); color: var(--bx-muted); }
 
 /* ---------- Buttons ---------- */
 
 /* Three equivalent opt-in forms (raw `<button>` is intentionally left alone):
-   - <button class="bento-btn bento-btn--primary"> (explicit BEM)
-   - <button class="bento-btn--primary"> (modifier alone)
-   - <button data-variant="primary"> inside .bento (semantic, shortest)
+   - <button class="bx-btn bx-btn--primary"> (explicit BEM)
+   - <button class="bx-btn--primary"> (modifier alone)
+   - <button data-variant="primary"> inside .bx (semantic, shortest)
    Same applies to <a>. */
-.bento :is(
-  .bento-btn,
-  .bento-btn--primary, .bento-btn--danger, .bento-btn--ghost,
-  .bento-btn--sm, .bento-btn--lg,
+.bx :is(
+  .bx-btn,
+  .bx-btn--primary, .bx-btn--danger, .bx-btn--ghost,
+  .bx-btn--sm, .bx-btn--lg,
   button[data-variant], a[data-variant]
 ) {
   -webkit-appearance: none;
@@ -425,125 +425,125 @@
   gap: 0.4em;
   padding: 0.55em 1.1em;
   font-family: inherit;
-  font-size: var(--bento-fs-sm);
+  font-size: var(--bx-fs-sm);
   font-weight: 600;
   line-height: 1.2;
-  color: var(--bento-fg);
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius-sm);
+  color: var(--bx-fg);
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius-sm);
   cursor: pointer;
   text-decoration: none;
   transition: background .12s, border-color .12s, color .12s, transform .05s;
 }
-.bento :is(a.bento-btn, a[data-variant]) { border-bottom: 1px solid var(--bento-border); }
-.bento :is(.bento-btn, .bento-btn--primary, .bento-btn--danger, .bento-btn--ghost, button[data-variant], a[data-variant]):hover {
-  background: var(--bento-surface-2);
-  border-color: var(--bento-border-strong);
+.bx :is(a.bx-btn, a[data-variant]) { border-bottom: 1px solid var(--bx-border); }
+.bx :is(.bx-btn, .bx-btn--primary, .bx-btn--danger, .bx-btn--ghost, button[data-variant], a[data-variant]):hover {
+  background: var(--bx-surface-2);
+  border-color: var(--bx-border-strong);
 }
-.bento :is(.bento-btn, button[data-variant], a[data-variant]):active { transform: translateY(1px); }
-.bento :is(.bento-btn, button[data-variant], a[data-variant]):disabled,
-.bento :is(.bento-btn, button[data-variant], a[data-variant])[aria-disabled="true"] {
+.bx :is(.bx-btn, button[data-variant], a[data-variant]):active { transform: translateY(1px); }
+.bx :is(.bx-btn, button[data-variant], a[data-variant]):disabled,
+.bx :is(.bx-btn, button[data-variant], a[data-variant])[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.bento :is(.bento-btn--primary, button[data-variant="primary"], a[data-variant="primary"]) {
-  background: var(--bento-accent);
-  border-color: var(--bento-accent);
+.bx :is(.bx-btn--primary, button[data-variant="primary"], a[data-variant="primary"]) {
+  background: var(--bx-accent);
+  border-color: var(--bx-accent);
   color: #fff;
 }
-.bento :is(.bento-btn--primary, button[data-variant="primary"], a[data-variant="primary"]):hover {
-  background: color-mix(in srgb, var(--bento-accent) 88%, #000);
-  border-color: color-mix(in srgb, var(--bento-accent) 88%, #000);
+.bx :is(.bx-btn--primary, button[data-variant="primary"], a[data-variant="primary"]):hover {
+  background: color-mix(in srgb, var(--bx-accent) 88%, #000);
+  border-color: color-mix(in srgb, var(--bx-accent) 88%, #000);
 }
-.bento :is(.bento-btn--danger, button[data-variant="danger"], a[data-variant="danger"]) {
-  background: var(--bento-danger);
-  border-color: var(--bento-danger);
+.bx :is(.bx-btn--danger, button[data-variant="danger"], a[data-variant="danger"]) {
+  background: var(--bx-danger);
+  border-color: var(--bx-danger);
   color: #fff;
 }
-.bento :is(.bento-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]) {
+.bx :is(.bx-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]) {
   background: transparent;
   border-color: transparent;
 }
-.bento :is(.bento-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]):hover {
-  background: var(--bento-surface-2);
-  border-color: var(--bento-border);
+.bx :is(.bx-btn--ghost, button[data-variant="ghost"], a[data-variant="ghost"]):hover {
+  background: var(--bx-surface-2);
+  border-color: var(--bx-border);
 }
-.bento .bento-btn--sm,
-.bento :is(button, a)[data-variant][data-size="sm"] { padding: 0.32em 0.75em; font-size: var(--bento-fs-xs); }
-.bento .bento-btn--lg,
-.bento :is(button, a)[data-variant][data-size="lg"] { padding: 0.75em 1.5em; font-size: 1rem; }
+.bx .bx-btn--sm,
+.bx :is(button, a)[data-variant][data-size="sm"] { padding: 0.32em 0.75em; font-size: var(--bx-fs-xs); }
+.bx .bx-btn--lg,
+.bx :is(button, a)[data-variant][data-size="lg"] { padding: 0.75em 1.5em; font-size: 1rem; }
 
-/* Copy feedback on .bento-copy buttons after a successful clipboard write. */
-.bento :is(.bento-btn, button[data-variant])[data-copied="1"]::after {
+/* Copy feedback on .bx-copy buttons after a successful clipboard write. */
+.bx :is(.bx-btn, button[data-variant])[data-copied="1"]::after {
   content: "✓";
-  color: var(--bento-success);
+  color: var(--bx-success);
   margin-left: 0.3em;
 }
-.bento :is(.bento-btn, button[data-variant])[data-copied="fail"]::after {
+.bx :is(.bx-btn, button[data-variant])[data-copied="fail"]::after {
   content: "✕";
-  color: var(--bento-danger);
+  color: var(--bx-danger);
   margin-left: 0.3em;
 }
 
 /* ---------- Forms ---------- */
 
-.bento input[type="text"],
-.bento input[type="email"],
-.bento input[type="password"],
-.bento input[type="search"],
-.bento input[type="url"],
-.bento input[type="tel"],
-.bento input[type="number"],
-.bento input[type="date"],
-.bento input[type="time"],
-.bento input[type="datetime-local"],
-.bento input[type="month"],
-.bento input[type="week"],
-.bento input:not([type]),
-.bento select,
-.bento textarea {
+.bx input[type="text"],
+.bx input[type="email"],
+.bx input[type="password"],
+.bx input[type="search"],
+.bx input[type="url"],
+.bx input[type="tel"],
+.bx input[type="number"],
+.bx input[type="date"],
+.bx input[type="time"],
+.bx input[type="datetime-local"],
+.bx input[type="month"],
+.bx input[type="week"],
+.bx input:not([type]),
+.bx select,
+.bx textarea {
   display: block;
   width: 100%;
   font-family: inherit;
-  font-size: var(--bento-fs-base);
+  font-size: var(--bx-fs-base);
   line-height: 1.4;
-  color: var(--bento-fg);
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius-sm);
+  color: var(--bx-fg);
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius-sm);
   padding: 0.5em 0.7em;
   transition: border-color .12s, box-shadow .12s;
 }
-.bento input:focus,
-.bento select:focus,
-.bento textarea:focus {
+.bx input:focus,
+.bx select:focus,
+.bx textarea:focus {
   outline: none;
-  border-color: var(--bento-accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bento-accent) 18%, transparent);
+  border-color: var(--bx-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bx-accent) 18%, transparent);
 }
-.bento input:disabled,
-.bento select:disabled,
-.bento textarea:disabled {
+.bx input:disabled,
+.bx select:disabled,
+.bx textarea:disabled {
   opacity: 0.55;
   cursor: not-allowed;
-  background: var(--bento-surface-2);
+  background: var(--bx-surface-2);
 }
-.bento input:invalid:not(:focus):not(:placeholder-shown) {
-  border-color: var(--bento-danger);
+.bx input:invalid:not(:focus):not(:placeholder-shown) {
+  border-color: var(--bx-danger);
 }
-.bento input::placeholder,
-.bento textarea::placeholder {
-  color: var(--bento-muted);
+.bx input::placeholder,
+.bx textarea::placeholder {
+  color: var(--bx-muted);
   opacity: 0.8;
 }
-.bento textarea { min-height: 5em; resize: vertical; }
-.bento select {
+.bx textarea { min-height: 5em; resize: vertical; }
+.bx select {
   background-image:
-    linear-gradient(45deg, transparent 50%, var(--bento-muted) 50%),
-    linear-gradient(-45deg, transparent 50%, var(--bento-muted) 50%);
+    linear-gradient(45deg, transparent 50%, var(--bx-muted) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--bx-muted) 50%);
   background-position:
     calc(100% - 18px) 50%,
     calc(100% - 13px) 50%;
@@ -553,11 +553,11 @@
   appearance: none;
   -webkit-appearance: none;
 }
-.bento input[type="checkbox"],
-.bento input[type="radio"] {
+.bx input[type="checkbox"],
+.bx input[type="radio"] {
   appearance: revert;
   -webkit-appearance: revert;
-  accent-color: var(--bento-accent);
+  accent-color: var(--bx-accent);
   width: 1em;
   height: 1em;
   display: inline-block;
@@ -565,74 +565,74 @@
   margin-right: 0.35em;
   padding: 0;
 }
-.bento input[type="range"] { accent-color: var(--bento-accent); width: 100%; }
-.bento input[type="color"] {
+.bx input[type="range"] { accent-color: var(--bx-accent); width: 100%; }
+.bx input[type="color"] {
   appearance: none;
   -webkit-appearance: none;
   width: 2.4em;
   height: 2.4em;
   padding: 0;
-  border-radius: var(--bento-radius-sm);
-  border: 1px solid var(--bento-border);
-  background: var(--bento-surface);
+  border-radius: var(--bx-radius-sm);
+  border: 1px solid var(--bx-border);
+  background: var(--bx-surface);
   cursor: pointer;
 }
 
-.bento label {
+.bx label {
   display: inline-block;
-  font-size: var(--bento-fs-sm);
+  font-size: var(--bx-fs-sm);
   font-weight: 600;
-  color: var(--bento-fg-soft);
+  color: var(--bx-fg-soft);
   margin-bottom: 0.3em;
 }
 
-.bento fieldset {
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+.bx fieldset {
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1rem 1.2rem;
   margin: 1em 0;
 }
-.bento fieldset legend {
+.bx fieldset legend {
   padding: 0 0.4em;
   font-weight: 600;
-  font-size: var(--bento-fs-sm);
-  color: var(--bento-fg-soft);
+  font-size: var(--bx-fs-sm);
+  color: var(--bx-fg-soft);
 }
 
 /* label + control + optional help text, stacked. */
-.bento-field {
+.bx-field {
   display: flex;
   flex-direction: column;
   gap: 0.3em;
   margin: 0 0 1em;
 }
-.bento-field > label { margin-bottom: 0; }
-.bento-field .bento-field-help {
-  font-size: var(--bento-fs-sm);
-  color: var(--bento-muted);
+.bx-field > label { margin-bottom: 0; }
+.bx-field .bx-field-help {
+  font-size: var(--bx-fs-sm);
+  color: var(--bx-muted);
 }
-.bento-field--inline {
+.bx-field--inline {
   flex-direction: row;
   align-items: center;
   gap: 0.5em;
 }
-.bento-field--inline > label { margin-bottom: 0; }
-.bento-field--inline > input:not([type="checkbox"]):not([type="radio"]),
-.bento-field--inline > select { flex: 1; }
+.bx-field--inline > label { margin-bottom: 0; }
+.bx-field--inline > input:not([type="checkbox"]):not([type="radio"]),
+.bx-field--inline > select { flex: 1; }
 
 /* ---------- SVG illustrations ---------- */
 
 /* Sets currentColor to the bento accent, so any inline SVG using
    stroke="currentColor" or fill="currentColor" inherits the theme. */
-.bento-illust,
-.bento svg.bento-illust {
-  color: var(--bento-accent);
+.bx-illust,
+.bx svg.bx-illust {
+  color: var(--bx-accent);
   display: block;
   margin: 1.5em auto;
   max-width: 100%;
 }
-.bento-illust > svg,
-.bento svg.bento-illust {
+.bx-illust > svg,
+.bx svg.bx-illust {
   display: block;
   width: 100%;
   height: auto;
@@ -641,90 +641,90 @@
 
 /* ---------- Code ---------- */
 
-.bento code {
-  font-family: var(--bento-font-mono);
+.bx code {
+  font-family: var(--bx-font-mono);
   font-size: 0.9em;
-  background: var(--bento-surface-2);
+  background: var(--bx-surface-2);
   padding: 0.1em 0.4em;
-  border-radius: var(--bento-radius-sm);
-  border: 1px solid var(--bento-border);
+  border-radius: var(--bx-radius-sm);
+  border: 1px solid var(--bx-border);
 }
-.bento pre {
-  background: var(--bento-surface-2);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+.bx pre {
+  background: var(--bx-surface-2);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1rem 1.2rem;
   overflow-x: auto;
   position: relative;
 }
-.bento pre code {
+.bx pre code {
   background: transparent;
   border: none;
   padding: 0;
   font-size: 0.92em;
   line-height: 1.55;
 }
-.bento pre[data-filename]::before {
+.bx pre[data-filename]::before {
   content: attr(data-filename);
   display: block;
   margin: -1rem -1.2rem 0.8rem;
   padding: 0.4rem 1.2rem;
-  background: var(--bento-surface);
-  border-bottom: 1px solid var(--bento-border);
-  font-family: var(--bento-font-mono);
-  font-size: var(--bento-fs-xs);
-  color: var(--bento-muted);
-  border-radius: var(--bento-radius) var(--bento-radius) 0 0;
+  background: var(--bx-surface);
+  border-bottom: 1px solid var(--bx-border);
+  font-family: var(--bx-font-mono);
+  font-size: var(--bx-fs-xs);
+  color: var(--bx-muted);
+  border-radius: var(--bx-radius) var(--bx-radius) 0 0;
 }
 
 /* ---------- Tables ---------- */
 
-.bento table {
+.bx table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.96em;
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   overflow: hidden;
 }
-.bento thead { background: var(--bento-surface-2); }
-.bento th, .bento td {
+.bx thead { background: var(--bx-surface-2); }
+.bx th, .bx td {
   text-align: left;
   padding: 0.6em 0.9em;
-  border-bottom: 1px solid var(--bento-border);
+  border-bottom: 1px solid var(--bx-border);
   vertical-align: top;
 }
-.bento th { font-weight: 600; color: var(--bento-fg-soft); font-size: var(--bento-fs-sm); text-transform: uppercase; letter-spacing: 0.04em; }
-.bento tr:last-child td { border-bottom: none; }
-.bento tbody tr:hover { background: color-mix(in srgb, var(--bento-accent-soft) 50%, transparent); }
+.bx th { font-weight: 600; color: var(--bx-fg-soft); font-size: var(--bx-fs-sm); text-transform: uppercase; letter-spacing: 0.04em; }
+.bx tr:last-child td { border-bottom: none; }
+.bx tbody tr:hover { background: color-mix(in srgb, var(--bx-accent-soft) 50%, transparent); }
 
-.bento-compare td:not(:first-child) { text-align: center; }
-.bento-compare td:where(:not(:first-child)) {
+.bx-compare td:not(:first-child) { text-align: center; }
+.bx-compare td:where(:not(:first-child)) {
   font-variant-numeric: tabular-nums;
 }
 
 /* ---------- Steps ---------- */
 
-.bento-steps {
-  counter-reset: bento-step;
+.bx-steps {
+  counter-reset: bx-step;
   list-style: none;
   padding: 0;
   display: grid;
   gap: 0.8rem;
 }
-.bento-steps > li {
-  counter-increment: bento-step;
+.bx-steps > li {
+  counter-increment: bx-step;
   display: grid;
   grid-template-columns: 2rem 1fr;
   gap: 0.8rem;
   padding: 0.6rem 0;
 }
-.bento-steps > li::before {
-  content: counter(bento-step);
+.bx-steps > li::before {
+  content: counter(bx-step);
   width: 2rem;
   height: 2rem;
   border-radius: 999px;
-  background: var(--bento-accent);
+  background: var(--bx-accent);
   color: #fff;
   font-weight: 700;
   display: grid;
@@ -735,26 +735,26 @@
 
 /* ---------- Timeline ---------- */
 
-.bento-timeline {
+.bx-timeline {
   list-style: none;
   padding: 0;
   margin: 1.5em 0;
   position: relative;
 }
-.bento-timeline::before {
+.bx-timeline::before {
   content: "";
   position: absolute;
   left: 0.55rem;
   top: 0.3rem;
   bottom: 0.3rem;
   width: 2px;
-  background: var(--bento-border);
+  background: var(--bx-border);
 }
-.bento-timeline > li {
+.bx-timeline > li {
   position: relative;
   padding: 0.4rem 0 1rem 2rem;
 }
-.bento-timeline > li::before {
+.bx-timeline > li::before {
   content: "";
   position: absolute;
   left: 0;
@@ -762,138 +762,138 @@
   width: 1.2rem;
   height: 1.2rem;
   border-radius: 999px;
-  background: var(--bento-surface);
-  border: 3px solid var(--bento-accent);
+  background: var(--bx-surface);
+  border: 3px solid var(--bx-accent);
   box-sizing: border-box;
 }
-.bento-timeline time {
+.bx-timeline time {
   display: block;
-  font-size: var(--bento-fs-sm);
-  color: var(--bento-muted);
+  font-size: var(--bx-fs-sm);
+  color: var(--bx-muted);
   font-variant-numeric: tabular-nums;
   margin-bottom: 0.2em;
 }
-.bento-timeline h4 { margin: 0 0 0.2em; }
-.bento-timeline p { margin: 0; color: var(--bento-fg-soft); }
+.bx-timeline h4 { margin: 0 0 0.2em; }
+.bx-timeline p { margin: 0; color: var(--bx-fg-soft); }
 
 /* ---------- TOC ---------- */
 
-.bento-toc {
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+.bx-toc {
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1rem 1.2rem;
   margin: 0 0 2rem;
-  font-size: var(--bento-fs-sm);
+  font-size: var(--bx-fs-sm);
 }
-.bento-toc::before {
+.bx-toc::before {
   content: "Contents";
   display: block;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  font-size: var(--bento-fs-xs);
-  color: var(--bento-muted);
+  font-size: var(--bx-fs-xs);
+  color: var(--bx-muted);
   margin-bottom: 0.6em;
 }
-.bento-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
-.bento-toc li { counter-increment: toc; margin: 0.18em 0; }
-.bento-toc li::before {
+.bx-toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
+.bx-toc li { counter-increment: toc; margin: 0.18em 0; }
+.bx-toc li::before {
   content: counters(toc, ".") " ";
-  color: var(--bento-muted);
+  color: var(--bx-muted);
   font-variant-numeric: tabular-nums;
   margin-right: 0.4em;
 }
-.bento-toc a { border-bottom: none; color: var(--bento-fg-soft); }
-.bento-toc a:hover { color: var(--bento-accent); }
-.bento-toc ol ol { padding-left: 1.2em; margin-top: 0.18em; }
+.bx-toc a { border-bottom: none; color: var(--bx-fg-soft); }
+.bx-toc a:hover { color: var(--bx-accent); }
+.bx-toc ol ol { padding-left: 1.2em; margin-top: 0.18em; }
 
 /* ---------- Cross-references ---------- */
 
-/* Inline jump link: <a class="bento-xref" href="#id">text</a>
+/* Inline jump link: <a class="bx-xref" href="#id">text</a>
    Empty text content is auto-filled from the target heading by bento.js. */
-.bento-xref {
-  border-bottom: 1px dashed color-mix(in srgb, var(--bento-accent) 35%, transparent);
+.bx-xref {
+  border-bottom: 1px dashed color-mix(in srgb, var(--bx-accent) 35%, transparent);
 }
-.bento-xref::before {
+.bx-xref::before {
   content: "→ ";
-  color: var(--bento-muted);
+  color: var(--bx-muted);
   font-weight: 600;
   transition: color .15s;
 }
-.bento-xref:hover {
+.bx-xref:hover {
   border-bottom-style: solid;
-  border-bottom-color: var(--bento-accent);
+  border-bottom-color: var(--bx-accent);
 }
-.bento-xref:hover::before { color: var(--bento-accent); }
+.bx-xref:hover::before { color: var(--bx-accent); }
 
 /* "Related" sidebar block:
-     <aside class="bento-related">
+     <aside class="bx-related">
        <strong>関連する章</strong>
        <ul><li><a href="#id">…</a></li>…</ul>
      </aside>
-   Shortcut form: <aside class="bento-related" data-refs="#a, #b"></aside>
+   Shortcut form: <aside class="bx-related" data-refs="#a, #b"></aside>
    (title and link list are auto-built by bento.js from the target headings). */
-.bento-related {
-  background: var(--bento-surface-2);
-  border-left: 3px solid var(--bento-accent);
-  border-radius: 0 var(--bento-radius) var(--bento-radius) 0;
+.bx-related {
+  background: var(--bx-surface-2);
+  border-left: 3px solid var(--bx-accent);
+  border-radius: 0 var(--bx-radius) var(--bx-radius) 0;
   padding: 0.85rem 1.1rem;
   margin: 1.4em 0;
-  font-size: var(--bento-fs-sm);
+  font-size: var(--bx-fs-sm);
 }
-.bento-related > :first-child { margin-top: 0; }
-.bento-related > :last-child { margin-bottom: 0; }
-.bento-related > strong {
+.bx-related > :first-child { margin-top: 0; }
+.bx-related > :last-child { margin-bottom: 0; }
+.bx-related > strong {
   display: block;
-  color: var(--bento-accent);
-  font-size: var(--bento-fs-xs);
+  color: var(--bx-accent);
+  font-size: var(--bx-fs-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin-bottom: 0.45em;
 }
-.bento-related ul {
+.bx-related ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.bento-related li {
+.bx-related li {
   margin: 0.1em 0;
   padding-left: 0;
 }
-.bento-related li::before {
+.bx-related li::before {
   content: "→ ";
-  color: var(--bento-muted);
+  color: var(--bx-muted);
   font-weight: 600;
   margin-right: 0.1em;
 }
-.bento-related a {
+.bx-related a {
   border-bottom: none;
-  color: var(--bento-fg-soft);
+  color: var(--bx-fg-soft);
 }
-.bento-related a:hover {
-  color: var(--bento-accent);
+.bx-related a:hover {
+  color: var(--bx-accent);
   border-bottom: 1px solid currentColor;
 }
 
 /* "Related" inside a 2-column split fits as a sidebar; otherwise it sits
    between sections. Reduce top margin when it's the first child after a
    heading for a tighter section-tail feel. */
-.bento h2 + .bento-related,
-.bento h3 + .bento-related {
+.bx h2 + .bx-related,
+.bx h3 + .bx-related {
   margin-top: 0.8em;
 }
 
 /* ---------- Details (collapsible) ---------- */
 
-.bento details {
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
-  background: var(--bento-surface);
+.bx details {
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-surface);
   margin: 1em 0;
   overflow: hidden;
 }
-.bento summary {
+.bx summary {
   cursor: pointer;
   padding: 0.7rem 1rem;
   font-weight: 600;
@@ -902,117 +902,117 @@
   align-items: center;
   gap: 0.5rem;
 }
-.bento summary::-webkit-details-marker { display: none; }
-.bento summary::before {
+.bx summary::-webkit-details-marker { display: none; }
+.bx summary::before {
   content: "▸";
-  color: var(--bento-muted);
+  color: var(--bx-muted);
   transition: transform .15s;
   display: inline-block;
 }
-.bento details[open] summary::before { transform: rotate(90deg); }
-.bento details > :not(summary) { padding: 0 1rem 1rem; }
+.bx details[open] summary::before { transform: rotate(90deg); }
+.bx details > :not(summary) { padding: 0 1rem 1rem; }
 
 /* ---------- Mermaid / Chart wrappers ---------- */
 
-.bento-mermaid, .bento-chart {
-  background: var(--bento-surface);
-  border: 1px solid var(--bento-border);
-  border-radius: var(--bento-radius);
+.bx-mermaid, .bx-chart {
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
   padding: 1.5rem 1rem;
   margin: 1.5em 0;
   overflow-x: auto;
 }
-.bento-chart { min-height: 280px; position: relative; }
-.bento-chart canvas { width: 100% !important; height: 100% !important; }
+.bx-chart { min-height: 280px; position: relative; }
+.bx-chart canvas { width: 100% !important; height: 100% !important; }
 
 /* Mermaid SVG polish — gives nodes soft shadows, rounded corners, calmer edges */
-.bento-mermaid svg {
+.bx-mermaid svg {
   display: block;
   margin: 0 auto;
   max-width: 100%;
   height: auto;
-  font-family: var(--bento-font-sans);
+  font-family: var(--bx-font-sans);
 }
-.bento-mermaid .node {
+.bx-mermaid .node {
   filter: drop-shadow(0 1px 2px rgba(20, 28, 50, 0.08))
           drop-shadow(0 6px 14px rgba(20, 28, 50, 0.06));
 }
-.bento-mermaid .node rect,
-.bento-mermaid .node .basic.label-container {
+.bx-mermaid .node rect,
+.bx-mermaid .node .basic.label-container {
   rx: 10;
   ry: 10;
   stroke-width: 1.5px;
 }
-.bento-mermaid .node polygon,
-.bento-mermaid .node path {
+.bx-mermaid .node polygon,
+.bx-mermaid .node path {
   stroke-width: 1.5px;
   stroke-linejoin: round;
 }
-.bento-mermaid .nodeLabel,
-.bento-mermaid .node .label {
+.bx-mermaid .nodeLabel,
+.bx-mermaid .node .label {
   font-weight: 500;
-  color: var(--bento-fg);
+  color: var(--bx-fg);
 }
-.bento-mermaid .flowchart-link,
-.bento-mermaid .messageLine0,
-.bento-mermaid .messageLine1 {
+.bx-mermaid .flowchart-link,
+.bx-mermaid .messageLine0,
+.bx-mermaid .messageLine1 {
   stroke-width: 1.5px;
   stroke-linecap: round;
 }
 /* Edge labels: mermaid 11 nests <foreignObject><div.labelBkg><span><p>>;
    we override the backgrounds so the label blends into the mermaid card. */
-.bento-mermaid .edgeLabel foreignObject {
+.bx-mermaid .edgeLabel foreignObject {
   overflow: visible;
 }
-.bento-mermaid .edgeLabel,
-.bento-mermaid .edgeLabel .labelBkg,
-.bento-mermaid .edgeLabel foreignObject > div,
-.bento-mermaid .edgeLabel span.edgeLabel,
-.bento-mermaid .edgeLabel p {
-  background-color: var(--bento-surface);
+.bx-mermaid .edgeLabel,
+.bx-mermaid .edgeLabel .labelBkg,
+.bx-mermaid .edgeLabel foreignObject > div,
+.bx-mermaid .edgeLabel span.edgeLabel,
+.bx-mermaid .edgeLabel p {
+  background-color: var(--bx-surface);
 }
-.bento-mermaid .edgeLabel p {
-  color: var(--bento-fg);
+.bx-mermaid .edgeLabel p {
+  color: var(--bx-fg);
   font-weight: 500;
   margin: 0;
   padding: 0;
 }
-.bento-mermaid .cluster rect {
-  fill: var(--bento-surface-2);
-  stroke: var(--bento-border);
+.bx-mermaid .cluster rect {
+  fill: var(--bx-surface-2);
+  stroke: var(--bx-border);
   rx: 14;
   ry: 14;
   stroke-width: 1px;
 }
-.bento-mermaid .cluster .nodeLabel {
+.bx-mermaid .cluster .nodeLabel {
   font-weight: 600;
-  color: var(--bento-fg-soft);
+  color: var(--bx-fg-soft);
 }
-.bento-mermaid .marker,
-.bento-mermaid .arrowMarkerPath,
-.bento-mermaid marker path {
-  fill: var(--bento-border-strong);
-  stroke: var(--bento-border-strong);
+.bx-mermaid .marker,
+.bx-mermaid .arrowMarkerPath,
+.bx-mermaid marker path {
+  fill: var(--bx-border-strong);
+  stroke: var(--bx-border-strong);
 }
 
 /* ---------- Figures ---------- */
 
-.bento figure { margin: 1.5em 0; }
-.bento figcaption {
+.bx figure { margin: 1.5em 0; }
+.bx figcaption {
   text-align: center;
-  font-size: var(--bento-fs-sm);
-  color: var(--bento-muted);
+  font-size: var(--bx-fs-sm);
+  color: var(--bx-muted);
   margin-top: 0.5em;
 }
 
 /* ---------- Footnotes / footer ---------- */
 
-.bento-footer {
+.bx-footer {
   margin-top: 4rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--bento-border);
-  color: var(--bento-muted);
-  font-size: var(--bento-fs-sm);
+  border-top: 1px solid var(--bx-border);
+  color: var(--bx-muted);
+  font-size: var(--bx-fs-sm);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 1.2rem;
@@ -1021,21 +1021,21 @@
 
 /* ---------- Print ---------- */
 
-.bento-print-only { display: none; }
+.bx-print-only { display: none; }
 @media print {
-  .bento { background: #fff; color: #000; }
-  .bento-doc { max-width: none; padding: 0; }
-  .bento-print-only { display: revert; }
-  .bento-screen-only { display: none !important; }
-  .bento a { color: #000; border: none; }
-  .bento-callout, .bento-card, .bento-stat, .bento-toc, .bento pre, .bento-chart, .bento-mermaid {
+  .bx { background: #fff; color: #000; }
+  .bx-doc { max-width: none; padding: 0; }
+  .bx-print-only { display: revert; }
+  .bx-screen-only { display: none !important; }
+  .bx a { color: #000; border: none; }
+  .bx-callout, .bx-card, .bx-stat, .bx-toc, .bx pre, .bx-chart, .bx-mermaid {
     box-shadow: none;
     break-inside: avoid;
   }
-  .bento h2, .bento h3 { break-after: avoid; }
+  .bx h2, .bx h3 { break-after: avoid; }
 }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  .bento, .bento * { transition: none !important; animation: none !important; }
+  .bx, .bx * { transition: none !important; animation: none !important; }
 }

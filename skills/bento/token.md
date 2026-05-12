@@ -20,7 +20,7 @@ structured visual components, and consistent reading rhythm are the
 point. Tokens are what you pay for that.
 
 The shortcuts in §1 let you pay less tax without losing what makes the
-document worth reading. They are not, however, a path to "bento-lite":
+document worth reading. They are not, however, a path to "bx-lite":
 if the audience will skim once and move on, **skip bento entirely** (§4)
 rather than dial it down to the bone. The skill load and skeleton are
 optimized for documents that earn their tokens, not for ephemeral
@@ -33,7 +33,7 @@ output.
 A bento document spends extra tokens (vs plain Markdown) in three places:
 
 1. **Skeleton** — doctype, head, framework `<link>` / `<script>`, body wrappers. Paid once per document.
-2. **Wrappers** — `.bento-grid`, `.bento-sidebar`, the `<main>` reading column. Paid per layout block.
+2. **Wrappers** — `.bx-grid`, `.bx-sidebar`, the `<main>` reading column. Paid per layout block.
 3. **Component shells** — the markup around callouts, cards, stats, charts. Paid per component.
 
 Prose content itself costs the same in Markdown and HTML — that's not where bento spends extra. The techniques below target the three buckets above, never the prose.
@@ -48,11 +48,11 @@ The framework supports multiple equivalent forms for most components. Pick the s
 
 | Component | Shortest | Equivalent longer forms |
 | --- | --- | --- |
-| Callout | `<aside data-tone="info"><strong>Info</strong><p>body</p></aside>` | `<div class="bento-callout--info">…</div>` · `<div class="bento-callout bento-callout--info">…</div>` |
-| Badge | `<span data-tone="primary">…</span>` | `<span class="bento-badge--primary">…</span>` · `<span class="bento-badge bento-badge--primary">…</span>` |
-| Button | `<button data-variant="primary">…</button>` | `<button class="bento-btn--primary">…</button>` · `<button class="bento-btn bento-btn--primary">…</button>` |
-| Card (inside `.bento-grid`) | `<article><h3>Title</h3><p>Body</p></article>` | `<div class="bento-card"><h3>Title</h3><p>Body</p></div>` |
-| Reading column wrapper | `<main>` directly inside `<body class="bento">` | `<main class="bento-doc">` |
+| Callout | `<aside data-tone="info"><strong>Info</strong><p>body</p></aside>` | `<div class="bx-callout--info">…</div>` · `<div class="bx-callout bx-callout--info">…</div>` |
+| Badge | `<span data-tone="primary">…</span>` | `<span class="bx-badge--primary">…</span>` · `<span class="bx-badge bx-badge--primary">…</span>` |
+| Button | `<button data-variant="primary">…</button>` | `<button class="bx-btn--primary">…</button>` · `<button class="bx-btn bx-btn--primary">…</button>` |
+| Card (inside `.bx-grid`) | `<article><h3>Title</h3><p>Body</p></article>` | `<div class="bx-card"><h3>Title</h3><p>Body</p></div>` |
+| Reading column wrapper | `<main>` directly inside `<body class="bx">` | `<main class="bx-doc">` |
 | Chart labels / values | `data-labels="A,B,C" data-values="10,20,30"` | `data-labels='["A","B","C"]' data-values='[10,20,30]'` |
 
 Tones recognized on `<aside data-tone>`: `info`, `note`, `tip`, `success`, `warn`, `danger`. Tones on `<span data-tone>`: `primary`, `success`, `warn`, `danger`, `muted`. Variants on `<button data-variant>` / `<a data-variant>`: `primary`, `danger`, `ghost`; size via `data-size="sm"` / `"lg"`.
@@ -63,9 +63,9 @@ These were available before; use them always:
 
 | Long form | Shortcut |
 | --- | --- |
-| Manual `<ul><li><a href="#a">A</a>…</ul>` inside a related-aside | `<aside class="bento-related" data-refs="#a, #b"></aside>` |
-| `<a class="bento-xref" href="#x">Section X heading</a>` | `<a class="bento-xref" href="#x"></a>` (label auto-fills from target heading) |
-| Hand-built `<nav>` with manual section links | `<nav class="bento-toc"></nav>` |
+| Manual `<ul><li><a href="#a">A</a>…</ul>` inside a related-aside | `<aside class="bx-related" data-refs="#a, #b"></aside>` |
+| `<a class="bx-xref" href="#x">Section X heading</a>` | `<a class="bx-xref" href="#x"></a>` (label auto-fills from target heading) |
+| Hand-built `<nav>` with manual section links | `<nav class="bx-toc"></nav>` |
 
 ### Markdown islands (highest leverage)
 
@@ -85,7 +85,7 @@ The redesign collapses steps 1–3 into one screen.
 </section>
 ```
 
-Inside the island, the AI emits Markdown (denser than HTML for paragraphs, lists, headings, inline code). The framework lazy-loads `marked` and renders to HTML at load time. Visual components (`.bento-chart`, mermaid, callouts) still need raw HTML — embed them inline inside the markdown.
+Inside the island, the AI emits Markdown (denser than HTML for paragraphs, lists, headings, inline code). The framework lazy-loads `marked` and renders to HTML at load time. Visual components (`.bx-chart`, mermaid, callouts) still need raw HTML — embed them inline inside the markdown.
 
 Leading whitespace common to every line is stripped automatically, so the source can stay readably indented inside the surrounding HTML.
 
@@ -95,9 +95,9 @@ This is the single biggest output-side saving — prose is usually the largest t
 
 The framework supplies sensible defaults; omit attributes when the value would be the default:
 
-- `.bento-grid` auto-fits to 3 columns → drop `data-cols="3"`
-- `.bento-sidebar` defaults to narrow-on-left → drop `data-side="left"`
-- `.bento-chart` defaults to `data-type="bar"` → drop it when bar is wanted
+- `.bx-grid` auto-fits to 3 columns → drop `data-cols="3"`
+- `.bx-sidebar` defaults to narrow-on-left → drop `data-side="left"`
+- `.bx-chart` defaults to `data-type="bar"` → drop it when bar is wanted
 
 ### Short skeleton
 
@@ -111,7 +111,7 @@ HTML5 is permissive. The skeleton can shrink to:
 <title>X</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/bento.css">
 <script src="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/bento.js" defer></script>
-<body class="bento">
+<body class="bx">
 <main>
 content
 </main>
@@ -123,12 +123,12 @@ No `<head>`, no `</body>` / `</html>` closers. Keep `<html lang>` and the viewpo
 
 ## 2. Class-decoration is wasted tokens
 
-The framework auto-styles `<h1>`-`<h6>`, `<p>`, `<ul>`, `<ol>`, `<table>`, `<blockquote>`, `<code>`, `<pre>`, `<details>`, `<figure>`, native form controls. **No class needed.** Reaching for `bento-*` on them is wasted markup.
+The framework auto-styles `<h1>`-`<h6>`, `<p>`, `<ul>`, `<ol>`, `<table>`, `<blockquote>`, `<code>`, `<pre>`, `<details>`, `<figure>`, native form controls. **No class needed.** Reaching for `bx-*` on them is wasted markup.
 
-> ✗ `<p class="bento-text">…</p>` (no such class; `<p>` is already styled)
+> ✗ `<p class="bx-text">…</p>` (no such class; `<p>` is already styled)
 > ✓ `<p>…</p>`
 
-The trap is mental — Markdown trained you to think "headings are just headings, paragraphs are just paragraphs". HTML carries that same property inside `.bento`. Trust the defaults.
+The trap is mental — Markdown trained you to think "headings are just headings, paragraphs are just paragraphs". HTML carries that same property inside `.bx`. Trust the defaults.
 
 ---
 
@@ -164,7 +164,7 @@ Before generating an HTML doc, in order:
 **Then markup hygiene — pay the tax without waste.**
 - [ ] For prose-heavy regions, am I using `<section data-md>` and writing Markdown inside? If no → wrap them.
 - [ ] Am I using the shortest equivalent form for each component (semantic-attribute callouts, modifier-only classes, bare `<article>` in grids, comma-separated chart data)? If no → swap them in.
-- [ ] Am I using the existing auto-builds (`<nav class="bento-toc"></nav>`, empty `<a class="bento-xref">`, `data-refs`)? If no → use them.
+- [ ] Am I using the existing auto-builds (`<nav class="bx-toc"></nav>`, empty `<a class="bx-xref">`, `data-refs`)? If no → use them.
 
 If any of the **audience** questions failed → use Markdown. If only the **markup** questions failed → fix the markup but keep bento.
 
@@ -177,7 +177,7 @@ When you really need to cut tokens, in order:
 1. **Skip the skill entirely** if the output doesn't benefit (see §4).
 2. **Wrap prose in `<section data-md>`** so paragraphs/lists/headings emit as Markdown.
 3. **Use the shortest component form** (`<aside data-tone>`, `<span data-tone>`, `<button data-variant>`, bare `<article>` in grids).
-4. **Use the existing auto-builds** (`<nav class="bento-toc"></nav>`, empty xref, `data-refs`).
+4. **Use the existing auto-builds** (`<nav class="bx-toc"></nav>`, empty xref, `data-refs`).
 5. **Drop default-value attributes** (`data-cols="3"`, `data-side="left"`, `data-type="bar"`).
 6. **Strip class decoration** on already-styled semantic elements (`<p>`, `<h2>`, `<ul>`, `<table>`).
 7. **Use compact chart data** (`data-labels="A,B,C"` instead of JSON arrays).

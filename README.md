@@ -54,15 +54,15 @@ Any HTML file can opt in by adding two lines:
 <script src="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/bento.js" defer></script>
 ```
 
-then wrapping its content in `<body class="bento"><main class="bento-doc">…</main></body>`.
+then wrapping its content in `<body class="bx"><main class="bx-doc">…</main></body>`.
 
 ## Themes
 
 ```html
-<body class="bento" data-theme="dark">       <!-- built-in -->
-<body class="bento" data-theme="editorial">  <!-- loads themes/editorial.css -->
-<body class="bento" data-theme="mono">
-<body class="bento" data-theme="playful">
+<body class="bx" data-theme="dark">       <!-- built-in -->
+<body class="bx" data-theme="editorial">  <!-- loads themes/editorial.css -->
+<body class="bx" data-theme="mono">
+<body class="bx" data-theme="playful">
 ```
 
 To use one of the optional themes, also include its stylesheet:
@@ -80,7 +80,7 @@ Drop a `.claude/bento.local.md` at your project root and bento reads it before e
 theme: editorial
 voice: terse
 em_dash: 0
-avoided_visuals: [bento-mermaid]
+avoided_visuals: [bx-mermaid]
 ---
 
 - 結論を最初に出してほしい
@@ -95,12 +95,12 @@ Every visual aspect is a CSS custom property. Override in a single `<style>` blo
 
 ```html
 <style>
-  .bento {
-    --bento-accent: #d23669;
-    --bento-bg: #fffaf3;
-    --bento-font-sans: "Hiragino Sans", system-ui, sans-serif;
-    --bento-max-width: 80ch;
-    --bento-radius: 0;
+  .bx {
+    --bx-accent: #d23669;
+    --bx-bg: #fffaf3;
+    --bx-font-sans: "Hiragino Sans", system-ui, sans-serif;
+    --bx-max-width: 80ch;
+    --bx-radius: 0;
   }
 </style>
 ```
@@ -111,26 +111,26 @@ Full token list at the top of `skills/bento/assets/bento.css`.
 
 | Class | Purpose |
 | --- | --- |
-| `.bento-doc` | reading column wrapper |
-| `.bento-hero` + `.bento-lead` | document header |
-| `.bento-grid` + `.bento-card` | card layouts (2–6 columns, auto-responsive) |
-| `.bento-split` | 2-column side-by-side |
-| `.bento-sidebar` (`data-side`, `data-ratio`) | asymmetric narrow+wide for editors / palettes |
-| `.bento-stat` | KPI tile |
-| `.bento-badge--*` | inline labels (primary/success/warn/danger/muted) |
-| `.bento-callout--*` | info/note/tip/success/warn/danger |
-| `.bento-steps` | numbered procedure list |
-| `.bento-timeline` | event timeline with date markers |
-| `.bento-compare` table | comparison table with checkmark styling |
-| `.bento-toc` (empty `<nav>`) | auto-built table of contents |
-| `.bento-xref`, `.bento-related` | inline jump links and "see also" blocks (auto-fill from headings) |
-| `.bento-btn` (`--primary/--danger/--ghost`, `--sm/--lg`) | opt-in button styling |
+| `.bx-doc` | reading column wrapper |
+| `.bx-hero` + `.bx-lead` | document header |
+| `.bx-grid` + `.bx-card` | card layouts (2–6 columns, auto-responsive) |
+| `.bx-split` | 2-column side-by-side |
+| `.bx-sidebar` (`data-side`, `data-ratio`) | asymmetric narrow+wide for editors / palettes |
+| `.bx-stat` | KPI tile |
+| `.bx-badge--*` | inline labels (primary/success/warn/danger/muted) |
+| `.bx-callout--*` | info/note/tip/success/warn/danger |
+| `.bx-steps` | numbered procedure list |
+| `.bx-timeline` | event timeline with date markers |
+| `.bx-compare` table | comparison table with checkmark styling |
+| `.bx-toc` (empty `<nav>`) | auto-built table of contents |
+| `.bx-xref`, `.bx-related` | inline jump links and "see also" blocks (auto-fill from headings) |
+| `.bx-btn` (`--primary/--danger/--ghost`, `--sm/--lg`) | opt-in button styling |
 | `<input>`, `<select>`, `<textarea>`, `<fieldset>` | styled out of the box — no class needed |
-| `.bento-field` | label + control + help-text group |
-| `.bento-illust` | SVG wrapper; `currentColor` follows the theme accent |
-| `.bento-copy` | "Copy as X" button (`data-copy-from="#id"` or `data-copy-text=…`) |
-| `.bento-mermaid` | mermaid diagram block (auto-rendered) |
-| `.bento-chart` (data-* driven) | bar / line / doughnut / radar (Chart.js) |
+| `.bx-field` | label + control + help-text group |
+| `.bx-illust` | SVG wrapper; `currentColor` follows the theme accent |
+| `.bx-copy` | "Copy as X" button (`data-copy-from="#id"` or `data-copy-text=…`) |
+| `.bx-mermaid` | mermaid diagram block (auto-rendered) |
+| `.bx-chart` (data-* driven) | bar / line / doughnut / radar (Chart.js) |
 | `<pre><code class="language-…">` | auto-highlighted (highlight.js) |
 | `\(…\)` `\[…\]` | LaTeX math (KaTeX) |
 
@@ -151,10 +151,10 @@ For the documents that do earn the tokens, the framework keeps the markup tax sm
 
 - **Markdown islands**: `<section data-md>…markdown…</section>` lets you write prose-heavy regions as plain Markdown
 - **Semantic-attribute components**: `<aside data-tone="info">`, `<span data-tone="primary">`, `<button data-variant="primary">` replace the longer BEM classes
-- **Bare `<article>`** inside `.bento-grid` is styled as a card
+- **Bare `<article>`** inside `.bx-grid` is styled as a card
 - **Compact chart data**: `data-labels="A,B,C"` works alongside JSON arrays
-- **Modifier-only classes**: `bento-callout--info` works without also writing `bento-callout`
-- **Bare `<main>`** directly inside `<body class="bento">` (no need for `class="bento-doc"`)
+- **Modifier-only classes**: `bx-callout--info` works without also writing `bx-callout`
+- **Bare `<main>`** directly inside `<body class="bx">` (no need for `class="bx-doc"`)
 
 See `skills/bento/token.md` for the full catalogue, the dial-down hierarchy, and (most importantly) when to skip bento entirely. Token savings serve the reader; they are not the goal.
 

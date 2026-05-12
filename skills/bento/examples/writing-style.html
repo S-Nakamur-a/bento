@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="../assets/themes/editorial.css">
 <script src="../assets/bento.js" defer></script>
 <style>
-  .bento {
-    --bento-max-width: 76ch;
+  .bx {
+    --bx-max-width: 76ch;
   }
   .ws-pair {
     display: grid;
@@ -19,45 +19,45 @@
   }
   .ws-pair > div {
     padding: 0.6rem 0.8rem;
-    border-radius: var(--bento-radius, 0.4rem);
-    background: var(--bento-surface);
-    border: 1px solid var(--bento-border);
+    border-radius: var(--bx-radius, 0.4rem);
+    background: var(--bx-surface);
+    border: 1px solid var(--bx-border);
   }
   .ws-pair .ws-bad   { border-left: 3px solid #d23669; }
   .ws-pair .ws-good  { border-left: 3px solid #2f9e6e; }
-  .ws-pair small { display:block; color: var(--bento-muted); margin-bottom: 0.2rem; }
+  .ws-pair small { display:block; color: var(--bx-muted); margin-bottom: 0.2rem; }
   @media (max-width: 640px) {
     .ws-pair { grid-template-columns: 1fr; }
   }
 </style>
 </head>
-<body class="bento" data-theme="editorial">
-<main class="bento-doc">
+<body class="bx" data-theme="editorial">
+<main class="bx-doc">
 
-  <header class="bento-hero">
+  <header class="bx-hero">
     <p>
-      <span class="bento-badge bento-badge--primary">WRITING GUIDE</span>
-      <span class="bento-badge bento-badge--muted">bento / 補助ドキュメント</span>
+      <span class="bx-badge bx-badge--primary">WRITING GUIDE</span>
+      <span class="bx-badge bx-badge--muted">bento / 補助ドキュメント</span>
     </p>
     <h1>AIっぽくない文章を書くために</h1>
-    <p class="bento-lead">
+    <p class="bx-lead">
       美しい HTML を組んでも、中の散文が AI 臭ければ読者は3行で気づきます。
       このページは、bento スキルの一部として配布される
       <code>writing-style.md</code> の要点を視覚化したものです。
       四つの根（語彙・文の形・構造・組版）と、書き終わる前のセルフチェックまで。
     </p>
-    <div class="bento-hero-meta">
+    <div class="bx-hero-meta">
       <span>Source: Wikipedia "Signs of AI writing", OpenAI dev forum, GPTZero 等の公開知見</span>
       <span>2026-05-11</span>
       <span>Reading time: 6 min</span>
     </div>
   </header>
 
-  <nav class="bento-toc"></nav>
+  <nav class="bx-toc"></nav>
 
   <h2>核心は一行で済む</h2>
 
-  <div class="bento-callout bento-callout--tip">
+  <div class="bx-callout bx-callout--tip">
     <strong>原則</strong>
     <p>立場を取る。具体的に書く。リズムを揺らす。<br>
     AI 文章のテルはほぼ全部、この三つのどれかをサボった結果です。</p>
@@ -73,33 +73,33 @@
 
   <h2>このページで扱う範囲</h2>
 
-  <div class="bento-grid" data-cols="4">
-    <div class="bento-stat">
-      <span class="bento-stat-label">分類</span>
-      <span class="bento-stat-value">4</span>
-      <span class="bento-stat-trend" data-trend="flat">語彙 / 文 / 構造 / 組版</span>
+  <div class="bx-grid" data-cols="4">
+    <div class="bx-stat">
+      <span class="bx-stat-label">分類</span>
+      <span class="bx-stat-value">4</span>
+      <span class="bx-stat-trend" data-trend="flat">語彙 / 文 / 構造 / 組版</span>
     </div>
-    <div class="bento-stat">
-      <span class="bento-stat-label">flagged words</span>
-      <span class="bento-stat-value">30+</span>
-      <span class="bento-stat-trend" data-trend="flat">英語 + 日本語</span>
+    <div class="bx-stat">
+      <span class="bx-stat-label">flagged words</span>
+      <span class="bx-stat-value">30+</span>
+      <span class="bx-stat-trend" data-trend="flat">英語 + 日本語</span>
     </div>
-    <div class="bento-stat">
-      <span class="bento-stat-label">em-dash 予算</span>
-      <span class="bento-stat-value">0–1</span>
-      <span class="bento-stat-trend" data-trend="down">最大の指紋</span>
+    <div class="bx-stat">
+      <span class="bx-stat-label">em-dash 予算</span>
+      <span class="bx-stat-value">0–1</span>
+      <span class="bx-stat-trend" data-trend="down">最大の指紋</span>
     </div>
-    <div class="bento-stat">
-      <span class="bento-stat-label">セルフチェック</span>
-      <span class="bento-stat-value">11</span>
-      <span class="bento-stat-trend" data-trend="flat">書き終わる前に</span>
+    <div class="bx-stat">
+      <span class="bx-stat-label">セルフチェック</span>
+      <span class="bx-stat-value">11</span>
+      <span class="bx-stat-trend" data-trend="flat">書き終わる前に</span>
     </div>
   </div>
 
   <h2>四つの根</h2>
 
-  <div class="bento-grid" data-cols="2">
-    <div class="bento-card">
+  <div class="bx-grid" data-cols="2">
+    <div class="bx-card">
       <h3>1. 語彙</h3>
       <p>
         <code>delve</code>, <code>leverage</code>, <code>pivotal</code>,
@@ -108,7 +108,7 @@
         意味は通るが、書き手の輪郭が消える。
       </p>
     </div>
-    <div class="bento-card">
+    <div class="bx-card">
       <h3>2. 文の形</h3>
       <p>
         三つ並べ（rule of three）、「単なる○○ではなく△△」、
@@ -116,7 +116,7 @@
         構造が固まると一文ごとに AI のメトロノームが鳴る。
       </p>
     </div>
-    <div class="bento-card">
+    <div class="bx-card">
       <h3>3. 構造</h3>
       <p>
         導入・3 ポイント・まとめの 5 段落エッセイ。
@@ -124,7 +124,7 @@
         段落の重みが均一に揃いすぎる。
       </p>
     </div>
-    <div class="bento-card">
+    <div class="bx-card">
       <h3>4. 組版</h3>
       <p>
         em-dash の乱用、カーリークォート、太字の過剰、
@@ -135,7 +135,7 @@
     </div>
   </div>
 
-  <aside class="bento-related"
+  <aside class="bx-related"
          data-title="このページの章"
          data-refs="#vocab, #sentence, #structure, #typography, #checklist"></aside>
 
@@ -150,7 +150,7 @@
 
   <h3>English</h3>
 
-  <table class="bento-compare">
+  <table class="bx-compare">
     <thead>
       <tr><th>カテゴリ</th><th>避ける</th><th>代替</th></tr>
     </thead>
@@ -164,7 +164,7 @@
 
   <h3>日本語</h3>
 
-  <table class="bento-compare">
+  <table class="bx-compare">
     <thead>
       <tr><th>カテゴリ</th><th>避ける</th><th>代替</th></tr>
     </thead>
@@ -232,7 +232,7 @@
 
   <h2 id="structure">構造: 段落と全体</h2>
 
-  <div class="bento-callout bento-callout--note">
+  <div class="bx-callout bx-callout--note">
     <strong>5段落エッセイを拒む</strong>
     <p>
       AI のデフォルトは「導入 → 3 ポイント → まとめ」。
@@ -241,7 +241,7 @@
     </p>
   </div>
 
-  <div class="bento-callout bento-callout--note">
+  <div class="bx-callout bx-callout--note">
     <strong>場面設定の枕を削る</strong>
     <p>
       段落の冒頭が「In today's world…」「現代のビジネス環境において…」
@@ -249,7 +249,7 @@
     </p>
   </div>
 
-  <div class="bento-callout bento-callout--note">
+  <div class="bx-callout bx-callout--note">
     <strong>「課題はあるが今後に期待」で締めない</strong>
     <p>
       AI の常套のクローズ。情報量ゼロ。
@@ -259,7 +259,7 @@
 
   <h2 id="typography">組版: punctuation の指紋</h2>
 
-  <div class="bento-callout bento-callout--danger">
+  <div class="bx-callout bx-callout--danger">
     <strong>em-dash は最強のテル</strong>
     <p>
       <q>The em-dash has become the most recognizable fingerprint of AI writing,
@@ -271,7 +271,7 @@
 
   <h3>クォート・ボールド・絵文字</h3>
 
-  <table class="bento-compare">
+  <table class="bx-compare">
     <thead>
       <tr><th>項目</th><th>AI のクセ</th><th>人間らしい設定</th></tr>
     </thead>
@@ -283,7 +283,7 @@
     </tbody>
   </table>
 
-  <aside class="bento-related"
+  <aside class="bx-related"
          data-title="続けて読む"
          data-refs="#vocab, #sentence"></aside>
 
@@ -294,7 +294,7 @@
     3 つ以上失敗していたら、パッチではなく書き直しの合図です。
   </p>
 
-  <ol class="bento-steps">
+  <ol class="bx-steps">
     <li><div><h4>em-dash</h4><p>0 個、または明確な意図のある 1 個まで。</p></div></li>
     <li><div><h4>禁止語彙</h4><p>delve / leverage / pivotal / robust / seamless / tapestry が無いか。</p></div></li>
     <li><div><h4>定型接続</h4><p>「まず／次に／そのため／さらに」がデフォルト位置に無いか。</p></div></li>
@@ -310,7 +310,7 @@
 
   <h2>bento の中で守るべきこと、一行で</h2>
 
-  <div class="bento-callout bento-callout--success">
+  <div class="bx-callout bx-callout--success">
     <strong>原則の再掲</strong>
     <p>立場を取る。具体的に書く。リズムを揺らす。<br>
        残りはこの三つの系。</p>
@@ -321,11 +321,11 @@
     あなたの段落のうち、誰かに反論されうるものはどれですか。
     一つも無ければ、足りないのは禁止語ではなく主張です
     （実務的な確認項目は
-    <a class="bento-xref" href="#checklist"></a>
+    <a class="bx-xref" href="#checklist"></a>
     にまとまっています）。
   </p>
 
-  <footer class="bento-footer">
+  <footer class="bx-footer">
     <span>bento / writing-style.md の HTML 版</span>
     <span>2026-05-11</span>
   </footer>

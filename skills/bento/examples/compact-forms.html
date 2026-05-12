@@ -5,20 +5,20 @@
 <title>bento — compact forms showcase</title>
 <link rel="stylesheet" href="../assets/bento.css">
 <script src="../assets/bento.js" defer></script>
-<body class="bento">
+<body class="bx">
 <main>
 
-<header class="bento-hero">
+<header class="bx-hero">
   <p><span data-tone="primary">SHOWCASE</span> <span data-tone="muted">v0.2</span></p>
   <h1>Compact forms</h1>
-  <p class="bento-lead">Every component below is written in its shortest equivalent form. Compare with <code>examples/report.html</code> to see the BEM-style longer markup.</p>
+  <p class="bx-lead">Every component below is written in its shortest equivalent form. Compare with <code>examples/report.html</code> to see the BEM-style longer markup.</p>
 </header>
 
-<nav class="bento-toc"></nav>
+<nav class="bx-toc"></nav>
 
 <h2>Skeleton</h2>
 
-<p>The document above uses the minimal skeleton: no <code>&lt;head&gt;</code> wrapper, no <code>data-theme</code> default, and a bare <code>&lt;main&gt;</code> directly inside <code>&lt;body class="bento"&gt;</code>. The framework's reading-column rules apply to either <code>.bento-doc</code> or <code>.bento &gt; main</code>.</p>
+<p>The document above uses the minimal skeleton: no <code>&lt;head&gt;</code> wrapper, no <code>data-theme</code> default, and a bare <code>&lt;main&gt;</code> directly inside <code>&lt;body class="bx"&gt;</code>. The framework's reading-column rules apply to either <code>.bx-doc</code> or <code>.bx &gt; main</code>.</p>
 
 <h2>Callouts via &lt;aside data-tone&gt;</h2>
 
@@ -34,7 +34,7 @@
 </aside>
 <aside data-tone="tip">
   <strong>Tip</strong>
-  <p>The BEM form (<code>class="bento-callout bento-callout--tip"</code>) still works for back-compat.</p>
+  <p>The BEM form (<code>class="bx-callout bx-callout--tip"</code>) still works for back-compat.</p>
 </aside>
 <aside data-tone="success">
   <strong>Success</strong>
@@ -42,18 +42,18 @@
 </aside>
 <aside data-tone="warn">
   <strong>Warn</strong>
-  <p>If you combine <code>data-tone</code> with <code>class="bento-related"</code>, behavior is undefined — pick one.</p>
+  <p>If you combine <code>data-tone</code> with <code>class="bx-related"</code>, behavior is undefined — pick one.</p>
 </aside>
 <aside data-tone="danger">
   <strong>Danger</strong>
-  <p>Don't use <code>data-tone</code> on a generic <code>&lt;aside&gt;</code> that isn't meant to be a callout — the styling applies to any <code>aside[data-tone]</code> inside <code>.bento</code>.</p>
+  <p>Don't use <code>data-tone</code> on a generic <code>&lt;aside&gt;</code> that isn't meant to be a callout — the styling applies to any <code>aside[data-tone]</code> inside <code>.bx</code>.</p>
 </aside>
 
 <h2>Cards via bare &lt;article&gt;</h2>
 
-<p>Inside <code>.bento-grid</code>, any <code>&lt;article&gt;</code> picks up card styling. <code>&lt;section&gt;</code> is intentionally excluded so markdown islands can sit inside grids.</p>
+<p>Inside <code>.bx-grid</code>, any <code>&lt;article&gt;</code> picks up card styling. <code>&lt;section&gt;</code> is intentionally excluded so markdown islands can sit inside grids.</p>
 
-<div class="bento-grid">
+<div class="bx-grid">
   <article>
     <h3>Investigation</h3>
     <p>14 user interviews. Common pattern: friction at step 2 of onboarding.</p>
@@ -95,9 +95,9 @@
 
 <p><code>data-labels</code> and <code>data-values</code> now accept the compact form alongside JSON arrays.</p>
 
-<div class="bento-grid" data-cols="2">
-  <div class="bento-chart" data-labels="Q1,Q2,Q3,Q4" data-values="42,58,71,89" data-title="Quarterly"></div>
-  <div class="bento-chart" data-type="doughnut" data-labels="A,B,C,D" data-values="35,25,22,18" data-title="Allocation"></div>
+<div class="bx-grid" data-cols="2">
+  <div class="bx-chart" data-labels="Q1,Q2,Q3,Q4" data-values="42,58,71,89" data-title="Quarterly"></div>
+  <div class="bx-chart" data-type="doughnut" data-labels="A,B,C,D" data-values="35,25,22,18" data-title="Allocation"></div>
 </div>
 
 <h2>Markdown islands</h2>

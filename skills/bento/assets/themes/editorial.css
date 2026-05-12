@@ -1,27 +1,27 @@
 /*! bento theme: editorial — long-form magazine feel with serif body. */
-.bento[data-theme="editorial"],
-.bento [data-theme="editorial"] {
-  --bento-fg: #1f1b16;
-  --bento-fg-soft: #3f3a32;
-  --bento-muted: #7a7166;
-  --bento-bg: #fbf7f0;
-  --bento-surface: #fffaf2;
-  --bento-surface-2: #f1ead9;
-  --bento-border: #e2d8c2;
-  --bento-border-strong: #c7b896;
-  --bento-accent: #9b2226;
-  --bento-accent-soft: #f6e7e3;
-  --bento-font-sans: var(--bento-font-serif);
-  --bento-max-width: 68ch;
-  --bento-radius: 4px;
-  --bento-radius-sm: 2px;
+.bx[data-theme="editorial"],
+.bx [data-theme="editorial"] {
+  --bx-fg: #1f1b16;
+  --bx-fg-soft: #3f3a32;
+  --bx-muted: #7a7166;
+  --bx-bg: #fbf7f0;
+  --bx-surface: #fffaf2;
+  --bx-surface-2: #f1ead9;
+  --bx-border: #e2d8c2;
+  --bx-border-strong: #c7b896;
+  --bx-accent: #9b2226;
+  --bx-accent-soft: #f6e7e3;
+  --bx-font-sans: var(--bx-font-serif);
+  --bx-max-width: 68ch;
+  --bx-radius: 4px;
+  --bx-radius-sm: 2px;
 }
-.bento[data-theme="editorial"] h1,
-.bento[data-theme="editorial"] h2,
-.bento[data-theme="editorial"] h3,
-.bento[data-theme="editorial"] h4 {
-  font-family: var(--bento-font-serif);
+.bx[data-theme="editorial"] h1,
+.bx[data-theme="editorial"] h2,
+.bx[data-theme="editorial"] h3,
+.bx[data-theme="editorial"] h4 {
+  font-family: var(--bx-font-serif);
   letter-spacing: -0.005em;
 }
-.bento[data-theme="editorial"] .bento-hero h1 { font-style: italic; }
-.bento[data-theme="editorial"] blockquote { font-family: var(--bento-font-serif); font-style: italic; }
+.bx[data-theme="editorial"] .bx-hero h1 { font-style: italic; }
+.bx[data-theme="editorial"] blockquote { font-family: var(--bx-font-serif); font-style: italic; }

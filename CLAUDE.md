@@ -22,7 +22,7 @@ The skill works as three complementary instruction files that all load into the 
 
 | File | Layer | What it disciplines |
 | --- | --- | --- |
-| `skills/bento/SKILL.md` | Visual | Component vocabulary (`.bento-card`, `.bento-callout`, etc.), the required HTML skeleton, theme switching, the user-preference file convention |
+| `skills/bento/SKILL.md` | Visual | Component vocabulary (`.bx-card`, `.bx-callout`, etc.), the required HTML skeleton, theme switching, the user-preference file convention |
 | `skills/bento/writing-style.md` | Sentence | Vocabulary, sentence shape, punctuation, AI-tells to avoid (EN + JA) |
 | `skills/bento/readability.md` | Document | BLUF / Pyramid Principle, paragraph design, heading hierarchy, component-choice-by-shape |
 
@@ -52,9 +52,9 @@ Every `examples/*.html` is expected to follow the skill's own rules: BLUF, paral
 
 A deliberate split:
 
-- **Opt-in (class required)**: `.bento-btn`. Raw `<button>` is left untouched because `<button class="bento-badge">` is a pre-existing pattern used as a click target in examples; auto-styling buttons would break it.
+- **Opt-in (class required)**: `.bx-btn`. Raw `<button>` is left untouched because `<button class="bx-badge">` is a pre-existing pattern used as a click target in examples; auto-styling buttons would break it.
 - **Automatic (no class)**: form elements (`<input>`, `<select>`, `<textarea>`, `<fieldset>`). Too many input types to require per-class adoption.
-- **Data-attribute driven**: `.bento-chart` (data-type, data-labels, data-values), `.bento-mermaid` (raw mermaid source as text), `.bento-copy` (data-copy-from / data-copy-text), `.bento-related` (data-refs shortcut). Use this style for any new feature whose configuration is more than one or two booleans.
+- **Data-attribute driven**: `.bx-chart` (data-type, data-labels, data-values), `.bx-mermaid` (raw mermaid source as text), `.bx-copy` (data-copy-from / data-copy-text), `.bx-related` (data-refs shortcut). Use this style for any new feature whose configuration is more than one or two booleans.
 
 When adding a new component, pick one of these three modes deliberately and explain the choice in the commit.
 
@@ -64,7 +64,7 @@ When adding a new component, pick one of these three modes deliberately and expl
 
 ### Heading IDs are framework-managed
 
-`bento.js` assigns slug IDs to `<h2>` / `<h3>` inside `.bento-doc` before the TOC and cross-references are built (see `ensureHeadingIds` in `bento.js`). Examples that need stable anchors (for `.bento-xref` / `.bento-related`) should set explicit `id` attributes on the target headings rather than rely on the auto-slug, which can drift if heading text changes.
+`bento.js` assigns slug IDs to `<h2>` / `<h3>` inside `.bx-doc` before the TOC and cross-references are built (see `ensureHeadingIds` in `bento.js`). Examples that need stable anchors (for `.bx-xref` / `.bx-related`) should set explicit `id` attributes on the target headings rather than rely on the auto-slug, which can drift if heading text changes.
 
 ### Adding to the catalogue
 

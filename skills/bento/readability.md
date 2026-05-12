@@ -38,7 +38,7 @@ conclusion → why → details. Flip it.
 > ✗ "The team explored several factors that may influence onboarding completion..."
 > ✓ "Onboarding completion dropped 18% after the v4 redesign. Three reasons; see below."
 
-The opening paragraph (or `<p class="bento-lead">`) is for the **bottom
+The opening paragraph (or `<p class="bx-lead">`) is for the **bottom
 line**: result, claim, or recommendation in plain words.
 
 ### Tree, not chain
@@ -56,7 +56,7 @@ the spine. If they don't, the headings are decorative, not structural.
 
 Narrative-shaped writing (postmortems with a twist, an essay where the
 reveal is the point) can build to the conclusion. Even then, give the
-reader a one-line `<p class="bento-lead">` at the top hinting at the
+reader a one-line `<p class="bx-lead">` at the top hinting at the
 destination. Suspense is fine; mystery is not.
 
 ---
@@ -100,7 +100,7 @@ gist.
 - `<h1>`: document title, exactly one
 - `<h2>`: major section. Aim for 4–8 per document
 - `<h3>`: subsection inside an `<h2>`. Use sparingly
-- `<h4>`: small label only, inside `.bento-card` / `.bento-callout` / `.bento-steps`
+- `<h4>`: small label only, inside `.bx-card` / `.bx-callout` / `.bx-steps`
 
 If you find yourself reaching for `<h5>`, the document needs to be
 split.
@@ -121,8 +121,8 @@ For each `<h2>` section, give the skimmer four layers:
 
 1. The heading (the signpost)
 2. A leading sentence that frames the section in one breath
-3. A scannable element near the top: a `.bento-callout`, a `.bento-stat`
-   row, a 3-row `.bento-compare` table, or a small chart
+3. A scannable element near the top: a `.bx-callout`, a `.bx-stat`
+   row, a 3-row `.bx-compare` table, or a small chart
 4. The fuller prose below
 
 A reader who only consumes (1)+(2)+(3) should still come away with the
@@ -148,36 +148,36 @@ not preference.
 - Reordering wouldn't break sense (for `<ul>`; `<ol>` is for genuine sequences)
 - There are 3–7 items. Below 3, write a sentence. Above 7, split into groups.
 
-### Use a `.bento-card` grid when
+### Use a `.bx-card` grid when
 
 - Items are independent units the reader compares
 - Each has a title + 1–2 sentence body + optional footer
 - 3–8 cards total. Beyond that, split into a second grid
 
-### Use a `.bento-stat` grid when
+### Use a `.bx-stat` grid when
 
 - The unit is a number with a label
 - The numbers are comparable (same scale or all percentages)
 - 3–6 stats fit cleanly; 4 is the sweet spot
 
-### Use a `.bento-callout` when
+### Use a `.bx-callout` when
 
 - A single highlighted note is meant to interrupt the prose flow
 - The reader should leave with this specific point if they leave with one thing
 - **Sparingly.** One or two per page. More than three and they stop interrupting and start being noise.
 
-### Use a `.bento-compare` table when
+### Use a `.bx-compare` table when
 
 - Comparing 2–4 alternatives across 3–8 attributes
 - `✓` / `✗` for boolean attributes, short text for nuance
 - Each column header is an alternative, each row an attribute
 
-### Use `.bento-steps` when
+### Use `.bx-steps` when
 
 - Order matters
 - Each step has an action the reader takes
 
-### Use `.bento-timeline` when
+### Use `.bx-timeline` when
 
 - Items anchor to specific dates
 - The reader cares about chronology, not just sequence
@@ -220,7 +220,7 @@ bento's defaults are tuned for general readability:
 | --- | --- | --- |
 | Body font size | `17px` | 16px is the floor; 17 is the comfort line. Big enough on retina, generous for kanji density. |
 | Line height (body) | `1.65` | Research puts the floor for long prose at 1.5; 1.65 leaves room for mixed JA/EN. |
-| Reading column | `76ch` (`--bento-max-width`) | English: 60–75 chars per line target met. Mixed JA/EN: about 38–44 文字/行, well inside the 30–50 文字 comfort zone. |
+| Reading column | `76ch` (`--bx-max-width`) | English: 60–75 chars per line target met. Mixed JA/EN: about 38–44 文字/行, well inside the 30–50 文字 comfort zone. |
 | Heading line-height | `1.2` | Tight, for visual weight. |
 | Paragraph margin | `1.1em` | One blank line between paragraphs without being airy. |
 
@@ -235,9 +235,9 @@ Override via a single `<style>` block:
 
 ```html
 <style>
-  .bento {
-    --bento-max-width: 64ch;
-    --bento-fs-base: 18px;
+  .bx {
+    --bx-max-width: 64ch;
+    --bx-fs-base: 18px;
   }
 </style>
 ```
@@ -261,7 +261,7 @@ Japan-specific:
   短めに保つと読みやすい (3–4 文を上限の目安に)。
 - **書体**: 横書きは Gothic (Hiragino Sans / Noto Sans JP)、縦書きや
   長文の印象重視には Serif (Hiragino Mincho / Noto Serif JP)。bento の
-  既定は Gothic 系。`--bento-font-serif` 経由で本文を serif に切り替え
+  既定は Gothic 系。`--bx-font-serif` 経由で本文を serif に切り替え
   も可能。
 - **半角・全角**: 数字と英字は半角、記号は文脈に合わせて。「、。」の
   あとは詰めない。
@@ -279,7 +279,7 @@ Scan the document before declaring it done:
 - [ ] Bullet lists contain genuinely list-shaped content, not prose in disguise.
 - [ ] `<h2>` siblings follow parallel wording.
 - [ ] The longest paragraph is under 8 sentences.
-- [ ] At most 1–2 `.bento-callout`s per page.
+- [ ] At most 1–2 `.bx-callout`s per page.
 - [ ] No `<br>` for spacing, no decorative wrapper `<div>`s.
 - [ ] Document title is in `<h1>`, sections in `<h2>`, and you didn't reach for `<h5>`.
 

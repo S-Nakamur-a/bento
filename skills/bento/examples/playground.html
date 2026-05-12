@@ -8,25 +8,25 @@
 <script src="../assets/bento.js" defer></script>
 <style>
   #preview-frame {
-    border: 1px dashed var(--bento-border);
-    border-radius: var(--bento-radius);
+    border: 1px dashed var(--bx-border);
+    border-radius: var(--bx-radius);
     padding: 1.2rem;
-    background: var(--bento-bg);
+    background: var(--bx-bg);
     min-height: 9rem;
     display: flex;
     align-items: center;
   }
-  #preview-frame > .bento-callout { width: 100%; margin: 0; }
+  #preview-frame > .bx-callout { width: 100%; margin: 0; }
   /* When opt-icon is off, hide the ::before icon and stretch contents */
-  #preview-frame .bento-callout[data-no-icon="1"]::before { display: none; }
-  #preview-frame .bento-callout[data-no-icon="1"] > strong,
-  #preview-frame .bento-callout[data-no-icon="1"] > p { grid-column: 1 / -1; }
+  #preview-frame .bx-callout[data-no-icon="1"]::before { display: none; }
+  #preview-frame .bx-callout[data-no-icon="1"] > strong,
+  #preview-frame .bx-callout[data-no-icon="1"] > p { grid-column: 1 / -1; }
   #payload {
-    font-family: var(--bento-font-mono);
+    font-family: var(--bx-font-mono);
     font-size: 0.85em;
-    background: var(--bento-surface-2);
-    border: 1px solid var(--bento-border);
-    border-radius: var(--bento-radius-sm);
+    background: var(--bx-surface-2);
+    border: 1px solid var(--bx-border);
+    border-radius: var(--bx-radius-sm);
     padding: 0.8rem 1rem;
     white-space: pre-wrap;
     word-break: break-all;
@@ -34,29 +34,29 @@
   }
 </style>
 </head>
-<body class="bento">
-<main class="bento-doc">
+<body class="bx">
+<main class="bx-doc">
 
-  <header class="bento-hero">
+  <header class="bx-hero">
     <p>
-      <span class="bento-badge bento-badge--primary">PLAYGROUND</span>
-      <span class="bento-badge bento-badge--muted">Custom Editing Interface</span>
+      <span class="bx-badge bx-badge--primary">PLAYGROUND</span>
+      <span class="bx-badge bx-badge--muted">Custom Editing Interface</span>
     </p>
     <h1>Callout デザイナー</h1>
-    <p class="bento-lead">
-      左のフォームで bento の <code>.bento-callout</code> をいじり、
+    <p class="bx-lead">
+      左のフォームで bento の <code>.bx-callout</code> をいじり、
       右で見た目を確認しつつ、最後に「Copy HTML」で出力をクリップボードへ。
       double-click でこのファイルを開き、好みの形を見つけたら HTML を
       別のドキュメントに貼り付けてください。
     </p>
   </header>
 
-  <div class="bento-sidebar" data-ratio="1:2">
+  <div class="bx-sidebar" data-ratio="1:2">
 
     <!-- ===== Left: form controls ===== -->
     <form id="form" onsubmit="return false">
 
-      <div class="bento-field">
+      <div class="bx-field">
         <label for="variant">バリアント</label>
         <select id="variant">
           <option value="info">info</option>
@@ -68,31 +68,31 @@
         </select>
       </div>
 
-      <div class="bento-field">
+      <div class="bx-field">
         <label for="title">タイトル</label>
         <input id="title" type="text" value="原則">
-        <span class="bento-field-help">空欄にすると <code>&lt;strong&gt;</code> ごと省かれます。</span>
+        <span class="bx-field-help">空欄にすると <code>&lt;strong&gt;</code> ごと省かれます。</span>
       </div>
 
-      <div class="bento-field">
+      <div class="bx-field">
         <label for="body">本文</label>
         <textarea id="body" rows="3">立場を取る。具体的に書く。リズムを揺らす。</textarea>
       </div>
 
-      <div class="bento-field">
+      <div class="bx-field">
         <label for="accent">アクセント色</label>
         <input id="accent" type="color" value="#2f5fbf">
-        <span class="bento-field-help">プレビュー内の <code>--bento-accent</code> を上書きします。</span>
+        <span class="bx-field-help">プレビュー内の <code>--bx-accent</code> を上書きします。</span>
       </div>
 
-      <div class="bento-field">
+      <div class="bx-field">
         <label for="radius">角丸 (<span id="radius-val">10</span>px)</label>
         <input id="radius" type="range" min="0" max="24" value="10">
       </div>
 
       <fieldset>
         <legend>オプション</legend>
-        <div class="bento-field bento-field--inline">
+        <div class="bx-field bx-field--inline">
           <input id="opt-icon" type="checkbox" checked>
           <label for="opt-icon">アイコンを表示する</label>
         </div>
@@ -108,7 +108,7 @@
         <!-- live-built callout goes here -->
       </div>
 
-      <figure class="bento-illust" aria-hidden="true">
+      <figure class="bx-illust" aria-hidden="true">
         <svg viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
           <rect x="2" y="22" width="316" height="36" rx="8"
                 fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 6"/>
@@ -116,7 +116,7 @@
           <circle cx="160" cy="40" r="8" fill="currentColor" opacity="0.55"/>
           <circle cx="280" cy="40" r="8" fill="currentColor" opacity="0.25"/>
         </svg>
-        <figcaption>SVG は <code>currentColor</code> で <code>--bento-accent</code> を継承します。</figcaption>
+        <figcaption>SVG は <code>currentColor</code> で <code>--bx-accent</code> を継承します。</figcaption>
       </figure>
 
       <h3>HTML 出力</h3>
@@ -124,11 +124,11 @@
 
       <p>
         <button type="button"
-                class="bento-btn bento-btn--primary bento-copy"
+                class="bx-btn bx-btn--primary bx-copy"
                 data-copy-from="#payload">
           Copy HTML
         </button>
-        <button type="button" class="bento-btn bento-btn--ghost" id="reset">
+        <button type="button" class="bx-btn bx-btn--ghost" id="reset">
           Reset
         </button>
       </p>
@@ -137,7 +137,7 @@
 
   </div>
 
-  <footer class="bento-footer">
+  <footer class="bx-footer">
     <span>bento / Custom Editing Interface 雛形</span>
     <span>2026-05-11</span>
   </footer>
@@ -169,8 +169,8 @@
   // Build the callout DOM from current state (no innerHTML).
   function buildCallout(state) {
     const div = document.createElement("div");
-    div.className = "bento-callout bento-callout--" + state.variant;
-    div.style.setProperty("--bento-accent", state.accent);
+    div.className = "bx-callout bx-callout--" + state.variant;
+    div.style.setProperty("--bx-accent", state.accent);
     div.style.borderRadius = "0 " + state.radius + "px " + state.radius + "px 0";
     if (!state.icon) div.setAttribute("data-no-icon", "1");
 
@@ -195,8 +195,8 @@
   function serializeCallout(state) {
     const indent = "  ";
     const attrs = [
-      'class="bento-callout bento-callout--' + state.variant + '"',
-      'style="--bento-accent: ' + state.accent +
+      'class="bx-callout bx-callout--' + state.variant + '"',
+      'style="--bx-accent: ' + state.accent +
         '; border-radius: 0 ' + state.radius + 'px ' + state.radius + 'px 0;"',
     ];
     if (!state.icon) attrs.push('data-no-icon="1"');

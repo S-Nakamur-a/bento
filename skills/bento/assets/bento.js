@@ -82,7 +82,7 @@
   function showError(el, msg) {
     while (el.firstChild) el.removeChild(el.firstChild);
     const pre = document.createElement("pre");
-    pre.style.color = "var(--bento-danger)";
+    pre.style.color = "var(--bx-danger)";
     pre.textContent = "bento: " + msg;
     el.appendChild(pre);
   }
@@ -99,32 +99,32 @@
       theme: "base",
       themeVariables: {
         // Frame / background
-        background:             v("--bento-bg"),
+        background:             v("--bx-bg"),
         // Primary nodes (most common rounded-rect)
-        primaryColor:           v("--bento-surface"),
-        primaryBorderColor:     v("--bento-accent"),
-        primaryTextColor:       v("--bento-fg"),
+        primaryColor:           v("--bx-surface"),
+        primaryBorderColor:     v("--bx-accent"),
+        primaryTextColor:       v("--bx-fg"),
         // Secondary (decisions / alternates)
-        secondaryColor:         v("--bento-accent-soft"),
-        secondaryBorderColor:   v("--bento-accent"),
-        secondaryTextColor:     v("--bento-fg"),
+        secondaryColor:         v("--bx-accent-soft"),
+        secondaryBorderColor:   v("--bx-accent"),
+        secondaryTextColor:     v("--bx-fg"),
         // Tertiary (other alt fills)
-        tertiaryColor:          v("--bento-surface-2"),
-        tertiaryBorderColor:    v("--bento-border-strong"),
-        tertiaryTextColor:      v("--bento-fg-soft"),
+        tertiaryColor:          v("--bx-surface-2"),
+        tertiaryBorderColor:    v("--bx-border-strong"),
+        tertiaryTextColor:      v("--bx-fg-soft"),
         // Edges & arrows
-        lineColor:              v("--bento-border-strong"),
-        edgeLabelBackground:    v("--bento-surface"),
+        lineColor:              v("--bx-border-strong"),
+        edgeLabelBackground:    v("--bx-surface"),
         // Cluster / subgraph
-        clusterBkg:             v("--bento-surface-2"),
-        clusterBorder:          v("--bento-border"),
-        titleColor:             v("--bento-fg"),
+        clusterBkg:             v("--bx-surface-2"),
+        clusterBorder:          v("--bx-border"),
+        titleColor:             v("--bx-fg"),
         // Notes / extras
-        noteBkgColor:           v("--bento-accent-soft"),
-        noteBorderColor:        v("--bento-accent"),
-        noteTextColor:          v("--bento-fg"),
+        noteBkgColor:           v("--bx-accent-soft"),
+        noteBorderColor:        v("--bx-accent"),
+        noteTextColor:          v("--bx-fg"),
         // Typography
-        fontFamily:             v("--bento-font-sans", "system-ui"),
+        fontFamily:             v("--bx-font-sans", "system-ui"),
         fontSize:               "15px",
       },
       flowchart: {
@@ -140,10 +140,10 @@
     for (const el of nodes) {
       const src = el.textContent.trim();
       try {
-        const id = "bento-mermaid-" + (i++);
+        const id = "bx-mermaid-" + (i++);
         const { svg } = await mermaid.render(id, src);
         replaceWithSVG(el, svg);
-        el.classList.add("bento-mermaid--rendered");
+        el.classList.add("bx-mermaid--rendered");
       } catch (e) {
         showError(el, "mermaid: " + (e.message || String(e)));
       }
@@ -153,12 +153,12 @@
   /* ---------- Charts ---------- */
 
   const CHART_PALETTE_KEYS = [
-    "--bento-accent",
-    "--bento-success",
-    "--bento-warn",
-    "--bento-danger",
-    "--bento-tip",
-    "--bento-info",
+    "--bx-accent",
+    "--bx-success",
+    "--bx-warn",
+    "--bx-danger",
+    "--bx-tip",
+    "--bx-info",
   ];
 
   function chartPalette() {
@@ -201,11 +201,11 @@
     await loadScript(CDN.chart);
     const Chart = window.Chart;
     if (!Chart) return;
-    const fg = cssVar("--bento-fg", "#1a2238");
-    const grid = cssVar("--bento-border", "#e6e4df");
+    const fg = cssVar("--bx-fg", "#1a2238");
+    const grid = cssVar("--bx-border", "#e6e4df");
     Chart.defaults.color = fg;
     Chart.defaults.borderColor = grid;
-    Chart.defaults.font.family = cssVar("--bento-font-sans", "system-ui");
+    Chart.defaults.font.family = cssVar("--bx-font-sans", "system-ui");
 
     for (const el of nodes) {
       const type = el.dataset.type || "bar";
@@ -295,7 +295,7 @@
   /* ---------- KaTeX ---------- */
 
   async function initKaTeX() {
-    const body = document.querySelector(".bento");
+    const body = document.querySelector(".bx");
     if (!body) return;
     const text = body.textContent;
     if (!/\\\(|\\\[|\$\$/.test(text)) return;
@@ -324,7 +324,7 @@
       .slice(0, 64) || "section";
   }
 
-  const HEADING_SKIP = ".bento-card, .bento-callout, .bento-stat, .bento-steps, .bento-timeline, .bento-toc, .bento-hero";
+  const HEADING_SKIP = ".bx-card, .bx-callout, .bx-stat, .bx-steps, .bx-timeline, .bx-toc, .bx-hero";
 
   function sectionHeadings(scope) {
     return Array.from(scope.querySelectorAll("h2, h3"))
@@ -333,7 +333,7 @@
 
   // Assigns slug IDs to section headings that don't have one. Used by
   // both the TOC and cross-references so anchors work whether or not the
-  // page has a <nav class="bento-toc">.
+  // page has a <nav class="bx-toc">.
   function ensureHeadingIds(root) {
     const used = new Set();
     const headings = sectionHeadings(root);
@@ -349,7 +349,7 @@
   }
 
   function buildTOC(tocEl) {
-    const doc = tocEl.closest(".bento-doc") || document;
+    const doc = tocEl.closest(".bx-doc") || document;
     const headings = sectionHeadings(doc);
     if (!headings.length) { tocEl.remove(); return; }
 
@@ -383,11 +383,11 @@
 
   /* ---------- Cross-references ---------- */
 
-  // `.bento-xref` with empty text → fill from target heading.
-  // `.bento-related[data-refs]` → build title + <ul> of links to targets.
+  // `.bx-xref` with empty text → fill from target heading.
+  // `.bx-related[data-refs]` → build title + <ul> of links to targets.
   // Heading IDs must already exist (ensureHeadingIds runs first in boot).
   function buildCrossRefs(root) {
-    root.querySelectorAll("a.bento-xref[href^='#']").forEach((a) => {
+    root.querySelectorAll("a.bx-xref[href^='#']").forEach((a) => {
       if (a.textContent.trim()) return;
       const id = decodeURIComponent(a.getAttribute("href").slice(1));
       if (!id) return;
@@ -395,7 +395,7 @@
       if (target) a.textContent = target.textContent.trim();
     });
 
-    root.querySelectorAll(".bento-related[data-refs]:not([data-built])").forEach((el) => {
+    root.querySelectorAll(".bx-related[data-refs]:not([data-built])").forEach((el) => {
       el.setAttribute("data-built", "1");
       const refs = el.dataset.refs.split(/[,\s]+/).filter(Boolean);
       if (!refs.length) return;
@@ -425,13 +425,13 @@
 
   /* ---------- Copy buttons ---------- */
 
-  // <button class="bento-btn bento-copy" data-copy-from="#config">…</button>
+  // <button class="bx-btn bx-copy" data-copy-from="#config">…</button>
   //   On click, copies the target's value (for inputs) or textContent
   //   (for other elements) to the clipboard. Sets data-copied="1" briefly
   //   so the CSS feedback (✓ / ✕) shows up.
   // Alternative: data-copy-text="literal text" copies a fixed string.
   function bindCopyButtons(root) {
-    root.querySelectorAll(".bento-copy:not([data-bound])").forEach((btn) => {
+    root.querySelectorAll(".bx-copy:not([data-bound])").forEach((btn) => {
       btn.setAttribute("data-bound", "1");
       btn.addEventListener("click", async () => {
         let text = btn.dataset.copyText || "";
@@ -514,7 +514,7 @@
   /* ---------- boot ---------- */
 
   async function boot() {
-    const root = document.querySelector(".bento") || document.body;
+    const root = document.querySelector(".bx") || document.body;
 
     // Markdown islands first: their rendered output may add headings,
     // charts, mermaid, code blocks that downstream steps need to see.
@@ -522,7 +522,7 @@
 
     ensureHeadingIds(root);
 
-    root.querySelectorAll("nav.bento-toc:empty, nav.bento-toc:not([data-built])").forEach((el) => {
+    root.querySelectorAll("nav.bx-toc:empty, nav.bx-toc:not([data-built])").forEach((el) => {
       el.setAttribute("data-built", "1");
       buildTOC(el);
     });
@@ -530,10 +530,10 @@
     buildCrossRefs(root);
     bindCopyButtons(root);
 
-    initMermaid(Array.from(root.querySelectorAll(".bento-mermaid:not([data-built])"))
+    initMermaid(Array.from(root.querySelectorAll(".bx-mermaid:not([data-built])"))
       .map((el) => { el.setAttribute("data-built", "1"); return el; }));
 
-    initCharts(Array.from(root.querySelectorAll(".bento-chart:not([data-built])"))
+    initCharts(Array.from(root.querySelectorAll(".bx-chart:not([data-built])"))
       .map((el) => { el.setAttribute("data-built", "1"); return el; }));
 
     initHighlight(Array.from(root.querySelectorAll('pre code[class*="language-"]:not([data-built])'))
@@ -548,5 +548,5 @@
     boot();
   }
 
-  window.bento = Object.assign(window.bento || {}, { refresh: boot });
+  window.bx = Object.assign(window.bx || {}, { refresh: boot });
 })();

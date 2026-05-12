@@ -172,7 +172,7 @@ at first mention or at the moment of payoff. In bento, prefer using
 ### 4.4 Emoji and symbol clutter
 
 ✅ ❌ 🚀 ⭐ used as bullet markers signal AI. The bento framework already
-styles `✓` and `✗` in `.bento-compare` tables and has badges, callouts,
+styles `✓` and `✗` in `.bx-compare` tables and has badges, callouts,
 and steps with semantic icons — use those instead of inline emoji.
 
 ### 4.5 Japanese-specific typography
