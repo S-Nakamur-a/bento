@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bento スキルの全体像 — 三層の規律</title>
+<link rel="stylesheet" href="../assets/bento.css">
+<script src="../assets/bento.js" defer></script>
+<style>
+  /* Slightly narrower column for a denser editorial feel */
+  .bento { --bento-max-width: 72ch; }
+  /* AI vs Human pair, reused from writing-style.html */
+  .ws-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 0.6rem 0;
+  }
+  .ws-pair > div {
+    padding: 0.55rem 0.8rem;
+    border-radius: var(--bento-radius-sm);
+    background: var(--bento-surface);
+    border: 1px solid var(--bento-border);
+    font-size: 0.94em;
+  }
+  .ws-pair .ws-bad  { border-left: 3px solid #d23669; }
+  .ws-pair .ws-good { border-left: 3px solid #2f9e6e; }
+  .ws-pair small { display:block; color: var(--bento-muted); margin-bottom: 0.15rem; }
+  @media (max-width: 640px) {
+    .ws-pair { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="bento">
+<main class="bento-doc">
+
+  <header class="bento-hero">
+    <p>
+      <span class="bento-badge bento-badge--primary">OVERVIEW</span>
+      <span class="bento-badge bento-badge--muted">bento v0.1</span>
+    </p>
+    <h1>bento スキルの全体像</h1>
+    <p class="bento-lead">
+      bento は AI 出力を「読まれる HTML」に変える skill です。
+      視覚は CDN ホストの CSS/JS が、文は writing-style.md が、
+      文書構造は readability.md が担保し、双方向 UI 用のプリミティブも揃っています。
+      6 分で全体像を掴めるよう、各層を要点だけまとめました。
+    </p>
+    <div class="bento-hero-meta">
+      <span>三層 + 双方向プリミティブ</span>
+      <span>2026-05-12</span>
+      <span>Reading time: 6 min</span>
+    </div>
+  </header>
+
+  <nav class="bento-toc"></nav>
+
+  <h2 id="bottom-line">最初に結論</h2>
+
+  <div class="bento-callout bento-callout--tip">
+    <strong>三原則</strong>
+    <p>
+      <strong>視覚は自動 / 文は規律 / 文書は skimmer 優先。</strong>
+      この三つさえ守れば、bento は同じトークン量で
+      「読まれる前に閉じられる」HTML を「最後まで読まれる」HTML に変えます。
+    </p>
+  </div>
+
+  <p>
+    Markdown は読みやすく、トークンも安いのですが、表現の天井が低い。
+    HTML はリッチですが手書きするとトークンが嵩む。
+    bento はこの両方の弱点を、CDN ホストのフレームワークと最小の AI 出力で同時に解決します。
+  </p>
+
+  <h2 id="layers">三つの層</h2>
+
+  <p>
+    bento は単一の framework ではなく、責任範囲の違う三つの層の重ね合わせです。
+    どれか一つでも欠けると、出力は AI 臭くなるか、見た目だけ綺麗になります。
+  </p>
+
+  <div class="bento-grid" data-cols="3">
+
+    <div class="bento-card">
+      <h3>① 視覚</h3>
+      <p>
+        <code>bento.css</code> と <code>bento.js</code> が
+        76ch のリーディングカラム、1.65 の行間、17px の本文、
+        callout・card・chart・mermaid を提供。
+      </p>
+      <footer>AI のクラス選択だけで成立</footer>
+    </div>
+
+    <div class="bento-card">
+      <h3>② 文</h3>
+      <p>
+        <code>writing-style.md</code> が
+        em-dash・"delve"・三つ並べ・「単なる○○ではなく」など
+        AI-tell を 30 種類以上カタログ化。
+      </p>
+      <footer>書きながら参照する規律</footer>
+    </div>
+
+    <div class="bento-card">
+      <h3>③ 文書</h3>
+      <p>
+        <code>readability.md</code> が BLUF / Pyramid Principle、
+        段落設計、見出し階層、コンポーネント選択の閾値を定義。
+      </p>
+      <footer>書く前に決める骨格</footer>
+    </div>
+
+  </div>
+
+  <h2 id="visual">層① 視覚: フレームワーク</h2>
+
+  <p>
+    視覚層の責任は「AI が貧弱な CSS を書かない」こと。
+    HTML を <code>&lt;link&gt;</code> と <code>&lt;script&gt;</code> 2 行に
+    繋ぐだけで、全コンポーネントが使えるようになります。
+    タイポグラフィ・配色・余白の判断は AI ではなくフレームワークが下します。
+  </p>
+
+  <table class="bento-compare">
+    <thead>
+      <tr><th>機能</th><th>提供方式</th><th>AI が触る？</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>本文タイポ (17px / 1.65 / 76ch)</td><td>自動</td><td>触らない</td></tr>
+      <tr><td>見出し階層 h1–h4</td><td>自動</td><td>マークアップだけ</td></tr>
+      <tr><td>カード / コールアウト / KPI</td><td>クラス指定</td><td>クラス名のみ</td></tr>
+      <tr><td>Chart.js / mermaid / KaTeX</td><td>data-属性駆動 + 遅延ロード</td><td>data-* だけ</td></tr>
+      <tr><td>テーマ切替</td><td><code>data-theme</code> 1 属性</td><td>1 属性のみ</td></tr>
+      <tr><td>フォーム要素</td><td>raw <code>&lt;input&gt;</code> 直接スタイル</td><td>クラス不要</td></tr>
+      <tr><td>ボタン</td><td><code>.bento-btn</code> opt-in</td><td>明示的に付ける</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="sentence">層② 文: writing-style.md</h2>
+
+  <div class="bento-callout bento-callout--note">
+    <strong>一行の原則</strong>
+    <p>立場を取る。具体的に書く。リズムを揺らす。<br>
+       AI 文章のテルは、ほぼ全部この三つのどれかをサボった結果です。</p>
+  </div>
+
+  <p>
+    語彙リストは便利ですが、根は三つの「コミットしない」習慣です。
+    断定を避ける、抽象に逃げる、同じ拍子で続ける。
+    禁止語を一つ削っても、この習慣が残っていると別の禁止語が代わりに出てきます。
+  </p>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      シンプルで、軽量で、わかりやすい設計です。
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      設計は軽い。プラグイン一つで全部組み替えられます。
+    </div>
+  </div>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI</small>
+      これは単なるツールではなく、思考の枠組みです。
+    </div>
+    <div class="ws-good"><small>✓ Human</small>
+      これは思考の枠組みです。
+    </div>
+  </div>
+
+  <div class="bento-grid" data-cols="3">
+    <div class="bento-stat">
+      <span class="bento-stat-label">flagged words</span>
+      <span class="bento-stat-value">30+</span>
+      <span class="bento-stat-trend" data-trend="flat">英語 + 日本語</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">em-dash 予算</span>
+      <span class="bento-stat-value">0–1</span>
+      <span class="bento-stat-trend" data-trend="down">最大の指紋</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">セルフチェック</span>
+      <span class="bento-stat-value">11</span>
+      <span class="bento-stat-trend" data-trend="flat">書き終わる前</span>
+    </div>
+  </div>
+
+  <p>
+    詳細と置き換え辞書は
+    <a class="bento-xref" href="writing-style.html">writing-style.html</a>
+    に視覚化されています。
+  </p>
+
+  <h2 id="document">層③ 文書: readability.md</h2>
+
+  <div class="bento-grid" data-cols="2">
+    <div class="bento-stat">
+      <span class="bento-stat-label">skim 率</span>
+      <span class="bento-stat-value">~70%</span>
+      <span class="bento-stat-trend" data-trend="flat">word-by-word では読まれない</span>
+    </div>
+    <div class="bento-stat">
+      <span class="bento-stat-label">判断時間</span>
+      <span class="bento-stat-value">5–7s</span>
+      <span class="bento-stat-trend" data-trend="flat">読む価値があるかの初期判定</span>
+    </div>
+  </div>
+
+  <p>
+    読者の 7 割は読まずに skim します。
+    だから結論を先に置き、見出しを「中身の縮図」として並べ、
+    各章の冒頭に視覚要素を一つ入れる。これだけで残り 3 割の精読読者にも届きます。
+  </p>
+
+  <div class="bento-mermaid">
+flowchart TB
+  C[結論: 18%下落]
+  C --> R1[要因 1<br>UI 簡略化]
+  C --> R2[要因 2<br>導線変更]
+  C --> R3[要因 3<br>本人確認追加]
+  R1 --> E1[A/B 結果]
+  R2 --> E2[ヒートマップ]
+  R3 --> E3[フォーム計測]
+  </div>
+
+  <p>
+    Pyramid Principle (Minto, 1969) の骨組み。
+    上から下へ「結論 → 根拠 → 証拠」と読める設計になっていれば、
+    skimmer は上層 1 層で意思決定でき、精読者は下層まで辿れます。
+  </p>
+
+  <div class="ws-pair">
+    <div class="ws-bad"><small>✗ AI: 5 段落エッセイ</small>
+      導入 → ポイント1 → ポイント2 → ポイント3 → まとめ。
+      均一な段落、最後に「課題はあるが今後に期待」。
+    </div>
+    <div class="ws-good"><small>✓ Pyramid</small>
+      結論 1 段落 → 根拠 3 章 (不揃いの長さ) → 各章に証拠と例。
+      最後はもう書かない。
+    </div>
+  </div>
+
+  <p>
+    階層と段落設計の詳細、コンポーネント選択の閾値
+    （paragraph と <code>&lt;ul&gt;</code> の境目、何個から card grid にするか）は
+    <code>readability.md</code> に表形式でまとまっています。
+  </p>
+
+  <h2 id="interactive">層を越えて: 双方向 HTML</h2>
+
+  <p>
+    Thariq の記事 "The Unreasonable Effectiveness of HTML" が指摘する
+    HTML の最強の用途は <strong>Custom Editing Interface</strong> です。
+    bento は v0.1 でこの用途のためのプリミティブを揃えました。
+  </p>
+
+  <div class="bento-grid" data-cols="2">
+
+    <div class="bento-card">
+      <h3>入力コントロール</h3>
+      <p>
+        <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>,
+        <code>&lt;textarea&gt;</code>, <code>&lt;fieldset&gt;</code>
+        がクラスなしで自動スタイル。
+        <code>.bento-field</code> でラベル＋コントロールを束ねる。
+      </p>
+    </div>
+
+    <div class="bento-card">
+      <h3>レイアウト</h3>
+      <p>
+        <code>.bento-sidebar</code> で非対称 narrow+wide。
+        <code>data-side</code> と <code>data-ratio</code> で
+        エディタ・パレット・ナビ + 本体を組める。
+      </p>
+    </div>
+
+    <div class="bento-card">
+      <h3>SVG / 描画</h3>
+      <p>
+        <code>.bento-illust</code> で SVG を包めば、
+        <code>currentColor</code> が <code>--bento-accent</code> を
+        継承してテーマに自動追随。
+      </p>
+    </div>
+
+    <div class="bento-card">
+      <h3>ループを閉じる</h3>
+      <p>
+        <code>&lt;button class="bento-btn bento-copy"
+        data-copy-from="#payload"&gt;</code>。
+        編集結果をクリップボードに戻して、別の Claude セッションに貼り直せる。
+      </p>
+    </div>
+
+  </div>
+
+  <p>
+    実例は
+    <a class="bento-xref" href="playground.html">playground.html</a>
+    の callout デザイナーで。フォーム入力がライブプレビューに反映され、
+    最後に「Copy HTML」で <code>.bento-callout</code> マークアップを取り出せます。
+  </p>
+
+  <h2 id="self-check">出力を閉じる前のチェック</h2>
+
+  <p>
+    writing-style.md と readability.md のチェックを統合した最小セット。
+    3 項目以上失敗していたら書き直しの合図です。
+  </p>
+
+  <ol class="bento-steps">
+    <li><div><h4>結論が先</h4><p>最初の 1–2 段落に bottom line が出ているか。</p></div></li>
+    <li><div><h4>見出しの parallel</h4><p><code>&lt;h2&gt;</code> 兄弟が同じ文法形か。スキマー読者がそこだけで筋を辿れるか。</p></div></li>
+    <li><div><h4>各章に視覚要素</h4><p>callout / card / stat / chart / compare / mermaid のどれかが <code>&lt;h2&gt;</code> ごとにあるか。</p></div></li>
+    <li><div><h4>em-dash</h4><p>0 個、または明確な意図のある 1 個まで。</p></div></li>
+    <li><div><h4>禁止語彙</h4><p>delve / leverage / pivotal / robust / seamless が無いか。日本語側は「まず・次に・そのため」のデフォルト位置。</p></div></li>
+    <li><div><h4>否定対比</h4><p><code>not just X, but Y</code> / 「単なる○○ではなく」を使っていないか。</p></div></li>
+    <li><div><h4>具体性</h4><p>固有名詞・数字・日付が 1 ページに最低 3 個。</p></div></li>
+    <li><div><h4>段落の長さ</h4><p>多くは 1–4 文。長い段落が連続していないか。</p></div></li>
+    <li><div><h4>箇条書きの正体</h4><p>本当にリスト構造か。3 個未満なら一文、7 個超なら分割。</p></div></li>
+    <li><div><h4>立場</h4><p>誰かが反論できる主張が、文書中に最低一つあるか。</p></div></li>
+  </ol>
+
+  <aside class="bento-related">
+    <strong>関連ドキュメント</strong>
+    <ul>
+      <li><a href="report.html">report.html: 全機能ショーケース</a></li>
+      <li><a href="writing-style.html">writing-style.html: クロスリファレンス実演 + AI-tell ガイド</a></li>
+      <li><a href="playground.html">playground.html: Custom Editing Interface (callout デザイナー)</a></li>
+    </ul>
+  </aside>
+
+  <p>
+    bento の全 API、テーマ、CSS 変数の一覧は
+    <code>skills/bento/SKILL.md</code> に。
+    sentence/document の規律はそれぞれ
+    <code>writing-style.md</code> と <code>readability.md</code> に分かれています。
+    使う側は <em>三つを別々に読む</em> ことで、責任範囲がはっきりします。
+  </p>
+
+  <footer class="bento-footer">
+    <span>bento / skill overview</span>
+    <span>2026-05-12</span>
+  </footer>
+
+</main>
+</body>
+</html>

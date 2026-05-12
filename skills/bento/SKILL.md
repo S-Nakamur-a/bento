@@ -24,12 +24,14 @@ Do NOT use bento when:
 
 ## How to produce output
 
-1. **Create a single `.html` file** (the user will open it in a browser, share it, or print it).
-2. **Use the skeleton below verbatim** as the first lines, then write your content inside `<main class="bento-doc">`.
-3. **Compose using bento classes** (see catalogue). Don't invent new class names; if you need something not covered, use plain semantic HTML — the framework styles `h1-h6`, `p`, `ul`, `ol`, `blockquote`, `table`, `code`, `pre`, `figure` etc. out of the box.
-4. **Don't inline raw CSS unless customizing the theme.** A single `<style>` block at top is fine for overrides; never restyle from scratch.
-5. **Token discipline**: prefer semantic HTML over class soup. The framework targets element selectors first, classes second.
-6. **Write like a human, not like ChatGPT.** Before drafting any prose, read `writing-style.md` in this directory — beautiful HTML around AI-sounding prose still reads as an AI artifact. The framework dresses the page; your sentences carry the credibility.
+1. **Read user preferences first.** If `.claude/bento.local.md` exists at the project root, read it **before drafting any output**. Its instructions override the defaults in this skill, `writing-style.md`, and `readability.md`. See `## Preferences` below for the file format and how to update it.
+2. **Create a single `.html` file** (the user will open it in a browser, share it, or print it).
+3. **Use the skeleton below verbatim** as the first lines, then write your content inside `<main class="bento-doc">`.
+4. **Compose using bento classes** (see catalogue). Don't invent new class names; if you need something not covered, use plain semantic HTML — the framework styles `h1-h6`, `p`, `ul`, `ol`, `blockquote`, `table`, `code`, `pre`, `figure` etc. out of the box.
+5. **Don't inline raw CSS unless customizing the theme.** A single `<style>` block at top is fine for overrides; never restyle from scratch.
+6. **Token discipline**: prefer semantic HTML over class soup. The framework targets element selectors first, classes second.
+7. **Write like a human, not like ChatGPT.** Before drafting any prose, read `writing-style.md` in this directory — beautiful HTML around AI-sounding prose still reads as an AI artifact. The framework dresses the page; your sentences carry the credibility.
+8. **Design for skimmers, not readers.** Roughly 70% of readers skim; the first 5–7 seconds decide whether they invest more. Open with the bottom line, use `<h2>` headings as a text-shaped TOC, and put one visual element (callout / card grid / stat row / chart / compare table) near the top of every section. Read `readability.md` for the document-level discipline (paragraph length, component choice by shape, the self-check before you stop).
 
 ### Required skeleton
 
@@ -99,6 +101,60 @@ See `assets/bento.css` for full reference; below are the most useful classes.
 - `.bento-hr` — section divider (or just `<hr>`)
 - `.bento-print-only` `.bento-screen-only` — visibility per medium
 
+## Preferences
+
+`.claude/bento.local.md` at the project root holds per-project preferences for this skill. If the file exists, **read it before drafting any output** and treat its contents as the highest-priority style instructions (overriding `writing-style.md`, `readability.md`, and framework defaults).
+
+### File format
+
+YAML frontmatter for structured preferences, markdown body for free-form rules.
+
+```markdown
+---
+theme: editorial         # default | dark | editorial | mono | playful
+voice: terse             # terse | balanced | warm
+language: ja             # ja | en | auto
+em_dash: 0               # 0 = never, 1 = at most one with intent, default = follow writing-style.md
+paragraph_max: 3         # max sentences per paragraph
+heading_case: sentence   # sentence | title
+preferred_visuals: [bento-compare, bento-stat, bento-callout]
+avoided_visuals: [bento-mermaid]
+---
+
+# Free-form rules
+- 結論を最初に出してほしい
+- カタカナ語は最小限
+- emoji は本文で使わない
+- 比喩より具体例を優先
+```
+
+Unknown frontmatter keys and any markdown body content are treated as additional user instructions at the same priority level. A field set in the file silently overrides the corresponding default — don't surface that you applied it unless asked.
+
+### Reactive capture (asking to save)
+
+When the user gives feedback that suggests a **recurring** stylistic preference (not a one-off paragraph edit), ask once whether to persist it. Triggers include:
+
+- 「もっと短く」「冗長」「シンプルに」 → `voice: terse`, `paragraph_max: N`
+- 「em-dash やめて」「ダッシュ使わないで」 → `em_dash: 0`
+- 「serif にして」「Mincho で」 → font preference in body
+- 「mermaid じゃなくて table で」「図はいらない」 → `avoided_visuals`
+- 「カタカナ語が多い」「もっと平易に」 → body note
+- 「emoji は不要」 → body note
+- Theme / color complaints → `theme:` or `--bento-accent` body note
+
+Ask exactly:
+
+> 「これを `.claude/bento.local.md` に default として保存しますか？」
+
+On yes: read the existing file if any, merge the new preference into the frontmatter (or append a bullet to the markdown body for free-form rules), and write the file back. Create the file (and the `.claude/` directory if needed) if absent. Don't ask permission for each write — the user already confirmed.
+
+On no: apply the preference for this conversation only.
+
+**Rules:**
+- Don't ask the same kind of preference question twice in one conversation.
+- Don't propose to save for **one-off edits** ("make this paragraph shorter" is for this paragraph; "I always want short paragraphs" is a preference).
+- Don't volunteer preference dialogs proactively — only when the user has actually given feedback that reveals a preference.
+
 ## Use cases
 
 bento covers five families of HTML output. Pick the family first, then the components.
@@ -149,7 +205,8 @@ The full variable list lives in `assets/bento.css` at the top under `:where(.ben
 - `examples/report.html` — full feature showcase (cards, charts, mermaid, etc.). Read this first if you want to see real usage of every component.
 - `examples/playground.html` — Custom Editing Interface demo: sidebar layout, form controls, SVG preview, and a copy-as-JSON export button.
 - `examples/writing-style.html` — long-form report that exercises cross-references (`.bento-xref`, `.bento-related`) end to end.
-- `writing-style.md` — mandatory before drafting prose. Lists AI-tells (em-dashes, "delve", rule-of-three, hedging participles, "not just X but Y", and the Japanese equivalents) plus a final self-check.
+- `writing-style.md` — sentence-level discipline. Read before drafting prose. Lists AI-tells (em-dashes, "delve", rule-of-three, hedging participles, "not just X but Y", and the Japanese equivalents) plus a final self-check.
+- `readability.md` — document-level discipline. Pyramid Principle / BLUF, paragraph design, heading hierarchy, component choice by shape (paragraph vs `<ul>` vs `.bento-card` grid vs `.bento-compare` vs callout), density targets, and a 5-minute structural self-check.
 
 ## Operating principles
 
@@ -158,3 +215,4 @@ The full variable list lives in `assets/bento.css` at the top under `:where(.ben
 - **Don't restyle**, customize via CSS variables only.
 - **Keep markup terse** — that's the whole point. If a generated section feels verbose, look for a class that already does it.
 - **Commit, be specific, vary.** The visual framework can carry weak prose only so far. See `writing-style.md` for the discipline.
+- **Skimmer-first structure.** Bottom line up top, signpost headings, one visual element per section. See `readability.md` for the document-level rules.

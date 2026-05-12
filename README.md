@@ -15,6 +15,7 @@ bento/
 ├── skills/bento/
 │   ├── SKILL.md           # the instruction Claude reads
 │   ├── writing-style.md   # prose discipline: AI-tells to avoid (EN + JA)
+│   ├── readability.md     # document discipline: structure, hierarchy, component choice
 │   ├── assets/
 │   │   ├── bento.css      # core framework (typography, cards, callouts, stats, ...)
 │   │   ├── bento.js       # lazy-loads mermaid / chart.js / highlight.js / katex
@@ -64,6 +65,24 @@ To use one of the optional themes, also include its stylesheet:
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/S-Nakamur-a/bento@main/skills/bento/assets/themes/editorial.css">
 ```
+
+## Per-project preferences
+
+Drop a `.claude/bento.local.md` at your project root and bento reads it before every generation, treating its contents as the highest-priority style overrides. YAML frontmatter holds structured preferences (theme, voice, language, em-dash tolerance, preferred/avoided components), markdown body holds free-form rules.
+
+```markdown
+---
+theme: editorial
+voice: terse
+em_dash: 0
+avoided_visuals: [bento-mermaid]
+---
+
+- 結論を最初に出してほしい
+- emoji は使わない
+```
+
+When you give the skill stylistic feedback (e.g. "もっと短く", "em-dash やめて"), it offers once to save the rule into this file. See `skills/bento/SKILL.md` → `## Preferences` for the full spec.
 
 ## Customizing on the fly
 
