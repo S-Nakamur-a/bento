@@ -1,7 +1,7 @@
 {
   "name": "bento",
-  "version": "0.2.0",
-  "description": "Token-efficient beautiful HTML output. AI emits a thin layer of semantic HTML; the bento CSS/JS framework provides typography, cards, callouts, charts, mermaid and KaTeX for free. Ships the /bento:report command with reader-perspective presets (engineer, product, executive, newcomer, customer) plus two subagents that keep the main context light.",
+  "version": "0.3.0",
+  "description": "Reader-perspective documents in two output formats. `/bento:html` writes a self-contained styled HTML report using the bento CSS/JS framework. `/bento:markdown` writes a plain Markdown document with the same writing-style and readability discipline (no HTML, no components). Five built-in reader perspectives: engineer, product, executive, newcomer, customer.",
   "author": {
     "name": "S-Nakamur-a"
   },
@@ -10,6 +10,7 @@
   "keywords": [
     "skill",
     "html",
+    "markdown",
     "documentation",
     "presentation",
     "token-efficient"

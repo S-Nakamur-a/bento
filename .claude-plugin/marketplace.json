@@ -7,11 +7,12 @@
     {
       "name": "bento",
       "source": "./",
-      "description": "Token-efficient beautiful HTML output. AI generates minimal HTML using a pre-bundled CSS/JS framework. /bento:report tailors output by reader perspective (engineer, product, executive, newcomer, customer).",
-      "version": "0.2.0",
+      "description": "Reader-perspective documents in two formats. /bento:html writes styled HTML via a CDN-hosted CSS/JS framework; /bento:markdown writes plain Markdown using the same writing-style and readability discipline. Five built-in perspectives: engineer, product, executive, newcomer, customer.",
+      "version": "0.3.0",
       "category": "documentation",
       "tags": [
         "html",
+        "markdown",
         "documentation",
         "token-efficient",
         "presentation",

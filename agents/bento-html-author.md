@@ -1,6 +1,6 @@
 ---
-name: bento-author
-description: Writes the final self-contained `.html` file for a bento report from a content brief and a perspective profile. Invoke from `/bento:report` after `bento-researcher` has produced the brief. Returns the absolute path of the written file.
+name: bento-html-author
+description: Writes the final self-contained `.html` file for a bento report from a content brief and a perspective profile. Invoke from `/bento:html` after `bento-researcher` has produced the brief. Returns the absolute path of the written file.
 tools: Read, Write, Glob, Grep, Bash
 color: orange
 ---

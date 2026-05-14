@@ -13,16 +13,20 @@ This costs some tokens over plain Markdown. Pay them deliberately — when the r
 
 ## How this skill is invoked
 
-Two entry points, one flow.
+This skill governs the **HTML** output path. Two entry points, one flow.
 
-**Preferred — slash command.** `/bento:report <topic> [for <audience>]` is the canonical entry. The command (`commands/report.md` at the plugin root) parses the topic and the reader perspective, then dispatches two subagents:
+**Preferred — slash command.** `/bento:html <topic> [for <audience>]` is the canonical entry. The command (`commands/html.md` at the plugin root) parses the topic and the reader perspective, then dispatches two subagents:
 
 - `bento-researcher` reads the writing-style and readability guides plus the chosen perspective file, then returns a Markdown content brief.
-- `bento-author` reads this file (`SKILL.md`), the writing and readability guides, and the brief, then writes the final `.html`.
+- `bento-html-author` reads this file (`SKILL.md`), the writing and readability guides, and the brief, then writes the final `.html`.
 
 **Fallback — ambient skill trigger.** When the user asks for a "shareable HTML report" / 「美しい資料」 without invoking the command, this skill activates directly. Run the same flow inline: read user preferences, identify the reader perspective from `perspectives/_index.md` (use `AskUserQuestion` if it is unclear), then produce the document using the steps in `## How to produce output` below. The perspective file applies to the writing exactly as it would under the command.
 
 The component vocabulary, the skeleton, and the writing rules below are the same in both modes — the subagents read this file, so a single source of truth governs the output.
+
+### Sibling command for plain Markdown
+
+`/bento:markdown <topic> [for <audience>]` produces a plain `.md` file from the same researcher and perspective machinery — no HTML, no bento classes, no framework. It reads `writing-style.md`, `readability.md`, and the perspective; it does **not** read this file. Use it for outputs the reader will consume as Markdown (wikis, READMEs, LLM-readable docs). Use `/bento:html` (or this skill's ambient trigger) when the reader gets the rendered HTML.
 
 ## When to use
 
@@ -46,7 +50,7 @@ The trade-off is deliberate: bento costs more tokens than Markdown. Make sure th
 ## How to produce output
 
 1. **Read user preferences first.** If `.claude/bento.local.md` exists at the project root, read it **before drafting any output**. Its instructions override the defaults in this skill, `writing-style.md`, and `readability.md`. See `## Preferences` below for the file format and how to update it.
-2. **Identify the reader perspective.** Read `perspectives/_index.md`. If the user named an audience and it matches a slug, read `perspectives/<slug>.md` before drafting; its `preferred_components` and `tone_notes` override defaults below. If the audience is unclear, ask the user with `AskUserQuestion` (choices from the index plus "その他 / general reader"). When invoked via `/bento:report`, the command and the `bento-researcher` subagent handle this resolution for you.
+2. **Identify the reader perspective.** Read `perspectives/_index.md`. If the user named an audience and it matches a slug, read `perspectives/<slug>.md` before drafting; its `preferred_components` and `tone_notes` override defaults below. If the audience is unclear, ask the user with `AskUserQuestion` (choices from the index plus "その他 / general reader"). When invoked via `/bento:html`, the command and the `bento-researcher` subagent handle this resolution for you.
 3. **Create a single `.html` file** (the user will open it in a browser, share it, or print it).
 4. **Use the skeleton below verbatim** as the first lines, then write your content inside `<main class="bx-doc">`.
 5. **Compose using bento classes** (see catalogue). Don't invent new class names; if you need something not covered, use plain semantic HTML — the framework styles `h1-h6`, `p`, `ul`, `ol`, `blockquote`, `table`, `code`, `pre`, `figure` etc. out of the box.
@@ -230,7 +234,7 @@ The full variable list lives in `assets/bento.css` at the top under `:where(.bx)
 - `writing-style.md` — sentence-level discipline. Read before drafting prose. Lists AI-tells (em-dashes, "delve", rule-of-three, hedging participles, "not just X but Y", and the Japanese equivalents) plus a final self-check.
 - `readability.md` — document-level discipline. Pyramid Principle / BLUF, paragraph design, heading hierarchy, component choice by shape (paragraph vs `<ul>` vs `.bx-card` grid vs `.bx-compare` vs callout), density targets, and a 5-minute structural self-check.
 - `token.md` — cost-level discipline. Where bento spends extra tokens, the shortcut catalogue (compact forms, `<section data-md>` markdown islands, when to skip bento entirely), and a 1-minute self-check before emitting HTML.
-- `perspectives/_index.md` — the list of built-in reader profiles (`engineer`, `product`, `executive`, `newcomer`, `customer`) used by `/bento:report` and the ambient skill trigger. Each profile lives in `perspectives/<slug>.md` and overrides defaults for its audience.
+- `perspectives/_index.md` — the list of built-in reader profiles (`engineer`, `product`, `executive`, `newcomer`, `customer`) used by `/bento:html`, `/bento:markdown`, and the ambient skill trigger. Each profile lives in `perspectives/<slug>.md` and overrides defaults for its audience.
 
 ## Operating principles
 

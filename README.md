@@ -1,14 +1,17 @@
 # bento
 
-> **HTML output for documents humans will read carefully.**
-> Some outputs are conversational and ephemeral — Markdown is the right tool for those.
-> Others deserve typographic care, structure, charts, callouts — content the reader is going to sit with, return to, share, or print. **bento is for those.**
+> **Reader-perspective documents, in HTML or Markdown.**
+> The plugin's job is to write *for someone specific* with the prose discipline of a careful writer.
+> The output format follows: HTML when the reader will open it in a browser and sit with it; Markdown when the reader will paste it into a wiki, a README, or another LLM.
 
-bento accepts a deliberate token premium over plain Markdown in exchange for what Markdown can't give: consistent typography, structured visual components (charts, callouts, comparison tables, KPI tiles, mermaid diagrams), responsive multi-column layouts, and a reading rhythm that holds up in a browser, in print, and across rereads. The AI writes near-vanilla semantic HTML using a small class vocabulary; all visual heavy-lifting lives in a CDN-hosted CSS/JS framework loaded with two tags.
+Two slash commands share the same researcher, the same reader-perspective profiles, and the same writing-style / readability discipline. They differ only in the final author:
 
-Like a real bento, each compartment is neatly framed and the whole tray composes into something that looks intentional, not improvised.
+- **`/bento:html`** writes a self-contained `.html` file using the bento CSS/JS framework (loaded from a CDN). Token premium over Markdown, paid back in typography, callouts, charts, comparison tables, mermaid diagrams, multi-column layouts, and reading rhythm in the browser and in print.
+- **`/bento:markdown`** writes a plain `.md` file. No HTML, no framework, no component classes — just BLUF, parallel headings, well-shaped paragraphs, and Markdown tables / blockquotes / code fences where the brief asks for visual structure.
 
-**When to use, when not to use** — see `skills/bento/SKILL.md`. The short version: use bento when a human will read the document carefully; use Markdown when the reader will skim once, or when the consumer is another LLM.
+Like a real bento, each compartment is neatly framed and the whole tray composes into something that looks intentional, not improvised — whether it lands as HTML or Markdown.
+
+**When to pick which** — see the "When to pick which" section below, or `skills/bento/SKILL.md` for the longer HTML-side reasoning.
 
 ## Repository layout
 
@@ -16,15 +19,17 @@ Like a real bento, each compartment is neatly framed and the whole tray composes
 bento/
 ├── .claude-plugin/        # plugin / marketplace manifests
 ├── commands/
-│   └── report.md          # /bento:report — orchestrator slash command
+│   ├── html.md            # /bento:html      — HTML orchestrator
+│   └── markdown.md        # /bento:markdown  — plain-Markdown orchestrator
 ├── agents/
-│   ├── bento-researcher.md   # produces the content brief
-│   └── bento-author.md       # writes the final HTML
+│   ├── bento-researcher.md       # produces the format-agnostic content brief
+│   ├── bento-html-author.md      # writes the final HTML
+│   └── bento-markdown-author.md  # writes a plain .md (no HTML, no components)
 ├── skills/bento/
-│   ├── SKILL.md           # component catalogue + skeleton + writing rules
+│   ├── SKILL.md           # HTML component catalogue + skeleton (HTML path only)
 │   ├── writing-style.md   # prose discipline: AI-tells to avoid (EN + JA)
 │   ├── readability.md     # document discipline: structure, hierarchy, component choice
-│   ├── token.md           # cost discipline: shortcut catalogue, when to skip bento
+│   ├── token.md           # cost discipline: shortcut catalogue, when to skip bento (HTML)
 │   ├── perspectives/      # reader-profile presets (engineer / product / executive / newcomer / customer)
 │   ├── assets/
 │   │   ├── bento.css      # core framework (typography, cards, callouts, stats, ...)
@@ -49,24 +54,34 @@ bento/
 /plugin install bento
 ```
 
-Once installed, you can produce a report two ways:
+Once installed, you have two commands:
 
 ```
-/bento:report <topic> [for <audience>]
+/bento:html      <topic> [for <audience>]   # styled, single-file HTML
+/bento:markdown  <topic> [for <audience>]   # plain Markdown (.md)
 ```
 
-The slash command is the canonical entry. It parses the topic and reader, then dispatches two subagents:
+Both share the same orchestration: parse the topic and the reader, dispatch the researcher, then the format-specific author.
 
-- `bento-researcher` reads the writing-style and readability guides plus the chosen perspective profile, gathers material from any sources you pass, and returns a Markdown content brief.
-- `bento-author` turns the brief into a single self-contained `.html` file that follows the skeleton, the component vocabulary, and the writing rules.
+- `bento-researcher` reads the writing-style and readability guides plus the chosen perspective profile, gathers material from any sources you pass, and returns a Markdown content brief. The brief is format-agnostic — its visual suggestions use bento class names as shorthand for shapes (`bx-compare` table, `bx-callout` blockquote, `bx-mermaid` flow).
+- `bento-html-author` turns the brief into a single self-contained `.html` file using the bento CSS/JS framework, the skeleton, and the component vocabulary.
+- `bento-markdown-author` turns the same brief into a `.md` file using only the writing-style and readability discipline — no HTML, no bento classes. It translates the brief's bento-shape shorthand to Markdown equivalents: tables, blockquotes, fenced `mermaid` code blocks, numbered lists.
 
 Example calls:
 
-- `/bento:report リポジトリ概要 for engineers`
-- `/bento:report Q3 status for executives`
-- `/bento:report 新人向けのオンボーディングメモ`
+```
+/bento:html リポジトリ概要 for engineers
+/bento:html Q3 status for executives
+/bento:markdown 新人向けのオンボーディングメモ for newcomers
+/bento:markdown release notes for customers
+```
 
-If you instead ask for a pretty HTML report in normal conversation (`美しい資料を作って`, `give me a shareable HTML report on X`), the `bento` skill auto-activates and runs the same flow inline.
+If you instead ask for a pretty HTML report in normal conversation (`美しい資料を作って`, `give me a shareable HTML report on X`), the `bento` skill auto-activates and runs the HTML flow inline. The Markdown path is slash-command only — it does not auto-activate.
+
+### When to pick which
+
+- **`/bento:html`** — the reader will open the file in a browser, share it, print it, return to it. Worth the token premium (skeleton, framework links, component wrappers) when typography, charts, callouts, and layout do real work for the reader.
+- **`/bento:markdown`** — the output goes into a wiki, a GitHub README, a Notion page, a chat, or feeds another LLM. The visual framework would be pure overhead; what you want is the BLUF, the heading hierarchy, the perspective-shaped prose, in portable Markdown.
 
 ### Reader perspectives
 
@@ -80,7 +95,7 @@ bento ships five built-in reader profiles under `skills/bento/perspectives/`:
 | `newcomer` | new joiners, onboarding readers |
 | `customer` | external users, paying customers |
 
-Each profile sets `preferred_components`, `tone_notes`, and an example opening so the researcher and author know what shape of output lands for that reader. When the command runs with a new audience that does not match a profile, the researcher drafts a new one and the command offers to save it as `perspectives/<slug>.md` for future runs.
+Each profile sets `preferred_components`, `tone_notes`, and an example opening so the researcher and author know what shape of output lands for that reader. Profiles are shared between `/bento:html` and `/bento:markdown`: the HTML author reads `preferred_components` as bento classes; the Markdown author reads them as shape hints (`bx-compare` → Markdown table, `bx-callout` → blockquote). When either command runs with a new audience that does not match a profile, the researcher drafts a new one and the command offers to save it as `perspectives/<slug>.md` for future runs.
 
 ### Manual / one-shot use
 

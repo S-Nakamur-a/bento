@@ -4,7 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A Claude Code plugin that ships a single skill, **bento**. The skill is a small CSS/JS framework plus three instruction files (`SKILL.md` + `writing-style.md` + `readability.md`) that together help another Claude instance produce HTML reports without burning tokens on inline styling. There is no build step; the assets are loaded from jsDelivr in user-generated documents.
+A Claude Code plugin that produces reader-perspective documents in two output formats. Both go through the same orchestration and the same writing discipline; the final author differs.
+
+- **`/bento:html`** uses the bento skill: a small CSS/JS framework plus `SKILL.md` + `writing-style.md` + `readability.md`. The HTML author writes near-vanilla semantic HTML; the framework dresses the page. Assets are loaded from jsDelivr in user-generated documents; there is no build step.
+- **`/bento:markdown`** skips the HTML skill entirely. The Markdown author reads `writing-style.md` + `readability.md` + the perspective profile, then writes a plain `.md` file. No HTML, no bento classes, no framework.
 
 ## Commands
 
@@ -18,14 +21,16 @@ There is no build, lint, or test runner. The only tooling worth knowing:
 
 ### Entry points and runtime layout
 
-The plugin exposes four runtime components Claude Code loads:
+The plugin exposes six runtime components Claude Code loads:
 
 | Path | Component type | Role |
 | --- | --- | --- |
-| `commands/report.md` | slash command | Canonical entry. Parses topic + perspective, orchestrates the subagents. |
-| `skills/bento/SKILL.md` | skill | Ambient fallback (auto-activates on "make a report" style prompts). Also the authoritative reference for components, skeleton, themes; `bento-author` reads it. |
-| `agents/bento-researcher.md` | subagent | Produces a Markdown content brief from topic + perspective + sources. |
-| `agents/bento-author.md` | subagent | Writes the final `.html` from the brief and the perspective. |
+| `commands/html.md` | slash command | `/bento:html` entry. Parses topic + perspective, orchestrates the researcher + HTML author. |
+| `commands/markdown.md` | slash command | `/bento:markdown` entry. Same orchestration; dispatches the Markdown author instead. |
+| `skills/bento/SKILL.md` | skill | Ambient fallback for the HTML path (auto-activates on "make an HTML report" / 「美しい資料」 style prompts). Also the authoritative reference for HTML components, skeleton, themes; `bento-html-author` reads it. Not consulted by the Markdown path. |
+| `agents/bento-researcher.md` | subagent | Produces a format-agnostic Markdown content brief from topic + perspective + sources. Shared by both commands. |
+| `agents/bento-html-author.md` | subagent | Writes the final `.html` from the brief, the perspective, and `SKILL.md`. |
+| `agents/bento-markdown-author.md` | subagent | Writes the final `.md` from the brief and the perspective. Reads `writing-style.md` + `readability.md` only — never `SKILL.md`. Translates bento-shape shorthand in the brief to Markdown equivalents (tables, blockquotes, fenced code). |
 
 ### Three discipline files
 
@@ -33,9 +38,9 @@ Three writing-discipline files apply across the subagents and the ambient skill 
 
 | File | Layer | What it disciplines |
 | --- | --- | --- |
-| `skills/bento/SKILL.md` | Visual | Component vocabulary (`.bx-card`, `.bx-callout`, etc.), the required HTML skeleton, theme switching, the user-preference file convention |
-| `skills/bento/writing-style.md` | Sentence | Vocabulary, sentence shape, punctuation, AI-tells to avoid (EN + JA) |
-| `skills/bento/readability.md` | Document | BLUF / Pyramid Principle, paragraph design, heading hierarchy, component-choice-by-shape |
+| `skills/bento/SKILL.md` | Visual (HTML only) | Component vocabulary (`.bx-card`, `.bx-callout`, etc.), the required HTML skeleton, theme switching, the user-preference file convention. **Markdown path ignores this file.** |
+| `skills/bento/writing-style.md` | Sentence | Vocabulary, sentence shape, punctuation, AI-tells to avoid (EN + JA). Both paths read it. |
+| `skills/bento/readability.md` | Document | BLUF / Pyramid Principle, paragraph design, heading hierarchy, component-choice-by-shape. Both paths read it. |
 
 Edits to any of these propagate to every user of the skill the moment the commit lands on `main` (see distribution model below). Keep changes deliberate.
 
@@ -43,10 +48,10 @@ Edits to any of these propagate to every user of the skill the moment the commit
 
 `skills/bento/perspectives/` holds reader-profile presets:
 
-- `_index.md` — the slug list (`engineer`, `product`, `executive`, `newcomer`, `customer`). The command reads it to know which slugs exist; the researcher reads it to know which audiences are already covered.
+- `_index.md` — the slug list (`engineer`, `product`, `executive`, `newcomer`, `customer`). Both commands read it to know which slugs exist; the researcher reads it to know which audiences are already covered.
 - `<slug>.md` — frontmatter (`audience`, `bluf_style`, `preferred_components`, `tone_notes`) plus body sections (when to use, key concerns, structural tips, example opening).
 
-The researcher consults a profile to shape the brief; the author consults the same profile to pick components and tone. For audiences not in `_index.md`, the researcher drafts a profile and the command offers to persist it as `perspectives/<slug>.md`.
+The researcher consults a profile to shape the brief. The HTML author reads the same profile and treats `preferred_components` as bento classes; the Markdown author reads them as **shape hints** (`bx-compare` → Markdown table, `bx-callout` → blockquote, `bx-mermaid` → fenced `mermaid` code block, `bx-chart` → small data table + one-sentence trend). Profiles are shared across both commands; you do not need parallel HTML / Markdown profile sets. For audiences not in `_index.md`, the researcher drafts a profile and the calling command offers to persist it as `perspectives/<slug>.md`.
 
 ### Distribution model
 
@@ -101,8 +106,9 @@ When adding a new **perspective**, update two places:
 
 When changing the **command or a subagent**, update:
 
-1. The relevant `commands/report.md` or `agents/<name>.md`.
+1. The relevant `commands/{html,markdown}.md` or `agents/<name>.md`.
 2. The "Entry points and runtime layout" table above, if the responsibility split shifted.
 3. The README section describing the entry point, if the user-facing contract changed.
+4. If the change affects both output paths (e.g. a researcher tweak), update both command files in lockstep — they share most of their workflow text, and drift between them is a maintenance hazard.
 
-The instruction layer is the public API of this skill; CSS without a SKILL.md entry is invisible to the AI that's supposed to use it, and a perspective file without an `_index.md` row is invisible to the command.
+The instruction layer is the public API of this skill; CSS without a SKILL.md entry is invisible to the AI that's supposed to use it, and a perspective file without an `_index.md` row is invisible to the commands.
